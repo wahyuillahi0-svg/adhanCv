@@ -9,6 +9,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=EB+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <!-- QR CODE LIBRARY -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
     <style>
         /* =============================================
@@ -269,6 +271,62 @@
                 grid-template-columns: 1fr 1fr;
                 gap: 0 20pt;
             }
+
+            /* --------- QR CODE PRINT STYLES --------- */
+            .cv-qr-section {
+                margin-top: 12pt;
+            }
+            .cv-qr-box {
+                display: flex;
+                align-items: flex-start;
+                gap: 9pt;
+                background: #f9f9f9;
+                border: 0.75pt solid #ddd;
+                border-radius: 4pt;
+                padding: 8pt 10pt;
+            }
+            .cv-qr-image-wrap {
+                flex-shrink: 0;
+                width: 68pt;
+                height: 68pt;
+                background: #fff;
+                border: 0.5pt solid #ccc;
+                border-radius: 3pt;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                overflow: hidden;
+            }
+            .cv-qr-image-wrap img,
+            .cv-qr-image-wrap canvas {
+                width: 64pt !important;
+                height: 64pt !important;
+                display: block !important;
+            }
+            .cv-qr-text {
+                flex: 1;
+            }
+            .cv-qr-title {
+                font-size: 9pt;
+                font-weight: 700;
+                color: #111;
+                margin: 0 0 4pt 0;
+                line-height: 1.3;
+            }
+            .cv-qr-desc {
+                font-size: 8pt;
+                color: #555;
+                margin: 0 0 3pt 0;
+                line-height: 1.5;
+            }
+            .cv-qr-url {
+                font-size: 7.5pt;
+                color: #888;
+                font-style: italic;
+                margin: 0;
+                line-height: 1.4;
+                word-break: break-all;
+            }
         }
 
         /* Sembunyikan CV print di layar */
@@ -476,6 +534,34 @@
                         
                     </p>
                 </div>
+
+                <!-- =============================================
+                     QR CODE — SCAN UNTUK BUKA WEB CV LENGKAP
+                ============================================= -->
+                <div class="cv-section cv-qr-section">
+                    <div class="cv-section-title">Portfolio Digital</div>
+                    <div style="display:flex; gap:8pt;">
+
+                        <!-- QR 1: Website CV -->
+                        <div style="flex:1; background:#f9f9f9; border:0.75pt solid #ddd; border-radius:4pt; padding:7pt 8pt; text-align:center;">
+                            <div id="cv-qrcode-web" style="display:flex; justify-content:center; margin-bottom:4pt;">
+                            </div>
+                            <p style="font-size:7.5pt; font-weight:700; color:#111; margin:0 0 2pt 0; line-height:1.3;">Web CV Interaktif</p>
+                            <p style="font-size:6.5pt; color:#888; margin:0; line-height:1.4; word-break:break-all;">wahyuillahi0-svg.github.io<br>/adhanCv/</p>
+                        </div>
+
+                        <!-- QR 2: LinkedIn -->
+                        <div style="flex:1; background:#f9f9f9; border:0.75pt solid #ddd; border-radius:4pt; padding:7pt 8pt; text-align:center;">
+                            <div id="cv-qrcode-linkedin" style="display:flex; justify-content:center; margin-bottom:4pt;">
+                            </div>
+                            <p style="font-size:7.5pt; font-weight:700; color:#111; margin:0 0 2pt 0; line-height:1.3;">LinkedIn Profile</p>
+                            <p style="font-size:6.5pt; color:#888; margin:0; line-height:1.4; word-break:break-all;">linkedin.com/in/<br>adhan-ab3a07195</p>
+                        </div>
+
+                    </div>
+                    <p style="font-size:7pt; color:#aaa; text-align:center; margin:5pt 0 0 0; font-style:italic;">Arahkan kamera HP untuk membuka profil digital</p>
+                </div>
+                <!-- END QR CODE -->
 
             </div><!-- end kolom kanan -->
 
@@ -818,6 +904,36 @@
             t.style.opacity = '0';
             setTimeout(function(){ t.style.display = 'none'; }, 400);
         }
+
+        // =============================================
+        // GENERATE QR CODE — 2 QR: Website CV & LinkedIn
+        // =============================================
+        (function() {
+            // QR 1: Website CV
+            var qrWeb = document.getElementById('cv-qrcode-web');
+            if (qrWeb && typeof QRCode !== 'undefined') {
+                new QRCode(qrWeb, {
+                    text: "https://wahyuillahi0-svg.github.io/adhanCv/",
+                    width: 80,
+                    height: 80,
+                    colorDark: "#111111",
+                    colorLight: "#ffffff",
+                    correctLevel: QRCode.CorrectLevel.H
+                });
+            }
+            // QR 2: LinkedIn
+            var qrLI = document.getElementById('cv-qrcode-linkedin');
+            if (qrLI && typeof QRCode !== 'undefined') {
+                new QRCode(qrLI, {
+                    text: "https://www.linkedin.com/in/adhan-ab3a07195/",
+                    width: 80,
+                    height: 80,
+                    colorDark: "#111111",
+                    colorLight: "#ffffff",
+                    correctLevel: QRCode.CorrectLevel.H
+                });
+            }
+        })();
     </script>
 </body>
 </html>
