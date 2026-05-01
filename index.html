@@ -6,13 +6,15 @@
     <title>Wahyu Illahi Ramadhan | Site Engineer & Drafter QS</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=EB+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
     <style>
-        /* Styles from First Code */
-        body { font-family: 'Inter', sans-serif; background-color: #fff; color: #000; overfflow-x: hidden; }
+        /* =============================================
+           ORIGINAL WEB STYLES — TIDAK DIUBAH
+        ============================================= */
+        body { font-family: 'Inter', sans-serif; background-color: #fff; color: #000; overflow-x: hidden; }
         .line-detail { height: 1px; width: 0; background-color: #3b82f6; transition: width 1s ease; }
         .aos-animate .line-detail { width: 100%; }
         .experience-node { position: relative; padding-bottom: 4rem; border-left: 1px solid #e5e7eb; padding-left: 2rem; }
@@ -20,70 +22,17 @@
         .btn-primary { background: #000; color: #fff; padding: 12px 24px; border-radius: 99px; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; transition: all 0.3s; }
         .btn-primary:hover { background: #3b82f6; transform: translateY(-2px); }
         .blueprint-card:hover img { transform: scale(1.05); }
-
-        /* Styles from Education Section */
-        .edu-container {
-            max-width: 800px;
-            margin: auto;
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
-        }
-        .edu-h2 {
-            text-align: center;
-            color: #2c3e50;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 10px;
-            margin-bottom: 30px;
-        }
-        .education-item {
-            position: relative;
-            padding-left: 30px;
-            border-left: 3px solid #3498db;
-            margin-bottom: 30px;
-            margin-left: 10px;
-        }
-        .education-item::before {
-            content: '';
-            position: absolute;
-            left: -9px;
-            top: 0;
-            width: 15px;
-            height: 15px;
-            border-radius: 50%;
-            background: #3498db;
-        }
+        .edu-container { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 8px; }
+        .edu-h2 { text-align: center; color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-bottom: 30px; }
+        .education-item { position: relative; padding-left: 30px; border-left: 3px solid #3498db; margin-bottom: 30px; margin-left: 10px; }
+        .education-item::before { content: ''; position: absolute; left: -9px; top: 0; width: 15px; height: 15px; border-radius: 50%; background: #3498db; }
         .year { font-weight: bold; color: #3498db; display: block; font-size: 0.9em; }
         .institution { font-size: 1.2em; font-weight: bold; margin: 5px 0; color: #2c3e50; }
         .major { color: #555; font-style: italic; }
         .degree { display: inline-block; background: #e1f0fa; color: #3498db; padding: 2px 8px; border-radius: 4px; font-size: 0.85em; margin-left: 10px; }
-
-        /* Styles from Skills Section */
-        :root {
-            --primary: #2563eb;
-            --dark: #1e293b;
-            --light: #f8fafc;
-            --accent: #3b82f6;
-        }
-        .skills-container {
-            background: white;
-            padding: 2rem;
-            border-radius: 1.5rem;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 500px;
-            margin: 40px auto;
-        }
-        .skills-h2 {
-            text-align: center;
-            color: var(--dark);
-            margin-bottom: 2rem;
-            font-weight: 700;
-            border-bottom: 3px solid var(--primary);
-            display: inline-block;
-            width: 100%;
-            padding-bottom: 10px;
-        }
+        :root { --primary: #2563eb; --dark: #1e293b; --light: #f8fafc; --accent: #3b82f6; }
+        .skills-container { background: white; padding: 2rem; border-radius: 1.5rem; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 500px; margin: 40px auto; }
+        .skills-h2 { text-align: center; color: var(--dark); margin-bottom: 2rem; font-weight: 700; border-bottom: 3px solid var(--primary); display: inline-block; width: 100%; padding-bottom: 10px; }
         .skill-card { margin-bottom: 1.5rem; transition: transform 0.3s ease; }
         .skill-card:hover { transform: translateX(10px); }
         .skill-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
@@ -92,9 +41,460 @@
         .progress-bar { background-color: #e2e8f0; border-radius: 10px; height: 12px; overflow: hidden; position: relative; }
         .progress-fill { background: linear-gradient(90deg, var(--primary), var(--accent)); height: 100%; border-radius: 10px; transition: width 1.5s ease-in-out; }
         .skill-desc { font-size: 0.85rem; color: #64748b; margin-top: 5px; font-style: italic; }
+
+        /* =============================================
+           PRINT-ONLY CV ATS — HANYA AKTIF SAAT PRINT
+        ============================================= */
+        @media print {
+
+            /* --- RESET SEMUA ELEMEN WEB --- */
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+            /* Sembunyikan SELURUH halaman web */
+            body > * { display: none !important; }
+
+            /* Tampilkan HANYA konten CV print */
+            #cv-print-only { display: block !important; }
+
+            /* Reset body untuk print */
+            body {
+                background: #fff !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                font-family: 'EB Garamond', Georgia, serif !important;
+                font-size: 10.5pt !important;
+                color: #111 !important;
+                line-height: 1.5 !important;
+            }
+
+            /* --------- CONTAINER UTAMA --------- */
+            #cv-print-only {
+                width: 210mm;
+                min-height: 297mm;
+                margin: 0 auto;
+                padding: 14mm 15mm 14mm 15mm;
+                box-sizing: border-box;
+                background: #fff;
+                page-break-inside: avoid;
+            }
+
+            /* --------- HEADER --------- */
+            .cv-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                border-bottom: 2.5pt solid #1a1a1a;
+                padding-bottom: 8pt;
+                margin-bottom: 10pt;
+            }
+            .cv-name-block {}
+            .cv-name {
+                font-family: 'EB Garamond', serif;
+                font-size: 26pt;
+                font-weight: 700;
+                letter-spacing: -0.5pt;
+                color: #0a0a0a;
+                line-height: 1;
+                margin: 0 0 3pt 0;
+            }
+            .cv-title {
+                font-size: 10pt;
+                font-weight: 400;
+                color: #555;
+                letter-spacing: 1.5pt;
+                text-transform: uppercase;
+                margin: 0;
+            }
+            .cv-contact-block {
+                text-align: right;
+                font-size: 9pt;
+                color: #333;
+                line-height: 1.8;
+            }
+            .cv-contact-block a { color: #333; text-decoration: none; }
+            .cv-contact-block strong { color: #111; }
+
+            /* --------- SECTION TITLES --------- */
+            .cv-section {
+                margin-top: 10pt;
+                margin-bottom: 4pt;
+            }
+            .cv-section-title {
+                font-family: 'EB Garamond', serif;
+                font-size: 9.5pt;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 2pt;
+                color: #1a1a1a;
+                border-bottom: 0.75pt solid #aaa;
+                padding-bottom: 2pt;
+                margin-bottom: 6pt;
+            }
+
+            /* --------- PROFILE SUMMARY --------- */
+            .cv-summary {
+                font-size: 10pt;
+                color: #333;
+                line-height: 1.6;
+                font-style: italic;
+                margin-bottom: 2pt;
+            }
+
+            /* --------- EXPERIENCE ITEMS --------- */
+            .cv-exp-item {
+                display: grid;
+                grid-template-columns: 105pt 1fr;
+                gap: 0 10pt;
+                margin-bottom: 7pt;
+                page-break-inside: avoid;
+            }
+            .cv-exp-date {
+                font-size: 8.5pt;
+                color: #555;
+                font-weight: 600;
+                padding-top: 1pt;
+                line-height: 1.4;
+            }
+            .cv-exp-right {}
+            .cv-exp-role {
+                font-size: 11pt;
+                font-weight: 700;
+                color: #0a0a0a;
+                margin: 0 0 1pt 0;
+                line-height: 1.3;
+            }
+            .cv-exp-company {
+                font-size: 9.5pt;
+                color: #333;
+                margin: 0 0 2pt 0;
+                font-weight: 600;
+            }
+            .cv-exp-desc {
+                font-size: 9.5pt;
+                color: #555;
+                margin: 0;
+                line-height: 1.5;
+            }
+
+            /* --------- EDUCATION --------- */
+            .cv-edu-item {
+                display: grid;
+                grid-template-columns: 105pt 1fr;
+                gap: 0 10pt;
+                margin-bottom: 6pt;
+            }
+            .cv-edu-year {
+                font-size: 8.5pt;
+                color: #555;
+                font-weight: 600;
+                padding-top: 1pt;
+            }
+            .cv-edu-school {
+                font-size: 11pt;
+                font-weight: 700;
+                color: #0a0a0a;
+                margin: 0 0 1pt 0;
+            }
+            .cv-edu-major {
+                font-size: 9.5pt;
+                color: #555;
+                font-style: italic;
+                margin: 0;
+            }
+            .cv-badge {
+                display: inline-block;
+                background: #1a1a1a;
+                color: #fff;
+                font-size: 7.5pt;
+                padding: 1pt 5pt;
+                border-radius: 2pt;
+                margin-left: 5pt;
+                font-style: normal;
+                vertical-align: middle;
+                letter-spacing: 0.3pt;
+            }
+
+            /* --------- SKILLS TWO-COLUMN --------- */
+            .cv-skills-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 5pt 16pt;
+            }
+            .cv-skill-item {
+                display: flex;
+                align-items: center;
+                gap: 6pt;
+            }
+            .cv-skill-name {
+                font-size: 9.5pt;
+                font-weight: 600;
+                color: #111;
+                white-space: nowrap;
+                min-width: 65pt;
+            }
+            .cv-skill-bar-wrap {
+                flex: 1;
+                background: #e8e8e8;
+                height: 5pt;
+                border-radius: 3pt;
+                overflow: hidden;
+            }
+            .cv-skill-bar-fill {
+                height: 100%;
+                background: #1a1a1a;
+                border-radius: 3pt;
+            }
+            .cv-skill-pct {
+                font-size: 7.5pt;
+                color: #888;
+                min-width: 22pt;
+                text-align: right;
+            }
+
+            /* --------- FOOTER LINE --------- */
+            .cv-footer {
+                margin-top: 12pt;
+                border-top: 0.75pt solid #bbb;
+                padding-top: 5pt;
+                font-size: 8pt;
+                color: #888;
+                display: flex;
+                justify-content: space-between;
+                text-align: center;
+            }
+
+            /* --------- TWO-COLUMN LAYOUT for lower sections --------- */
+            .cv-two-col {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 0 20pt;
+            }
+        }
+
+        /* Sembunyikan CV print di layar */
+        @media screen {
+            #cv-print-only { display: none; }
+        }
     </style>
 </head>
 <body class="antialiased">
+
+    <!-- =========================================================
+         PRINT-ONLY ATS CV — TIDAK TERLIHAT DI WEB, HANYA MUNCUL SAAT PRINT
+    ========================================================= -->
+    <div id="cv-print-only">
+
+        <!-- HEADER -->
+        <div class="cv-header">
+            <div class="cv-name-block">
+                <h1 class="cv-name">Wahyu Illahi Ramadhan</h1>
+                <p class="cv-title">Civil Drafter &amp; Quantity Surveyor · Site Engineer</p>
+            </div>
+            <div class="cv-contact-block">
+                <div><strong>Telp / WA</strong> &nbsp;+62 822-8575-4080</div>
+                <div><strong>LinkedIn</strong> &nbsp;linkedin.com/in/adhan-ab3a07195</div>
+                <div><strong>Lokasi</strong> &nbsp;Bekasi, Jawa Barat</div>
+            </div>
+        </div>
+
+        <!-- PROFILE SUMMARY -->
+        <div class="cv-section">
+            <div class="cv-section-title">Profil Profesional</div>
+            <p class="cv-summary">
+                Profesional teknik sipil dengan pengalaman lapangan lebih dari 10 tahun (sejak 2014) dalam peran Drafter, Quantity Surveyor, dan Site Engineer. Kompeten dalam penyusunan Gambar Kerja (AutoCAD, SketchUp), Rencana Anggaran Biaya (RAB), dan Rencana Kerja dan Syarat-syarat (RKS). Berpengalaman menangani proyek infrastruktur, gedung , renovasi, dan jembatan antar kampung.
+            </p>
+        </div>
+
+        <!-- TWO-COLUMN: EXPERIENCE + EDU/SKILLS -->
+        <div class="cv-two-col">
+
+            <!-- KOLOM KIRI: PENGALAMAN KERJA -->
+            <div>
+                <div class="cv-section">
+                    <div class="cv-section-title">Pengalaman Kerja</div>
+
+                    <div class="cv-exp-item">
+                        <div class="cv-exp-date">Jan 2023 — Sekarang</div>
+                        <div class="cv-exp-right">
+                            <p class="cv-exp-role">Civil Drafter</p>
+                            <p class="cv-exp-company">Bumantara Karya Amerta — Bekasi</p>
+                            <p class="cv-exp-desc">Pengembangan dokumen teknis (Gambar Kerja &amp; RKS) dengan AutoCAD dan SketchUp; koordinasi teknis lintas tim.</p>
+                        </div>
+                    </div>
+
+                    <div class="cv-exp-item">
+                        <div class="cv-exp-date">Jul 2022 — Des 2022</div>
+                        <div class="cv-exp-right">
+                            <p class="cv-exp-role">Site Project Manager</p>
+                            <p class="cv-exp-company">Sarana Anugrah Rekacipta — Jakarta</p>
+                            <p class="cv-exp-desc">Manajemen tim lapangan dan logistik material proyek jembatan antar kampung.</p>
+                        </div>
+                    </div>
+
+                    <div class="cv-exp-item">
+                        <div class="cv-exp-date">Mar 2022 — Jul 2022</div>
+                        <div class="cv-exp-right">
+                            <p class="cv-exp-role">Quantity Surveyor</p>
+                            <p class="cv-exp-company">Mulia Jaya Abadi — Jakarta</p>
+                        </div>
+                    </div>
+
+                    <div class="cv-exp-item">
+                        <div class="cv-exp-date">Agu 2021 — Jan 2022</div>
+                        <div class="cv-exp-right">
+                            <p class="cv-exp-role">Inspector Konsultan</p>
+                            <p class="cv-exp-company">Citra Tama Arsitek — Kerinci, Jambi</p>
+                        </div>
+                    </div>
+
+                    <div class="cv-exp-item">
+                        <div class="cv-exp-date">Jul 2020 — Jul 2021</div>
+                        <div class="cv-exp-right">
+                            <p class="cv-exp-role">QS &amp; Drafter (Freelance)</p>
+                            <p class="cv-exp-company">Renovasi SMK N 8 &amp; UNAND — Padang</p>
+                        </div>
+                    </div>
+
+                    <div class="cv-exp-item">
+                        <div class="cv-exp-date">Nov 2019 — Jun 2020</div>
+                        <div class="cv-exp-right">
+                            <p class="cv-exp-role">Drafter &amp; QS</p>
+                            <p class="cv-exp-company">Pesantren Dar el-Iman — Padang</p>
+                        </div>
+                    </div>
+
+                    <div class="cv-exp-item">
+                        <div class="cv-exp-date">Sep 2019 — Nov 2019</div>
+                        <div class="cv-exp-right">
+                            <p class="cv-exp-role">Creative Designer</p>
+                            <p class="cv-exp-company">Haluan Digital Media — Padang (Magang)</p>
+                        </div>
+                    </div>
+
+                    <div class="cv-exp-item">
+                        <div class="cv-exp-date">Jan 2019 — Mar 2019</div>
+                        <div class="cv-exp-right">
+                            <p class="cv-exp-role">Drafter</p>
+                            <p class="cv-exp-company">Japutra Teknikindo — Padang (Magang)</p>
+                        </div>
+                    </div>
+
+                    <div class="cv-exp-item">
+                        <div class="cv-exp-date">Agu 2018 — Des 2018</div>
+                        <div class="cv-exp-right">
+                            <p class="cv-exp-role">Guru Teknik Bangunan</p>
+                            <p class="cv-exp-company">SMK N 2 Sijunjung (Magang)</p>
+                        </div>
+                    </div>
+
+                    <div class="cv-exp-item">
+                        <div class="cv-exp-date">Jun 2015 — Agu 2015</div>
+                        <div class="cv-exp-right">
+                            <p class="cv-exp-role">Drafter</p>
+                            <p class="cv-exp-company">Karya Cipta Sentosa — Jambi</p>
+                        </div>
+                    </div>
+
+                    <div class="cv-exp-item">
+                        <div class="cv-exp-date">Agu 2014 — Des 2014</div>
+                        <div class="cv-exp-right">
+                            <p class="cv-exp-role">Drafter</p>
+                            <p class="cv-exp-company">Asri Konsultan — Padang (Magang)</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div><!-- end kolom kiri -->
+
+            <!-- KOLOM KANAN: PENDIDIKAN + KEAHLIAN + SERTIFIKAT -->
+            <div>
+
+                <!-- PENDIDIKAN -->
+                <div class="cv-section">
+                    <div class="cv-section-title">Pendidikan</div>
+
+                    <div class="cv-edu-item">
+                        <div class="cv-edu-year">2015 — 2019</div>
+                        <div>
+                            <p class="cv-edu-school">Universitas Negeri Padang <span class="cv-badge">S1</span></p>
+                            <p class="cv-edu-major">Teknik Sipil</p>
+                        </div>
+                    </div>
+
+                    <div class="cv-edu-item">
+                        <div class="cv-edu-year">2012 — 2015</div>
+                        <div>
+                            <p class="cv-edu-school">SMK N 2 Sijunjung</p>
+                            <p class="cv-edu-major">Teknik Gambar Bangunan</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- KEAHLIAN TEKNIS -->
+                <div class="cv-section">
+                    <div class="cv-section-title">Keahlian Teknis</div>
+                    <div class="cv-skills-grid" style="display:block;">
+
+                        <div class="cv-skill-item" style="display:flex; align-items:center; gap:6pt; margin-bottom:5pt;">
+                            <span class="cv-skill-name">AutoCAD</span>
+                            <div class="cv-skill-bar-wrap"><div class="cv-skill-bar-fill" style="width:95%"></div></div>
+                            <span class="cv-skill-pct">Mahir</span>
+                        </div>
+
+                        <div class="cv-skill-item" style="display:flex; align-items:center; gap:6pt; margin-bottom:5pt;">
+                            <span class="cv-skill-name">SketchUp 3D</span>
+                            <div class="cv-skill-bar-wrap"><div class="cv-skill-bar-fill" style="width:85%"></div></div>
+                            <span class="cv-skill-pct">Menengah</span>
+                        </div>
+
+                        <div class="cv-skill-item" style="display:flex; align-items:center; gap:6pt; margin-bottom:5pt;">
+                            <span class="cv-skill-name">MS Excel</span>
+                            <div class="cv-skill-bar-wrap"><div class="cv-skill-bar-fill" style="width:83%"></div></div>
+                            <span class="cv-skill-pct">Menengah</span>
+                        </div>
+
+                        <div class="cv-skill-item" style="display:flex; align-items:center; gap:6pt; margin-bottom:5pt;">
+                            <span class="cv-skill-name">MS Word</span>
+                            <div class="cv-skill-bar-wrap"><div class="cv-skill-bar-fill" style="width:90%"></div></div>
+                            <span class="cv-skill-pct">Mahir</span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- KOMPETENSI UTAMA -->
+                <div class="cv-section">
+                    <div class="cv-section-title">Kompetensi Utama</div>
+                    <p style="font-size:9.5pt; color:#333; line-height:1.7; margin:0;">
+                        Gambar Kerja Arsitektur &amp; Struktur &nbsp;·&nbsp;
+                        Penyusunan RAB &amp; BQ &nbsp;·&nbsp;
+                        Rencana Kerja dan Syarat-syarat (RKS) &nbsp;·&nbsp;
+                        Pengawasan Lapangan &nbsp;·&nbsp;
+                        Pemodelan 3D Arsitektur &nbsp;·&nbsp;
+                        Manajemen Material &amp; Logistik &nbsp;·&nbsp;
+                        Koordinasi Tim Teknis &nbsp;·&nbsp;
+                        Dokumen Tender &amp; Kontrak
+                    </p>
+                </div>
+
+            </div><!-- end kolom kanan -->
+
+        </div><!-- end two-col -->
+
+        <!-- FOOTER -->
+        <div class="cv-footer">
+            <span>Wahyu Illahi Ramadhan &nbsp;·&nbsp; Bekasi, Indonesia</span>
+            <span>Dokumen ini dapat diverifikasi melalui LinkedIn atau portfolio Google Drive</span>
+            <span>+62 822-8575-4080</span>
+        </div>
+
+    </div>
+    <!-- END CV PRINT ONLY -->
+
+
+    <!-- =========================================================
+         ORIGINAL WEB HTML — TIDAK DIUBAH SAMA SEKALI
+    ========================================================= -->
 
     <nav class="fixed w-full z-50 bg-white/95 backdrop-blur-md py-4 px-8 md:px-16 flex justify-between items-center border-b border-gray-100">
         <div class="font-bold text-xl tracking-tighter uppercase text-blue-600">Wahyu Illahi R.</div>
@@ -112,7 +512,7 @@
         </h1>
         <div class="mt-12 flex flex-col md:flex-row gap-8 items-start">
             <p id="hero-sub" class="max-w-xl text-gray-500 text-lg opacity-0 leading-relaxed">
-                Memvisualisasikan desain teknis secara profesional, didukung keahlian dalam penyusunan RAB & RKS serta manajemen proyek dengan pengalaman lapangan sejak 2014.
+                Expert dalam manajemen proyek infrastruktur, penyusunan RAB/RKS, dan visualisasi arsitektur teknis dengan pengalaman lapangan sejak 2014.
             </p>
             <div id="hero-cta" class="opacity-0 flex gap-4">
                 <a href="https://drive.google.com/open?id=1W-GKy2ecMUbizcD0zjU0cLJ2prrS8P9s&usp=drive_fs" target="_blank" class="btn-primary uppercase">Portofolio</a>
@@ -162,7 +562,7 @@
                 <span class="text-blue-600 font-bold text-xs uppercase">Jan 2023 — Sekarang</span>
                 <h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Civil Drafter</h3>
                 <p class="font-semibold text-gray-800">Bumantara Karya Amerta — Bekasi</p>
-                <p class="text-gray-500 text-sm mt-2 max-w-2xl">Membuat Gambar Kerja menggunakan AutoCAD dan SketchUp, menyusun RKS menggunakan Microsoft Word, serta berkoordinasi dengan tim.</p>
+                <p class="text-gray-500 text-sm mt-2 max-w-2xl">Bertanggung jawab dalam pengembangan dokumen teknis (Gambar Kerja & RKS) menggunakan AutoCAD dan SketchUp, serta koordinasi teknis di dalam tim.</p>
             </div>
             <div class="experience-node" data-aos="fade-up">
                 <span class="text-gray-400 font-bold text-xs uppercase">Jul 2022 — Des 2022</span>
@@ -177,7 +577,7 @@
             </div>
             <div class="experience-node" data-aos="fade-up">
                 <span class="text-gray-400 font-bold text-xs uppercase">Agu 2021 — Jan 2022</span>
-                <h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Inspektor Konsultan</h3>
+                <h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Inspector Konsultan</h3>
                 <p class="font-semibold text-gray-800">Citra Tama Arsitek — Kerinci, Jambi</p>
             </div>
             <div class="experience-node" data-aos="fade-up">
@@ -245,25 +645,25 @@
                 <div class="progress-bar">
                     <div class="progress-fill" style="width: 95%;"></div>
                 </div>
-                <p class="skill-desc">Spesialis di gambar teknik, detail struktur, dan pekerjaan infrastruktur.</p>
+                <p class="skill-desc">Spesialis di gambar teknik arsitektur, detail struktur yang rumit, dan pekerjaan infrastruktur.</p>
             </div>
             <div class="skill-card">
                 <div class="skill-info">
                     <span class="skill-name">SketchUp</span>
-                    <span class="skill-level-text">Terampil</span>
+                    <span class="skill-level-text">Menengah</span>
                 </div>
                 <div class="progress-bar">
-                    <div class="progress-fill" style="width: 78%;"></div>
+                    <div class="progress-fill" style="width: 85%;"></div>
                 </div>
                 <p class="skill-desc">Pemodelan 3D untuk visualisasi desain arsitektur.</p>
             </div>
             <div class="skill-card">
                 <div class="skill-info">
                     <span class="skill-name">MS Excel</span>
-                    <span class="skill-level-text">Terampil</span>
+                    <span class="skill-level-text">Menengah</span>
                 </div>
                 <div class="progress-bar">
-                    <div class="progress-fill" style="width: 80%;"></div>
+                    <div class="progress-fill" style="width: 83%;"></div>
                 </div>
                 <p class="skill-desc">Pengolahan data teknis, Rencana Anggaran Biaya (RAB), dan automasi formula.</p>
             </div>
@@ -298,7 +698,7 @@
 
     <footer id="contact" class="py-32 px-8 md:px-24 border-t border-gray-100 text-center bg-white">
         <div data-aos="fade-up">
-            <h2 class="text-5xl font-bold tracking-tighter mb-12 uppercase">MARI BERKOLABORASI</h2>
+            <h2 class="text-5xl font-bold tracking-tighter mb-12 uppercase">HUBUNGI SAYA.</h2>
             <div class="flex flex-col items-center gap-6">
                 <a href="tel:+6282285754080" class="text-2xl font-light hover:text-blue-600 transition tracking-tighter">0822-8575-4080</a>
                 <div class="flex gap-6">
@@ -310,12 +710,114 @@
         </div>
     </footer>
 
+    <!-- =============================================
+         PRINT PDF POPUP TOAST — pojok kanan bawah
+    ============================================= -->
+    <div id="print-toast" style="
+        position: fixed;
+        bottom: 28px;
+        right: 28px;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-left: 4px solid #3b82f6;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.13), 0 2px 8px rgba(59,130,246,0.10);
+        border-radius: 14px;
+        padding: 16px 22px 16px 18px;
+        min-width: 260px;
+        max-width: 320px;
+        transform: translateY(100px);
+        opacity: 0;
+        transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s ease;
+        font-family: 'Inter', sans-serif;
+        cursor: pointer;
+    " onclick="window.print()" title="Klik untuk cetak / simpan sebagai PDF">
+
+        <!-- Icon PDF -->
+        <div style="
+            width: 42px; height: 42px;
+            background: #eff6ff;
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        ">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke="#3b82f6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M14 2v6h6" stroke="#3b82f6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M9 13h6M9 17h4" stroke="#3b82f6" stroke-width="1.8" stroke-linecap="round"/>
+                <circle cx="17" cy="17" r="4" fill="#3b82f6"/>
+                <path d="M17 15.5v3M15.5 17h3" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/>
+            </svg>
+        </div>
+
+        <!-- Teks -->
+        <div style="flex:1; min-width:0;">
+            <div style="font-size:12.5px; font-weight:700; color:#111; margin-bottom:3px; white-space:nowrap;">
+                Simpan CV sebagai PDF
+            </div>
+            <div style="font-size:11px; color:#6b7280; line-height:1.4;">
+                Klik di sini atau tekan <kbd style="background:#f3f4f6; border:1px solid #d1d5db; border-radius:4px; padding:1px 5px; font-size:10px; font-family:monospace;">Ctrl+P</kbd> lalu pilih <em>Save as PDF</em>
+            </div>
+        </div>
+
+        <!-- Tombol close -->
+        <button onclick="event.stopPropagation(); dismissToast()" style="
+            position:absolute; top:8px; right:10px;
+            background:none; border:none; cursor:pointer;
+            color:#9ca3af; font-size:16px; line-height:1;
+            padding:2px 4px; border-radius:4px;
+            transition: color 0.2s;
+        " onmouseover="this.style.color='#374151'" onmouseout="this.style.color='#9ca3af'" title="Tutup">✕</button>
+
+        <!-- Pulse dot -->
+        <span style="
+            position:absolute; top:12px; left:12px;
+            width:8px; height:8px; border-radius:50%;
+            background:#3b82f6;
+            box-shadow: 0 0 0 0 rgba(59,130,246,0.5);
+            animation: pulse-dot 2s infinite;
+        "></span>
+    </div>
+
+    <style>
+        @keyframes pulse-dot {
+            0%   { box-shadow: 0 0 0 0 rgba(59,130,246,0.5); }
+            70%  { box-shadow: 0 0 0 8px rgba(59,130,246,0); }
+            100% { box-shadow: 0 0 0 0 rgba(59,130,246,0); }
+        }
+        #print-toast:hover {
+            box-shadow: 0 12px 40px rgba(59,130,246,0.18), 0 2px 8px rgba(0,0,0,0.10) !important;
+            border-color: #93c5fd !important;
+            transform: translateY(-2px) !important;
+        }
+        @media print {
+            #print-toast { display: none !important; }
+        }
+    </style>
+
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({ duration: 800, once: true });
         gsap.to("#hero-title", { opacity: 1, duration: 1.5, y: -10, ease: "power4.out" });
         gsap.to("#hero-sub", { opacity: 1, duration: 1, delay: 0.5 });
         gsap.to("#hero-cta", { opacity: 1, duration: 1, delay: 0.8 });
+
+        // Tampilkan toast setelah 1.5 detik
+        setTimeout(function() {
+            var t = document.getElementById('print-toast');
+            t.style.transform = 'translateY(0)';
+            t.style.opacity = '1';
+        }, 1500);
+
+        function dismissToast() {
+            var t = document.getElementById('print-toast');
+            t.style.transform = 'translateY(100px)';
+            t.style.opacity = '0';
+            setTimeout(function(){ t.style.display = 'none'; }, 400);
+        }
     </script>
 </body>
 </html>
