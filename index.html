@@ -203,6 +203,113 @@
             opacity: 0.6;
         }
 
+        /* ============================================================
+           PORTFOLIO SELECTOR — inside book cover (left page)
+        ============================================================ */
+        .portfolio-selector {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 0 4px;
+        }
+        .portfolio-selector-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 9px;
+            font-weight: 700;
+            color: rgba(255,255,255,0.35);
+            text-transform: uppercase;
+            letter-spacing: 0.25em;
+            text-align: center;
+            margin-bottom: 4px;
+        }
+        .portfolio-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(59,130,246,0.25);
+            border-radius: 6px;
+            padding: 9px 12px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-align: left;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        .portfolio-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, rgba(37,99,235,0.15), transparent);
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+        .portfolio-btn:hover::before,
+        .portfolio-btn.active::before {
+            opacity: 1;
+        }
+        .portfolio-btn:hover {
+            border-color: rgba(59,130,246,0.7);
+            transform: translateX(3px);
+        }
+        .portfolio-btn.active {
+            border-color: #3b82f6;
+            background: rgba(37,99,235,0.15);
+        }
+        .portfolio-btn-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 4px;
+            background: rgba(59,130,246,0.2);
+            border: 1px solid rgba(59,130,246,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 13px;
+        }
+        .portfolio-btn-text {
+            flex: 1;
+            min-width: 0;
+        }
+        .portfolio-btn-title {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(9px, 1.1vw, 11px);
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.2;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .portfolio-btn-desc {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(8px, 0.9vw, 9px);
+            color: rgba(255,255,255,0.4);
+            line-height: 1.3;
+            margin-top: 1px;
+        }
+        .portfolio-btn-arrow {
+            font-size: 10px;
+            color: #3b82f6;
+            opacity: 0;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            flex-shrink: 0;
+        }
+        .portfolio-btn:hover .portfolio-btn-arrow,
+        .portfolio-btn.active .portfolio-btn-arrow {
+            opacity: 1;
+            transform: translateX(2px);
+        }
+        .portfolio-btn.active .portfolio-btn-title {
+            color: #93c5fd;
+        }
+
         /* Right page — PDF viewer */
         .book-page {
             position: absolute;
@@ -565,7 +672,34 @@
                     <div class="book-cover-title">Wahyu Illahi<br>Ramadhan</div>
                     <div class="book-cover-divider"></div>
                     <div class="book-cover-sub" style="color:rgba(255,255,255,0.4);font-size:10px;letter-spacing:0.15em;">Civil Drafter · QS · Site Engineer</div>
-                    <div class="book-cover-badge">Bekasi · Indonesia · 2024</div>
+
+                    <!-- =============================================
+                         PORTFOLIO SELECTOR — TAMBAHAN BARU
+                    ============================================= -->
+                    <div class="portfolio-selector">
+                        <div class="portfolio-selector-label">Pilih Dokumen</div>
+
+                        <button class="portfolio-btn active" id="btn-portfolio-1" onclick="switchPortfolio(1)">
+                            <div class="portfolio-btn-icon">🏗️</div>
+                            <div class="portfolio-btn-text">
+                                <div class="portfolio-btn-title">Portfolio-1</div>
+                                <div class="portfolio-btn-desc">As built drawing</div>
+                            </div>
+                            <div class="portfolio-btn-arrow">▶</div>
+                        </button>
+
+                        <button class="portfolio-btn" id="btn-portfolio-2" onclick="switchPortfolio(2)">
+                            <div class="portfolio-btn-icon">🏗️</div>
+                            <div class="portfolio-btn-text">
+                                <div class="portfolio-btn-title">Portfolio-2</div>
+                                <div class="portfolio-btn-desc">As built drawing</div>
+                            </div>
+                            <div class="portfolio-btn-arrow">▶</div>
+                        </button>
+                    </div>
+                    <!-- END PORTFOLIO SELECTOR -->
+
+                    <div class="book-cover-badge" style="margin-top:14px;">Bekasi · Indonesia · 2026</div>
 
                     <div class="page-curl"></div>
                 </div>
@@ -573,32 +707,25 @@
                 <!-- RIGHT: PDF viewer page -->
                 <div class="book-page">
                     <div class="book-page-header">
-                        <span class="book-page-header-title">Portofolio Lengkap</span>
+                        <span class="book-page-header-title" id="pageHeaderTitle">Portofolio Lengkap</span>
                         <span class="book-page-header-badge">📄 Protected View</span>
                     </div>
 
                     <div class="pdf-frame-wrap">
-                        <!-- Drive toolbar blocker -->
                         <!-- Loading indicator -->
                         <div class="pdf-loading" id="pdfLoading">
                             <div class="spinner"></div>
                             <p>Memuat portofolio…</p>
                         </div>
 
-                        <!--
-                            GOOGLE DRIVE EMBED
-                            Ganti FILE_ID dengan ID file PDF kamu dari Google Drive
-                            Format URL: https://drive.google.com/file/d/FILE_ID/preview
-                            ID dari link kamu: 1W-GKy2ecMUbizcD0zjU0cLJ2prrS8P9s
-                        -->
-   <iframe
-    id="pdfFrame"
-    src="https://drive.google.com/file/d/1GnWPxTrsyeuwe8KJeGrOKVqE3YYuSBiU/preview?embedded=true"
-    allow="autoplay"
-    sandbox="allow-scripts allow-same-origin"
-    onload="hidePdfLoading()"
-    title="Portfolio Wahyu Illahi Ramadhan"
-></iframe>
+                        <iframe
+                            id="pdfFrame"
+                            src="https://drive.google.com/file/d/1GnWPxTrsyeuwe8KJeGrOKVqE3YYuSBiU/preview?embedded=true"
+                            allow="autoplay"
+                            sandbox="allow-scripts allow-same-origin"
+                            onload="hidePdfLoading()"
+                            title="Portfolio Wahyu Illahi Ramadhan"
+                        ></iframe>
 
                         <!-- Watermark grid overlay -->
                         <div class="watermark-layer">
@@ -819,6 +946,45 @@
                 new QRCode(qrLI, { text: "https://www.linkedin.com/in/adhan-ab3a07195/", width: 80, height: 80, colorDark: "#111111", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.H });
             }
         })();
+
+        // ============================================================
+        // PORTFOLIO DATA — dua PDF
+        // ============================================================
+        var portfolios = {
+            1: {
+                src:   'https://drive.google.com/file/d/1GnWPxTrsyeuwe8KJeGrOKVqE3YYuSBiU/preview?embedded=true',
+                title: 'Gambar-1'
+            },
+            2: {
+                // ← GANTI dengan File ID PDF baru kamu dari Google Drive
+    src: 'https://drive.google.com/file/d/1MeGwZmkAdqinuT4cHOHUbKQZIZKC38nF/preview?embedded=true',
+    title: 'Gambar-2'
+
+            }
+        };
+
+        // ============================================================
+        // SWITCH PORTFOLIO
+        // ============================================================
+        function switchPortfolio(num) {
+            var data   = portfolios[num];
+            var frame  = document.getElementById('pdfFrame');
+            var header = document.getElementById('pageHeaderTitle');
+            var loader = document.getElementById('pdfLoading');
+
+            // Update active button state
+            document.getElementById('btn-portfolio-1').classList.toggle('active', num === 1);
+            document.getElementById('btn-portfolio-2').classList.toggle('active', num === 2);
+
+            // Show loading
+            loader.classList.remove('hidden');
+
+            // Swap iframe src
+            frame.src = data.src;
+
+            // Update header title
+            header.textContent = data.title;
+        }
 
         // ============================================================
         // BOOK POPUP — OPEN / CLOSE
