@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wahyu Illahi Ramadhan | Site Engineer & Drafter QS</title>
 
-    <!-- =============================================
-         OPEN GRAPH — Preview saat link dibagikan
-    ============================================= -->
     <meta property="og:title" content="Wahyu Illahi R. — Civil Drafter & Site Engineer" />
     <meta property="og:description" content="Berpengalaman sebagai Drafter, QS & Site Engineer." />
     <meta property="og:image" content="https://wahyuillahi0-svg.github.io/adhanCv/images/tampak-depan.jpg" />
@@ -18,25 +15,23 @@
     <meta name="twitter:title" content="Wahyu Illahi Ramadhan — Civil Drafter & Site Engineer" />
     <meta name="twitter:description" content="Berpengalaman sebagai Drafter, QS & Site Engineer." />
     <meta name="twitter:image" content="https://wahyuillahi0-svg.github.io/adhanCv/images/tampak-depan.jpg" />
-    <!-- END OPEN GRAPH -->
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=EB+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <!-- QR CODE LIBRARY -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
     <style>
-        /* =============================================
-           ORIGINAL WEB STYLES — TIDAK DIUBAH
-        ============================================= */
+        /* ============================================================
+           BASE STYLES
+        ============================================================ */
         body { font-family: 'Inter', sans-serif; background-color: #fff; color: #000; overflow-x: hidden; }
         .line-detail { height: 1px; width: 0; background-color: #3b82f6; transition: width 1s ease; }
         .aos-animate .line-detail { width: 100%; }
         .experience-node { position: relative; padding-bottom: 4rem; border-left: 1px solid #e5e7eb; padding-left: 2rem; }
         .experience-node::before { content: ''; position: absolute; left: -5px; top: 0; width: 9px; height: 9px; background: #3b82f6; border-radius: 50%; }
-        .btn-primary { background: #000; color: #fff; padding: 12px 24px; border-radius: 99px; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; transition: all 0.3s; }
+        .btn-primary { background: #000; color: #fff; padding: 12px 24px; border-radius: 99px; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; transition: all 0.3s; cursor: pointer; border: none; }
         .btn-primary:hover { background: #3b82f6; transform: translateY(-2px); }
         .blueprint-card:hover img { transform: scale(1.05); }
         .edu-container { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 8px; }
@@ -59,305 +54,406 @@
         .progress-fill { background: linear-gradient(90deg, var(--primary), var(--accent)); height: 100%; border-radius: 10px; transition: width 1.5s ease-in-out; }
         .skill-desc { font-size: 0.85rem; color: #64748b; margin-top: 5px; font-style: italic; }
 
-        /* =============================================
-           PRINT-ONLY CV ATS — HANYA AKTIF SAAT PRINT
-        ============================================= */
+        /* ============================================================
+           BOOK FLIP POPUP — PORTFOLIO VIEWER
+        ============================================================ */
+
+        /* Overlay backdrop */
+        #portfolio-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(5, 10, 20, 0.92);
+            backdrop-filter: blur(8px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+        #portfolio-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* Book container — 3D stage */
+        .book-stage {
+            perspective: 2000px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* The book itself */
+        .book-wrap {
+            position: relative;
+            width: min(92vw, 900px);
+            height: min(88vh, 640px);
+            transform-style: preserve-3d;
+            transform: rotateY(90deg) scale(0.7);
+            opacity: 0;
+            transition: transform 0.8s cubic-bezier(0.34, 1.2, 0.64, 1), opacity 0.5s ease;
+        }
+        .book-wrap.opened {
+            transform: rotateY(0deg) scale(1);
+            opacity: 1;
+        }
+
+        /* Left page — decorative cover side */
+        .book-cover {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0d1117 100%);
+            border-radius: 4px 0 0 4px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 32px 24px;
+            box-shadow: -8px 0 40px rgba(0,0,0,0.6);
+            overflow: hidden;
+            user-select: none;
+        }
+        .book-cover::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 39px,
+                    rgba(59,130,246,0.06) 39px,
+                    rgba(59,130,246,0.06) 40px
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 39px,
+                    rgba(59,130,246,0.04) 39px,
+                    rgba(59,130,246,0.04) 40px
+                );
+        }
+        .book-cover-spine {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(to right, #1e3a5f, #2563eb, #1e3a5f);
+            box-shadow: 2px 0 12px rgba(37,99,235,0.4);
+        }
+        .book-cover-title {
+            font-family: 'EB Garamond', serif;
+            font-size: clamp(18px, 2.5vw, 28px);
+            font-weight: 700;
+            color: #fff;
+            text-align: center;
+            line-height: 1.3;
+            letter-spacing: 0.03em;
+            position: relative;
+            z-index: 1;
+        }
+        .book-cover-sub {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(9px, 1.2vw, 12px);
+            font-weight: 600;
+            color: #3b82f6;
+            text-transform: uppercase;
+            letter-spacing: 0.25em;
+            margin-top: 12px;
+            position: relative;
+            z-index: 1;
+        }
+        .book-cover-divider {
+            width: 48px;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #3b82f6, transparent);
+            margin: 16px 0;
+            position: relative;
+            z-index: 1;
+        }
+        .book-cover-badge {
+            position: relative;
+            z-index: 1;
+            margin-top: 24px;
+            border: 1px solid rgba(59,130,246,0.4);
+            border-radius: 4px;
+            padding: 6px 14px;
+            font-family: 'Inter', sans-serif;
+            font-size: 10px;
+            color: rgba(255,255,255,0.5);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+        .blueprint-icon {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 24px;
+        }
+        .blueprint-icon svg {
+            width: clamp(40px, 6vw, 64px);
+            height: clamp(40px, 6vw, 64px);
+            opacity: 0.6;
+        }
+
+        /* Right page — PDF viewer */
+        .book-page {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            background: #f8f9fa;
+            border-radius: 0 4px 4px 0;
+            overflow: hidden;
+            box-shadow: 8px 0 40px rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Page header bar */
+        .book-page-header {
+            background: #fff;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+        .book-page-header-title {
+            font-family: 'EB Garamond', serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: #111;
+        }
+        .book-page-header-badge {
+            font-size: 10px;
+            font-weight: 700;
+            color: #3b82f6;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 99px;
+            padding: 2px 10px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        /* Watermark overlay — sits above iframe, pointer-events none */
+        .watermark-layer {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .watermark-text {
+            font-family: 'EB Garamond', serif;
+            font-size: clamp(20px, 3.5vw, 36px);
+            font-weight: 700;
+            color: rgba(37, 99, 235, 0.12);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transform: rotate(-30deg);
+            white-space: nowrap;
+            user-select: none;
+            pointer-events: none;
+            text-shadow: none;
+        }
+        /* Repeat watermark pattern */
+        .watermark-grid {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            gap: 0;
+            pointer-events: none;
+        }
+        .watermark-cell {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .watermark-cell span {
+            font-family: 'EB Garamond', serif;
+            font-size: clamp(10px, 1.5vw, 16px);
+            font-weight: 700;
+            color: rgba(37, 99, 235, 0.10);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transform: rotate(-25deg);
+            white-space: nowrap;
+            user-select: none;
+            pointer-events: none;
+        }
+
+        /* The iframe that loads Google Drive preview */
+        .pdf-frame-wrap {
+            position: relative;
+            flex: 1;
+            overflow: hidden;
+        }
+        .pdf-frame-wrap iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+            /* Shift iframe up to hide Drive toolbar with download button */
+            margin-top: -50px;
+            height: calc(100% + 50px);
+        }
+
+        /* Block the Drive top bar that has download */
+        .pdf-frame-wrap::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 52px;
+            background: #f8f9fa;
+            z-index: 4;
+        }
+
+        /* Close button */
+        #portfolio-close {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            z-index: 10010;
+            line-height: 1;
+        }
+        #portfolio-close:hover {
+            background: rgba(239,68,68,0.8);
+            border-color: rgba(239,68,68,0.8);
+            transform: scale(1.1);
+        }
+
+        /* Loading spinner inside book page */
+        .pdf-loading {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
+            z-index: 3;
+            transition: opacity 0.4s ease;
+        }
+        .pdf-loading.hidden { opacity: 0; pointer-events: none; }
+        .spinner {
+            width: 36px;
+            height: 36px;
+            border: 3px solid #e5e7eb;
+            border-top-color: #3b82f6;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 12px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .pdf-loading p {
+            font-size: 12px;
+            color: #9ca3af;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Page turn effect — decorative curl on right edge of left page */
+        .page-curl {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 0 32px 32px;
+            border-color: transparent transparent #2563eb transparent;
+            opacity: 0;
+            transition: opacity 0.5s ease 0.6s;
+        }
+        .book-wrap.opened .page-curl {
+            opacity: 0.5;
+        }
+
+        /* Disable context menu on page */
+        .no-select { -webkit-user-select: none; user-select: none; }
+
+        /* ============================================================
+           PRINT-ONLY CV ATS
+        ============================================================ */
         @media print {
-
-            /* --- RESET SEMUA ELEMEN WEB --- */
             * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-
-            /* Sembunyikan SELURUH halaman web */
             body > * { display: none !important; }
-
-            /* Tampilkan HANYA konten CV print */
             #cv-print-only { display: block !important; }
-
-            /* Reset body untuk print */
-            body {
-                background: #fff !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                font-family: 'EB Garamond', Georgia, serif !important;
-                font-size: 10.5pt !important;
-                color: #111 !important;
-                line-height: 1.5 !important;
-            }
-
-            /* --------- CONTAINER UTAMA --------- */
-            #cv-print-only {
-                width: 210mm;
-                min-height: 297mm;
-                margin: 0 auto;
-                padding: 14mm 15mm 14mm 15mm;
-                box-sizing: border-box;
-                background: #fff;
-                page-break-inside: avoid;
-            }
-
-            /* --------- HEADER --------- */
-            .cv-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: flex-start;
-                border-bottom: 2.5pt solid #1a1a1a;
-                padding-bottom: 8pt;
-                margin-bottom: 10pt;
-            }
-            .cv-name-block {}
-            .cv-name {
-                font-family: 'EB Garamond', serif;
-                font-size: 26pt;
-                font-weight: 700;
-                letter-spacing: -0.5pt;
-                color: #0a0a0a;
-                line-height: 1;
-                margin: 0 0 3pt 0;
-            }
-            .cv-title {
-                font-size: 10pt;
-                font-weight: 400;
-                color: #555;
-                letter-spacing: 1.5pt;
-                text-transform: uppercase;
-                margin: 0;
-            }
-            .cv-contact-block {
-                text-align: right;
-                font-size: 9pt;
-                color: #333;
-                line-height: 1.8;
-            }
+            body { background: #fff !important; margin: 0 !important; padding: 0 !important; font-family: 'EB Garamond', Georgia, serif !important; font-size: 10.5pt !important; color: #111 !important; line-height: 1.5 !important; }
+            #cv-print-only { width: 210mm; min-height: 297mm; margin: 0 auto; padding: 14mm 15mm 14mm 15mm; box-sizing: border-box; background: #fff; page-break-inside: avoid; }
+            .cv-header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2.5pt solid #1a1a1a; padding-bottom: 8pt; margin-bottom: 10pt; }
+            .cv-name { font-family: 'EB Garamond', serif; font-size: 26pt; font-weight: 700; letter-spacing: -0.5pt; color: #0a0a0a; line-height: 1; margin: 0 0 3pt 0; }
+            .cv-title { font-size: 10pt; font-weight: 400; color: #555; letter-spacing: 1.5pt; text-transform: uppercase; margin: 0; }
+            .cv-contact-block { text-align: right; font-size: 9pt; color: #333; line-height: 1.8; }
             .cv-contact-block a { color: #333; text-decoration: none; }
             .cv-contact-block strong { color: #111; }
-
-            /* --------- SECTION TITLES --------- */
-            .cv-section {
-                margin-top: 10pt;
-                margin-bottom: 4pt;
-            }
-            .cv-section-title {
-                font-family: 'EB Garamond', serif;
-                font-size: 9.5pt;
-                font-weight: 700;
-                text-transform: uppercase;
-                letter-spacing: 2pt;
-                color: #1a1a1a;
-                border-bottom: 0.75pt solid #aaa;
-                padding-bottom: 2pt;
-                margin-bottom: 6pt;
-            }
-
-            /* --------- PROFILE SUMMARY --------- */
-            .cv-summary {
-                font-size: 10pt;
-                color: #333;
-                line-height: 1.6;
-                font-style: italic;
-                margin-bottom: 2pt;
-            }
-
-            /* --------- EXPERIENCE ITEMS --------- */
-            .cv-exp-item {
-                display: grid;
-                grid-template-columns: 105pt 1fr;
-                gap: 0 10pt;
-                margin-bottom: 7pt;
-                page-break-inside: avoid;
-            }
-            .cv-exp-date {
-                font-size: 8.5pt;
-                color: #555;
-                font-weight: 600;
-                padding-top: 1pt;
-                line-height: 1.4;
-            }
-            .cv-exp-right {}
-            .cv-exp-role {
-                font-size: 11pt;
-                font-weight: 700;
-                color: #0a0a0a;
-                margin: 0 0 1pt 0;
-                line-height: 1.3;
-            }
-            .cv-exp-company {
-                font-size: 9.5pt;
-                color: #333;
-                margin: 0 0 2pt 0;
-                font-weight: 600;
-            }
-            .cv-exp-desc {
-                font-size: 9.5pt;
-                color: #555;
-                margin: 0;
-                line-height: 1.5;
-            }
-
-            /* --------- EDUCATION --------- */
-            .cv-edu-item {
-                display: grid;
-                grid-template-columns: 105pt 1fr;
-                gap: 0 10pt;
-                margin-bottom: 6pt;
-            }
-            .cv-edu-year {
-                font-size: 8.5pt;
-                color: #555;
-                font-weight: 600;
-                padding-top: 1pt;
-            }
-            .cv-edu-school {
-                font-size: 11pt;
-                font-weight: 700;
-                color: #0a0a0a;
-                margin: 0 0 1pt 0;
-            }
-            .cv-edu-major {
-                font-size: 9.5pt;
-                color: #555;
-                font-style: italic;
-                margin: 0;
-            }
-            .cv-badge {
-                display: inline-block;
-                background: #1a1a1a;
-                color: #fff;
-                font-size: 7.5pt;
-                padding: 1pt 5pt;
-                border-radius: 2pt;
-                margin-left: 5pt;
-                font-style: normal;
-                vertical-align: middle;
-                letter-spacing: 0.3pt;
-            }
-
-            /* --------- SKILLS TWO-COLUMN --------- */
-            .cv-skills-grid {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 5pt 16pt;
-            }
-            .cv-skill-item {
-                display: flex;
-                align-items: center;
-                gap: 6pt;
-            }
-            .cv-skill-name {
-                font-size: 9.5pt;
-                font-weight: 600;
-                color: #111;
-                white-space: nowrap;
-                min-width: 65pt;
-            }
-            .cv-skill-bar-wrap {
-                flex: 1;
-                background: #e8e8e8;
-                height: 5pt;
-                border-radius: 3pt;
-                overflow: hidden;
-            }
-            .cv-skill-bar-fill {
-                height: 100%;
-                background: #1a1a1a;
-                border-radius: 3pt;
-            }
-            .cv-skill-pct {
-                font-size: 7.5pt;
-                color: #888;
-                min-width: 22pt;
-                text-align: right;
-            }
-
-            /* --------- FOOTER LINE --------- */
-            .cv-footer {
-                margin-top: 12pt;
-                border-top: 0.75pt solid #bbb;
-                padding-top: 5pt;
-                font-size: 8pt;
-                color: #888;
-                display: flex;
-                justify-content: space-between;
-                text-align: center;
-            }
-
-            /* --------- TWO-COLUMN LAYOUT for lower sections --------- */
-            .cv-two-col {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 0 20pt;
-            }
-
-            /* --------- QR CODE PRINT STYLES --------- */
-            .cv-qr-section {
-                margin-top: 12pt;
-            }
-            .cv-qr-box {
-                display: flex;
-                align-items: flex-start;
-                gap: 9pt;
-                background: #f9f9f9;
-                border: 0.75pt solid #ddd;
-                border-radius: 4pt;
-                padding: 8pt 10pt;
-            }
-            .cv-qr-image-wrap {
-                flex-shrink: 0;
-                width: 68pt;
-                height: 68pt;
-                background: #fff;
-                border: 0.5pt solid #ccc;
-                border-radius: 3pt;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                overflow: hidden;
-            }
-            .cv-qr-image-wrap img,
-            .cv-qr-image-wrap canvas {
-                width: 64pt !important;
-                height: 64pt !important;
-                display: block !important;
-            }
-            .cv-qr-text {
-                flex: 1;
-            }
-            .cv-qr-title {
-                font-size: 9pt;
-                font-weight: 700;
-                color: #111;
-                margin: 0 0 4pt 0;
-                line-height: 1.3;
-            }
-            .cv-qr-desc {
-                font-size: 8pt;
-                color: #555;
-                margin: 0 0 3pt 0;
-                line-height: 1.5;
-            }
-            .cv-qr-url {
-                font-size: 7.5pt;
-                color: #888;
-                font-style: italic;
-                margin: 0;
-                line-height: 1.4;
-                word-break: break-all;
-            }
+            .cv-section { margin-top: 10pt; margin-bottom: 4pt; }
+            .cv-section-title { font-family: 'EB Garamond', serif; font-size: 9.5pt; font-weight: 700; text-transform: uppercase; letter-spacing: 2pt; color: #1a1a1a; border-bottom: 0.75pt solid #aaa; padding-bottom: 2pt; margin-bottom: 6pt; }
+            .cv-summary { font-size: 10pt; color: #333; line-height: 1.6; font-style: italic; margin-bottom: 2pt; }
+            .cv-exp-item { display: grid; grid-template-columns: 105pt 1fr; gap: 0 10pt; margin-bottom: 7pt; page-break-inside: avoid; }
+            .cv-exp-date { font-size: 8.5pt; color: #555; font-weight: 600; padding-top: 1pt; line-height: 1.4; }
+            .cv-exp-role { font-size: 11pt; font-weight: 700; color: #0a0a0a; margin: 0 0 1pt 0; line-height: 1.3; }
+            .cv-exp-company { font-size: 9.5pt; color: #333; margin: 0 0 2pt 0; font-weight: 600; }
+            .cv-exp-desc { font-size: 9.5pt; color: #555; margin: 0; line-height: 1.5; }
+            .cv-edu-item { display: grid; grid-template-columns: 105pt 1fr; gap: 0 10pt; margin-bottom: 6pt; }
+            .cv-edu-year { font-size: 8.5pt; color: #555; font-weight: 600; padding-top: 1pt; }
+            .cv-edu-school { font-size: 11pt; font-weight: 700; color: #0a0a0a; margin: 0 0 1pt 0; }
+            .cv-edu-major { font-size: 9.5pt; color: #555; font-style: italic; margin: 0; }
+            .cv-badge { display: inline-block; background: #1a1a1a; color: #fff; font-size: 7.5pt; padding: 1pt 5pt; border-radius: 2pt; margin-left: 5pt; font-style: normal; vertical-align: middle; letter-spacing: 0.3pt; }
+            .cv-skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5pt 16pt; }
+            .cv-skill-item { display: flex; align-items: center; gap: 6pt; }
+            .cv-skill-name { font-size: 9.5pt; font-weight: 600; color: #111; white-space: nowrap; min-width: 65pt; }
+            .cv-skill-bar-wrap { flex: 1; background: #e8e8e8; height: 5pt; border-radius: 3pt; overflow: hidden; }
+            .cv-skill-bar-fill { height: 100%; background: #1a1a1a; border-radius: 3pt; }
+            .cv-skill-pct { font-size: 7.5pt; color: #888; min-width: 22pt; text-align: right; }
+            .cv-footer { margin-top: 12pt; border-top: 0.75pt solid #bbb; padding-top: 5pt; font-size: 8pt; color: #888; display: flex; justify-content: space-between; text-align: center; }
+            .cv-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 0 20pt; }
+            .cv-qr-section { margin-top: 12pt; }
+            .cv-qr-box { display: flex; align-items: flex-start; gap: 9pt; background: #f9f9f9; border: 0.75pt solid #ddd; border-radius: 4pt; padding: 8pt 10pt; }
+            .cv-qr-image-wrap { flex-shrink: 0; width: 68pt; height: 68pt; background: #fff; border: 0.5pt solid #ccc; border-radius: 3pt; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+            .cv-qr-image-wrap img, .cv-qr-image-wrap canvas { width: 64pt !important; height: 64pt !important; display: block !important; }
+            #portfolio-overlay { display: none !important; }
+            #print-toast { display: none !important; }
         }
-
-        /* Sembunyikan CV print di layar */
-        @media screen {
-            #cv-print-only { display: none; }
-        }
+        @media screen { #cv-print-only { display: none; } }
     </style>
 </head>
-<body class="antialiased">
+<body class="antialiased" oncontextmenu="return false;">
 
-    <!-- =========================================================
-         PRINT-ONLY ATS CV — TIDAK TERLIHAT DI WEB, HANYA MUNCUL SAAT PRINT
-    ========================================================= -->
+    <!-- ============================================================
+         PRINT-ONLY CV ATS
+    ============================================================ -->
     <div id="cv-print-only">
-
-        <!-- HEADER -->
         <div class="cv-header">
             <div class="cv-name-block">
                 <h1 class="cv-name">Wahyu Illahi Ramadhan</h1>
@@ -369,244 +465,178 @@
                 <div><strong>Lokasi</strong> &nbsp;Bekasi, Jawa Barat</div>
             </div>
         </div>
-
-        <!-- PROFILE SUMMARY -->
         <div class="cv-section">
             <div class="cv-section-title">Profil Profesional</div>
-            <p class="cv-summary">
-                Profesional teknik sipil dengan pengalaman lapangan lebih dari 10 tahun (sejak 2014) dalam peran Drafter, Quantity Surveyor, dan Site Engineer. Kompeten dalam penyusunan Gambar Kerja (AutoCAD, SketchUp), Rencana Anggaran Biaya (RAB), dan Rencana Kerja dan Syarat-syarat (RKS). Berpengalaman menangani proyek infrastruktur, gedung , renovasi, dan jembatan antar kampung.
-            </p>
+            <p class="cv-summary">Profesional teknik sipil dengan pengalaman lapangan lebih dari 10 tahun (sejak 2014) dalam peran Drafter, Quantity Surveyor, dan Site Engineer. Kompeten dalam penyusunan Gambar Kerja (AutoCAD, SketchUp), Rencana Anggaran Biaya (RAB), dan Rencana Kerja dan Syarat-syarat (RKS). Berpengalaman menangani proyek infrastruktur, gedung, renovasi, dan jembatan antar kampung.</p>
         </div>
-
-        <!-- TWO-COLUMN: EXPERIENCE + EDU/SKILLS -->
         <div class="cv-two-col">
-
-            <!-- KOLOM KIRI: PENGALAMAN KERJA -->
             <div>
                 <div class="cv-section">
                     <div class="cv-section-title">Pengalaman Kerja</div>
-
-                    <div class="cv-exp-item">
-                        <div class="cv-exp-date">Jan 2023 — Sekarang</div>
-                        <div class="cv-exp-right">
-                            <p class="cv-exp-role">Civil Drafter</p>
-                            <p class="cv-exp-company">Bumantara Karya Amerta — Bekasi</p>
-                            <p class="cv-exp-desc">Pengembangan dokumen teknis (Gambar Kerja &amp; RKS) dengan AutoCAD dan SketchUp; koordinasi teknis lintas tim.</p>
-                        </div>
-                    </div>
-
-                    <div class="cv-exp-item">
-                        <div class="cv-exp-date">Jul 2022 — Des 2022</div>
-                        <div class="cv-exp-right">
-                            <p class="cv-exp-role">Site Project Manager</p>
-                            <p class="cv-exp-company">Sarana Anugrah Rekacipta — Jakarta</p>
-                            <p class="cv-exp-desc">Manajemen tim lapangan dan logistik material proyek jembatan antar kampung.</p>
-                        </div>
-                    </div>
-
-                    <div class="cv-exp-item">
-                        <div class="cv-exp-date">Mar 2022 — Jul 2022</div>
-                        <div class="cv-exp-right">
-                            <p class="cv-exp-role">Quantity Surveyor</p>
-                            <p class="cv-exp-company">Mulia Jaya Abadi — Jakarta</p>
-                        </div>
-                    </div>
-
-                    <div class="cv-exp-item">
-                        <div class="cv-exp-date">Agu 2021 — Jan 2022</div>
-                        <div class="cv-exp-right">
-                            <p class="cv-exp-role">Inspector Konsultan</p>
-                            <p class="cv-exp-company">Citra Tama Arsitek — Kerinci, Jambi</p>
-                        </div>
-                    </div>
-
-                    <div class="cv-exp-item">
-                        <div class="cv-exp-date">Jul 2020 — Jul 2021</div>
-                        <div class="cv-exp-right">
-                            <p class="cv-exp-role">QS &amp; Drafter (Freelance)</p>
-                            <p class="cv-exp-company">Renovasi SMK N 8 &amp; UNAND — Padang</p>
-                        </div>
-                    </div>
-
-                    <div class="cv-exp-item">
-                        <div class="cv-exp-date">Nov 2019 — Jun 2020</div>
-                        <div class="cv-exp-right">
-                            <p class="cv-exp-role">Drafter &amp; QS</p>
-                            <p class="cv-exp-company">Pesantren Dar el-Iman — Padang</p>
-                        </div>
-                    </div>
-
-                    <div class="cv-exp-item">
-                        <div class="cv-exp-date">Sep 2019 — Nov 2019</div>
-                        <div class="cv-exp-right">
-                            <p class="cv-exp-role">Creative Designer</p>
-                            <p class="cv-exp-company">Haluan Digital Media — Padang (Magang)</p>
-                        </div>
-                    </div>
-
-                    <div class="cv-exp-item">
-                        <div class="cv-exp-date">Jan 2019 — Mar 2019</div>
-                        <div class="cv-exp-right">
-                            <p class="cv-exp-role">Drafter</p>
-                            <p class="cv-exp-company">Japutra Teknikindo — Padang (Magang)</p>
-                        </div>
-                    </div>
-
-                    <div class="cv-exp-item">
-                        <div class="cv-exp-date">Agu 2018 — Des 2018</div>
-                        <div class="cv-exp-right">
-                            <p class="cv-exp-role">Guru Teknik Bangunan</p>
-                            <p class="cv-exp-company">SMK N 2 Sijunjung (Magang)</p>
-                        </div>
-                    </div>
-
-                    <div class="cv-exp-item">
-                        <div class="cv-exp-date">Jun 2015 — Agu 2015</div>
-                        <div class="cv-exp-right">
-                            <p class="cv-exp-role">Drafter</p>
-                            <p class="cv-exp-company">Karya Cipta Sentosa — Jambi</p>
-                        </div>
-                    </div>
-
-                    <div class="cv-exp-item">
-                        <div class="cv-exp-date">Agu 2014 — Des 2014</div>
-                        <div class="cv-exp-right">
-                            <p class="cv-exp-role">Drafter</p>
-                            <p class="cv-exp-company">Asri Konsultan — Padang (Magang)</p>
-                        </div>
-                    </div>
-
+                    <div class="cv-exp-item"><div class="cv-exp-date">Jan 2023 — Sekarang</div><div class="cv-exp-right"><p class="cv-exp-role">Civil Drafter</p><p class="cv-exp-company">Bumantara Karya Amerta — Bekasi</p><p class="cv-exp-desc">Pengembangan dokumen teknis (Gambar Kerja &amp; RKS) dengan AutoCAD dan SketchUp; koordinasi teknis lintas tim.</p></div></div>
+                    <div class="cv-exp-item"><div class="cv-exp-date">Jul 2022 — Des 2022</div><div class="cv-exp-right"><p class="cv-exp-role">Site Project Manager</p><p class="cv-exp-company">Sarana Anugrah Rekacipta — Jakarta</p><p class="cv-exp-desc">Manajemen tim lapangan dan logistik material proyek jembatan antar kampung.</p></div></div>
+                    <div class="cv-exp-item"><div class="cv-exp-date">Mar 2022 — Jul 2022</div><div class="cv-exp-right"><p class="cv-exp-role">Quantity Surveyor</p><p class="cv-exp-company">Mulia Jaya Abadi — Jakarta</p></div></div>
+                    <div class="cv-exp-item"><div class="cv-exp-date">Agu 2021 — Jan 2022</div><div class="cv-exp-right"><p class="cv-exp-role">Inspector Konsultan</p><p class="cv-exp-company">Citra Tama Arsitek — Kerinci, Jambi</p></div></div>
+                    <div class="cv-exp-item"><div class="cv-exp-date">Jul 2020 — Jul 2021</div><div class="cv-exp-right"><p class="cv-exp-role">QS &amp; Drafter (Freelance)</p><p class="cv-exp-company">Renovasi SMK N 8 &amp; UNAND — Padang</p></div></div>
+                    <div class="cv-exp-item"><div class="cv-exp-date">Nov 2019 — Jun 2020</div><div class="cv-exp-right"><p class="cv-exp-role">Drafter &amp; QS</p><p class="cv-exp-company">Pesantren Dar el-Iman — Padang</p></div></div>
+                    <div class="cv-exp-item"><div class="cv-exp-date">Sep 2019 — Nov 2019</div><div class="cv-exp-right"><p class="cv-exp-role">Creative Designer</p><p class="cv-exp-company">Haluan Digital Media — Padang (Magang)</p></div></div>
+                    <div class="cv-exp-item"><div class="cv-exp-date">Jan 2019 — Mar 2019</div><div class="cv-exp-right"><p class="cv-exp-role">Drafter</p><p class="cv-exp-company">Japutra Teknikindo — Padang (Magang)</p></div></div>
+                    <div class="cv-exp-item"><div class="cv-exp-date">Agu 2018 — Des 2018</div><div class="cv-exp-right"><p class="cv-exp-role">Guru Teknik Bangunan</p><p class="cv-exp-company">SMK N 2 Sijunjung (Magang)</p></div></div>
+                    <div class="cv-exp-item"><div class="cv-exp-date">Jun 2015 — Agu 2015</div><div class="cv-exp-right"><p class="cv-exp-role">Drafter</p><p class="cv-exp-company">Karya Cipta Sentosa — Jambi</p></div></div>
+                    <div class="cv-exp-item"><div class="cv-exp-date">Agu 2014 — Des 2014</div><div class="cv-exp-right"><p class="cv-exp-role">Drafter</p><p class="cv-exp-company">Asri Konsultan — Padang (Magang)</p></div></div>
                 </div>
-            </div><!-- end kolom kiri -->
-
-            <!-- KOLOM KANAN: PENDIDIKAN + KEAHLIAN + SERTIFIKAT -->
+            </div>
             <div>
-
-                <!-- PENDIDIKAN -->
                 <div class="cv-section">
                     <div class="cv-section-title">Pendidikan</div>
-
-                    <div class="cv-edu-item">
-                        <div class="cv-edu-year">2015 — 2019</div>
-                        <div>
-                            <p class="cv-edu-school">Universitas Negeri Padang <span class="cv-badge">S1</span></p>
-                            <p class="cv-edu-major">Teknik Sipil</p>
-                        </div>
-                    </div>
-
-                    <div class="cv-edu-item">
-                        <div class="cv-edu-year">2012 — 2015</div>
-                        <div>
-                            <p class="cv-edu-school">SMK N 2 Sijunjung</p>
-                            <p class="cv-edu-major">Teknik Gambar Bangunan</p>
-                        </div>
-                    </div>
+                    <div class="cv-edu-item"><div class="cv-edu-year">2015 — 2019</div><div><p class="cv-edu-school">Universitas Negeri Padang <span class="cv-badge">S1</span></p><p class="cv-edu-major">Teknik Sipil</p></div></div>
+                    <div class="cv-edu-item"><div class="cv-edu-year">2012 — 2015</div><div><p class="cv-edu-school">SMK N 2 Sijunjung</p><p class="cv-edu-major">Teknik Gambar Bangunan</p></div></div>
                 </div>
-
-                <!-- KEAHLIAN TEKNIS -->
                 <div class="cv-section">
                     <div class="cv-section-title">Keahlian Teknis</div>
-                    <div class="cv-skills-grid" style="display:block;">
-
-                        <div class="cv-skill-item" style="display:flex; align-items:center; gap:6pt; margin-bottom:5pt;">
-                            <span class="cv-skill-name">AutoCAD</span>
-                            <div class="cv-skill-bar-wrap"><div class="cv-skill-bar-fill" style="width:95%"></div></div>
-                            <span class="cv-skill-pct">Mahir</span>
-                        </div>
-
-                        <div class="cv-skill-item" style="display:flex; align-items:center; gap:6pt; margin-bottom:5pt;">
-                            <span class="cv-skill-name">SketchUp 3D</span>
-                            <div class="cv-skill-bar-wrap"><div class="cv-skill-bar-fill" style="width:85%"></div></div>
-                            <span class="cv-skill-pct">Menengah</span>
-                        </div>
-
-                        <div class="cv-skill-item" style="display:flex; align-items:center; gap:6pt; margin-bottom:5pt;">
-                            <span class="cv-skill-name">MS Excel</span>
-                            <div class="cv-skill-bar-wrap"><div class="cv-skill-bar-fill" style="width:83%"></div></div>
-                            <span class="cv-skill-pct">Menengah</span>
-                        </div>
-
-                        <div class="cv-skill-item" style="display:flex; align-items:center; gap:6pt; margin-bottom:5pt;">
-                            <span class="cv-skill-name">MS Word</span>
-                            <div class="cv-skill-bar-wrap"><div class="cv-skill-bar-fill" style="width:90%"></div></div>
-                            <span class="cv-skill-pct">Mahir</span>
-                        </div>
-
+                    <div style="display:block;">
+                        <div class="cv-skill-item" style="display:flex;align-items:center;gap:6pt;margin-bottom:5pt;"><span class="cv-skill-name">AutoCAD</span><div class="cv-skill-bar-wrap"><div class="cv-skill-bar-fill" style="width:95%"></div></div><span class="cv-skill-pct">Mahir</span></div>
+                        <div class="cv-skill-item" style="display:flex;align-items:center;gap:6pt;margin-bottom:5pt;"><span class="cv-skill-name">SketchUp 3D</span><div class="cv-skill-bar-wrap"><div class="cv-skill-bar-fill" style="width:85%"></div></div><span class="cv-skill-pct">Menengah</span></div>
+                        <div class="cv-skill-item" style="display:flex;align-items:center;gap:6pt;margin-bottom:5pt;"><span class="cv-skill-name">MS Excel</span><div class="cv-skill-bar-wrap"><div class="cv-skill-bar-fill" style="width:83%"></div></div><span class="cv-skill-pct">Menengah</span></div>
+                        <div class="cv-skill-item" style="display:flex;align-items:center;gap:6pt;margin-bottom:5pt;"><span class="cv-skill-name">MS Word</span><div class="cv-skill-bar-wrap"><div class="cv-skill-bar-fill" style="width:90%"></div></div><span class="cv-skill-pct">Mahir</span></div>
                     </div>
                 </div>
-
-                <!-- KOMPETENSI UTAMA -->
                 <div class="cv-section">
                     <div class="cv-section-title">Kompetensi Utama</div>
-                    <p style="font-size:9.5pt; color:#333; line-height:1.7; margin:0;">
-                        Gambar Kerja Arsitektur &amp; Struktur &nbsp;·&nbsp;
-                        Penyusunan RAB &amp; BQ &nbsp;·&nbsp;
-                        Rencana Kerja dan Syarat-syarat (RKS) &nbsp;·&nbsp;
-                        Pengawasan Lapangan &nbsp;·&nbsp;
-                        Pemodelan 3D &nbsp;·&nbsp;
-                        Manajemen Material &amp; Logistik &nbsp;·&nbsp;
-                        Koordinasi Tim &nbsp;·&nbsp;
-                        
-                    </p>
+                    <p style="font-size:9.5pt;color:#333;line-height:1.7;margin:0;">Gambar Kerja Arsitektur &amp; Struktur &nbsp;·&nbsp; Penyusunan RAB &amp; BQ &nbsp;·&nbsp; Rencana Kerja dan Syarat-syarat (RKS) &nbsp;·&nbsp; Pengawasan Lapangan &nbsp;·&nbsp; Pemodelan 3D &nbsp;·&nbsp; Manajemen Material &amp; Logistik &nbsp;·&nbsp; Koordinasi Tim</p>
                 </div>
-
-                <!-- =============================================
-                     QR CODE — SCAN UNTUK BUKA WEB CV LENGKAP
-                ============================================= -->
                 <div class="cv-section cv-qr-section">
                     <div class="cv-section-title">Portfolio Digital</div>
-                    <div style="display:flex; gap:8pt;">
-
-                        <!-- QR 1: Website CV -->
-                        <div style="flex:1; background:#f9f9f9; border:0.75pt solid #ddd; border-radius:4pt; padding:7pt 8pt; text-align:center;">
-                            <div id="cv-qrcode-web" style="display:flex; justify-content:center; margin-bottom:4pt;">
-                            </div>
-                            <p style="font-size:7.5pt; font-weight:700; color:#111; margin:0 0 2pt 0; line-height:1.3;">Web CV Interaktif</p>
-                            <p style="font-size:6.5pt; color:#888; margin:0; line-height:1.4; word-break:break-all;">wahyuillahi0-svg.github.io<br>/adhanCv/</p>
+                    <div style="display:flex;gap:8pt;">
+                        <div style="flex:1;background:#f9f9f9;border:0.75pt solid #ddd;border-radius:4pt;padding:7pt 8pt;text-align:center;">
+                            <div id="cv-qrcode-web" style="display:flex;justify-content:center;margin-bottom:4pt;"></div>
+                            <p style="font-size:7.5pt;font-weight:700;color:#111;margin:0 0 2pt 0;">Web CV Interaktif</p>
+                            <p style="font-size:6.5pt;color:#888;margin:0;word-break:break-all;">wahyuillahi0-svg.github.io<br>/adhanCv/</p>
                         </div>
-
-                        <!-- QR 2: LinkedIn -->
-                        <div style="flex:1; background:#f9f9f9; border:0.75pt solid #ddd; border-radius:4pt; padding:7pt 8pt; text-align:center;">
-                            <div id="cv-qrcode-linkedin" style="display:flex; justify-content:center; margin-bottom:4pt;">
-                            </div>
-                            <p style="font-size:7.5pt; font-weight:700; color:#111; margin:0 0 2pt 0; line-height:1.3;">LinkedIn Profile</p>
-                            <p style="font-size:6.5pt; color:#888; margin:0; line-height:1.4; word-break:break-all;">linkedin.com/in/<br>adhan-ab3a07195</p>
+                        <div style="flex:1;background:#f9f9f9;border:0.75pt solid #ddd;border-radius:4pt;padding:7pt 8pt;text-align:center;">
+                            <div id="cv-qrcode-linkedin" style="display:flex;justify-content:center;margin-bottom:4pt;"></div>
+                            <p style="font-size:7.5pt;font-weight:700;color:#111;margin:0 0 2pt 0;">LinkedIn Profile</p>
+                            <p style="font-size:6.5pt;color:#888;margin:0;word-break:break-all;">linkedin.com/in/<br>adhan-ab3a07195</p>
                         </div>
-
                     </div>
-                    <p style="font-size:7pt; color:#aaa; text-align:center; margin:5pt 0 0 0; font-style:italic;">Arahkan kamera HP untuk membuka profil digital</p>
+                    <p style="font-size:7pt;color:#aaa;text-align:center;margin:5pt 0 0 0;font-style:italic;">Arahkan kamera HP untuk membuka profil digital</p>
                 </div>
-                <!-- END QR CODE -->
-
-            </div><!-- end kolom kanan -->
-
-        </div><!-- end two-col -->
-
-        <!-- FOOTER -->
+            </div>
+        </div>
         <div class="cv-footer">
             <span>Wahyu Illahi Ramadhan &nbsp;·&nbsp; Bekasi, Indonesia</span>
             <span>Dokumen ini dapat diverifikasi melalui LinkedIn atau portfolio Google Drive</span>
             <span>+62 822-8575-4080</span>
         </div>
-
     </div>
-    <!-- END CV PRINT ONLY -->
+    <!-- END PRINT CV -->
 
 
-    <!-- =========================================================
-         ORIGINAL WEB HTML — TIDAK DIUBAH SAMA SEKALI
-    ========================================================= -->
+    <!-- ============================================================
+         PORTFOLIO BOOK POPUP
+    ============================================================ -->
+    <div id="portfolio-overlay" role="dialog" aria-modal="true" aria-label="Portfolio Viewer">
+        <button id="portfolio-close" onclick="closePortfolio()" title="Tutup">&times;</button>
 
+        <div class="book-stage">
+            <div class="book-wrap no-select" id="bookWrap">
+
+                <!-- LEFT: Cover page -->
+                <div class="book-cover">
+                    <div class="book-cover-spine"></div>
+
+                    <div class="blueprint-icon">
+                        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="8" y="8" width="48" height="48" rx="2" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="4 2"/>
+                            <line x1="8" y1="20" x2="56" y2="20" stroke="#3b82f6" stroke-width="0.8" opacity="0.5"/>
+                            <line x1="8" y1="32" x2="56" y2="32" stroke="#3b82f6" stroke-width="0.8" opacity="0.5"/>
+                            <line x1="8" y1="44" x2="56" y2="44" stroke="#3b82f6" stroke-width="0.8" opacity="0.5"/>
+                            <line x1="20" y1="8" x2="20" y2="56" stroke="#3b82f6" stroke-width="0.8" opacity="0.5"/>
+                            <line x1="32" y1="8" x2="32" y2="56" stroke="#3b82f6" stroke-width="0.8" opacity="0.5"/>
+                            <line x1="44" y1="8" x2="44" y2="56" stroke="#3b82f6" stroke-width="0.8" opacity="0.5"/>
+                            <rect x="18" y="28" width="28" height="18" rx="1" fill="none" stroke="#60a5fa" stroke-width="1.5"/>
+                            <path d="M18 34 L46 34" stroke="#60a5fa" stroke-width="1"/>
+                            <circle cx="32" cy="20" r="4" fill="none" stroke="#93c5fd" stroke-width="1.2"/>
+                        </svg>
+                    </div>
+
+                    <div class="book-cover-sub">Portfolio Teknis</div>
+                    <div class="book-cover-divider"></div>
+                    <div class="book-cover-title">Wahyu Illahi<br>Ramadhan</div>
+                    <div class="book-cover-divider"></div>
+                    <div class="book-cover-sub" style="color:rgba(255,255,255,0.4);font-size:10px;letter-spacing:0.15em;">Civil Drafter · QS · Site Engineer</div>
+                    <div class="book-cover-badge">Bekasi · Indonesia · 2024</div>
+
+                    <div class="page-curl"></div>
+                </div>
+
+                <!-- RIGHT: PDF viewer page -->
+                <div class="book-page">
+                    <div class="book-page-header">
+                        <span class="book-page-header-title">Portofolio Lengkap</span>
+                        <span class="book-page-header-badge">📄 Protected View</span>
+                    </div>
+
+                    <div class="pdf-frame-wrap">
+                        <!-- Drive toolbar blocker -->
+                        <!-- Loading indicator -->
+                        <div class="pdf-loading" id="pdfLoading">
+                            <div class="spinner"></div>
+                            <p>Memuat portofolio…</p>
+                        </div>
+
+                        <!--
+                            GOOGLE DRIVE EMBED
+                            Ganti FILE_ID dengan ID file PDF kamu dari Google Drive
+                            Format URL: https://drive.google.com/file/d/FILE_ID/preview
+                            ID dari link kamu: 1W-GKy2ecMUbizcD0zjU0cLJ2prrS8P9s
+                        -->
+                       <iframe
+    id="pdfFrame"
+    src="https://drive.google.com/file/d/1GnWPxTrsyeuwe8KJeGrOKVqE3YYuSBiU/view?usp=sharing"
+    allow="autoplay"
+    onload="hidePdfLoading()"
+    title="Portfolio Wahyu Illahi Ramadhan"
+></iframe>
+
+                        <!-- Watermark grid overlay -->
+                        <div class="watermark-layer">
+                            <div class="watermark-grid">
+                                <div class="watermark-cell"><span>Wahyu Illahi R.</span></div>
+                                <div class="watermark-cell"><span>© Portofolio</span></div>
+                                <div class="watermark-cell"><span>Wahyu Illahi R.</span></div>
+                                <div class="watermark-cell"><span>© Portofolio</span></div>
+                                <div class="watermark-cell"><span>© Portofolio</span></div>
+                                <div class="watermark-cell"><span>Wahyu Illahi R.</span></div>
+                                <div class="watermark-cell"><span>© Portofolio</span></div>
+                                <div class="watermark-cell"><span>Wahyu Illahi R.</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- end book-wrap -->
+        </div>
+    </div>
+    <!-- END PORTFOLIO POPUP -->
+
+
+    <!-- ============================================================
+         WEB NAVIGATION
+    ============================================================ -->
     <nav class="fixed w-full z-50 bg-white/95 backdrop-blur-md py-4 px-8 md:px-16 flex justify-between items-center border-b border-gray-100">
         <div class="font-bold text-xl tracking-tighter uppercase text-blue-600">Wahyu Illahi R.</div>
         <div class="hidden md:flex space-x-8 text-[10px] font-bold uppercase tracking-[0.2em] items-center">
             <a href="#experience" class="hover:text-blue-600 transition">Karir</a>
             <a href="#blueprints" class="hover:text-blue-600 transition">Proyek</a>
-            <a href="https://drive.google.com/open?id=1W-GKy2ecMUbizcD0zjU0cLJ2prrS8P9s&usp=drive_fs" target="_blank" class="text-blue-600 border border-blue-600 px-4 py-1 rounded-full hover:bg-blue-600 hover:text-white transition">Full Portfolio</a>
+            <!-- PORTFOLIO BUTTON — buka book popup -->
+            <button onclick="openPortfolio()" class="text-blue-600 border border-blue-600 px-4 py-1 rounded-full hover:bg-blue-600 hover:text-white transition cursor-pointer bg-transparent font-bold text-[10px] uppercase tracking-[0.2em]">Full Portfolio</button>
             <a href="https://www.linkedin.com/in/adhan-ab3a07195/" target="_blank" class="hover:text-blue-600 transition">LinkedIn</a>
         </div>
     </nav>
 
+
+    <!-- HERO -->
     <header class="min-h-screen flex flex-col justify-center px-8 md:px-24 bg-[#fcfcfc]">
         <h1 id="hero-title" class="text-[8vw] md:text-[6vw] font-bold leading-[0.9] tracking-tighter opacity-0 translate-y-10 uppercase">
             DRAFTER QS & <br> ENGINEER
@@ -615,20 +645,23 @@
             <p id="hero-sub" class="max-w-xl text-gray-500 text-lg opacity-0 leading-relaxed">
                 Expert dalam manajemen proyek infrastruktur, penyusunan RAB/RKS, dan visualisasi arsitektur teknis dengan pengalaman lapangan sejak 2014.
             </p>
-            <div id="hero-cta" class="opacity-0 flex gap-4">
-                <a href="https://drive.google.com/open?id=1W-GKy2ecMUbizcD0zjU0cLJ2prrS8P9s&usp=drive_fs" target="_blank" class="btn-primary uppercase">Portofolio</a>
+            <div id="hero-cta" class="opacity-0 flex gap-4 flex-wrap">
+                <!-- PORTFOLIO BUTTON — hero -->
+                <button onclick="openPortfolio()" class="btn-primary uppercase">Portofolio</button>
                 <a href="tel:+6282285754080" class="border border-black px-8 py-4 text-xs font-bold rounded-full hover:bg-black hover:text-white transition uppercase">Kontak</a>
                 <a href="https://wa.me/6282285754080" class="border border-[#25D366] px-8 py-4 text-xs font-bold rounded-full text-[#25D366] hover:bg-[#25D366] hover:text-white transition uppercase">WhatsApp</a>
             </div>
         </div>
     </header>
 
+
+    <!-- BLUEPRINTS GALLERY -->
     <section id="blueprints" class="py-24 bg-[#0a0a0a] text-white px-8 md:px-24">
         <div class="flex justify-between items-center mb-12">
             <h2 class="text-xs font-bold uppercase tracking-[0.4em] text-blue-500">Technical Projects Gallery</h2>
-            <a href="https://drive.google.com/open?id=1W-GKy2ecMUbizcD0zjU0cLJ2prrS8P9s&usp=drive_fs" target="_blank" class="text-xs font-bold text-white border-b border-white pb-1 hover:text-blue-500 hover:border-blue-500 transition">Buka File Asli (Drive) →</a>
+            <button onclick="openPortfolio()" class="text-xs font-bold text-white border-b border-white pb-1 hover:text-blue-500 hover:border-blue-500 transition bg-transparent cursor-pointer">Buka Portfolio Lengkap →</button>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 Blueprint-Grid">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div class="blueprint-card aspect-square bg-white group overflow-hidden rounded-lg shadow-inner" data-aos="fade-up">
                 <img src="images/tampak-depan.jpg" alt="tampak-depan" class="w-full h-full object-contain p-2 transition duration-700">
             </div>
@@ -656,131 +689,49 @@
         </div>
     </section>
 
+
+    <!-- EXPERIENCE -->
     <section id="experience" class="py-32 px-8 md:px-24 max-w-6xl mx-auto">
         <h2 class="text-xs font-bold uppercase tracking-[0.4em] text-gray-400 mb-20" data-aos="fade-up">Full Professional History</h2>
         <div class="relative">
-            <div class="experience-node" data-aos="fade-up">
-                <span class="text-blue-600 font-bold text-xs uppercase">Jan 2023 — Sekarang</span>
-                <h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Civil Drafter</h3>
-                <p class="font-semibold text-gray-800">Bumantara Karya Amerta (Konsultan Bandar Udara) — Bekasi</p>
-                <p class="text-gray-500 text-sm mt-2 max-w-2xl">Bertanggung jawab dalam pengembangan dokumen teknis (Gambar Kerja & RKS) menggunakan AutoCAD dan SketchUp, serta koordinasi teknis di dalam tim.</p>
-            </div>
-            <div class="experience-node" data-aos="fade-up">
-                <span class="text-gray-400 font-bold text-xs uppercase">Jul 2022 — Des 2022</span>
-                <h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Site Project Manager</h3>
-                <p class="font-semibold text-gray-800">Sarana Anugrah Rekacipta — Jakarta</p>
-                <p class="text-gray-500 text-sm mt-2">Manajemen tim dan logistik material proyek jembatan antar kampung.</p>
-            </div>
-            <div class="experience-node" data-aos="fade-up">
-                <span class="text-gray-400 font-bold text-xs uppercase">Mar 2022 — Jul 2022</span>
-                <h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Quantity Surveyor</h3>
-                <p class="font-semibold text-gray-800">Mulia Jaya Abadi — Jakarta</p>
-            </div>
-            <div class="experience-node" data-aos="fade-up">
-                <span class="text-gray-400 font-bold text-xs uppercase">Agu 2021 — Jan 2022</span>
-                <h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Inspector Konsultan</h3>
-                <p class="font-semibold text-gray-800">Citra Tama Arsitek — Kerinci, Jambi</p>
-            </div>
-            <div class="experience-node" data-aos="fade-up">
-                <span class="text-gray-400 font-bold text-xs uppercase">Jul 2020 — Jul 2021</span>
-                <h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">QS & Drafter (Freelance)</h3>
-                <p class="font-semibold text-gray-800">Project Renovasi SMK N 8 & UNAND — Padang</p>
-            </div>
-            <div class="experience-node" data-aos="fade-up">
-                <span class="text-gray-400 font-bold text-xs uppercase">Nov 2019 — Jun 2020</span>
-                <h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Drafter & QS</h3>
-                <p class="font-semibold text-gray-800">Pesantren Dar el-Iman — Padang</p>
-            </div>
-            <div class="experience-node" data-aos="fade-up">
-                <span class="text-gray-400 font-bold text-xs uppercase">Sep 2019 — Nov 2019</span>
-                <h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Creative Designer (Magang)</h3>
-                <p class="font-semibold text-gray-800">Haluan Digital Media — Padang</p>
-            </div>
-            <div class="experience-node" data-aos="fade-up">
-                <span class="text-gray-400 font-bold text-xs uppercase">Jan 2019 — Mar 2019</span>
-                <h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Drafter (Magang)</h3>
-                <p class="font-semibold text-gray-800">Japutra Teknikindo — Padang</p>
-            </div>
-            <div class="experience-node" data-aos="fade-up">
-                <span class="text-gray-400 font-bold text-xs uppercase">Agu 2018 — Des 2018</span>
-                <h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Teacher (Magang)</h3>
-                <p class="font-semibold text-gray-800">SMK N 2 SIJUNJUNG — Sijunjung</p>
-            </div>
-            <div class="experience-node" data-aos="fade-up">
-                <span class="text-gray-400 font-bold text-xs uppercase">Jun 2015 — Agu 2015</span>
-                <h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Drafter</h3>
-                <p class="font-semibold text-gray-800">Karya Cipta Sentosa — Jambi</p>
-            </div>
-            <div class="experience-node" data-aos="fade-up">
-                <span class="text-gray-400 font-bold text-xs uppercase">Agu 2014 — Des 2014</span>
-                <h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Drafter (Magang)</h3>
-                <p class="font-semibold text-gray-800">Asri Konsultan — Padang</p>
-            </div>
+            <div class="experience-node" data-aos="fade-up"><span class="text-blue-600 font-bold text-xs uppercase">Jan 2023 — Sekarang</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Civil Drafter</h3><p class="font-semibold text-gray-800">Bumantara Karya Amerta (Konsultan Bandar Udara) — Bekasi</p><p class="text-gray-500 text-sm mt-2 max-w-2xl">Bertanggung jawab dalam pengembangan dokumen teknis (Gambar Kerja & RKS) menggunakan AutoCAD dan SketchUp, serta koordinasi teknis di dalam tim.</p></div>
+            <div class="experience-node" data-aos="fade-up"><span class="text-gray-400 font-bold text-xs uppercase">Jul 2022 — Des 2022</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Site Project Manager</h3><p class="font-semibold text-gray-800">Sarana Anugrah Rekacipta — Jakarta</p><p class="text-gray-500 text-sm mt-2">Manajemen tim dan logistik material proyek jembatan antar kampung.</p></div>
+            <div class="experience-node" data-aos="fade-up"><span class="text-gray-400 font-bold text-xs uppercase">Mar 2022 — Jul 2022</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Quantity Surveyor</h3><p class="font-semibold text-gray-800">Mulia Jaya Abadi — Jakarta</p></div>
+            <div class="experience-node" data-aos="fade-up"><span class="text-gray-400 font-bold text-xs uppercase">Agu 2021 — Jan 2022</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Inspector Konsultan</h3><p class="font-semibold text-gray-800">Citra Tama Arsitek — Kerinci, Jambi</p></div>
+            <div class="experience-node" data-aos="fade-up"><span class="text-gray-400 font-bold text-xs uppercase">Jul 2020 — Jul 2021</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">QS & Drafter (Freelance)</h3><p class="font-semibold text-gray-800">Project Renovasi SMK N 8 & UNAND — Padang</p></div>
+            <div class="experience-node" data-aos="fade-up"><span class="text-gray-400 font-bold text-xs uppercase">Nov 2019 — Jun 2020</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Drafter & QS</h3><p class="font-semibold text-gray-800">Pesantren Dar el-Iman — Padang</p></div>
+            <div class="experience-node" data-aos="fade-up"><span class="text-gray-400 font-bold text-xs uppercase">Sep 2019 — Nov 2019</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Creative Designer (Magang)</h3><p class="font-semibold text-gray-800">Haluan Digital Media — Padang</p></div>
+            <div class="experience-node" data-aos="fade-up"><span class="text-gray-400 font-bold text-xs uppercase">Jan 2019 — Mar 2019</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Drafter (Magang)</h3><p class="font-semibold text-gray-800">Japutra Teknikindo — Padang</p></div>
+            <div class="experience-node" data-aos="fade-up"><span class="text-gray-400 font-bold text-xs uppercase">Agu 2018 — Des 2018</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Teacher (Magang)</h3><p class="font-semibold text-gray-800">SMK N 2 SIJUNJUNG — Sijunjung</p></div>
+            <div class="experience-node" data-aos="fade-up"><span class="text-gray-400 font-bold text-xs uppercase">Jun 2015 — Agu 2015</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Drafter</h3><p class="font-semibold text-gray-800">Karya Cipta Sentosa — Jambi</p></div>
+            <div class="experience-node" data-aos="fade-up"><span class="text-gray-400 font-bold text-xs uppercase">Agu 2014 — Des 2014</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Drafter (Magang)</h3><p class="font-semibold text-gray-800">Asri Konsultan — Padang</p></div>
         </div>
     </section>
 
+
+    <!-- EDUCATION -->
     <section class="py-20 bg-[#f4f7f6]">
         <div class="edu-container">
             <h2 class="edu-h2">Riwayat Pendidikan</h2>
-            <div class="education-item">
-                <span class="year">2015 - 2019</span>
-                <div class="institution">Universitas Negeri Padang <span class="degree">S1</span></div>
-                <div class="major">Teknik Sipil</div>
-            </div>
-            <div class="education-item">
-                <span class="year">2012 - 2015</span>
-                <div class="institution">SMK N 2 Sijunjung</div>
-                <div class="major">Teknik Gambar Bangunan</div>
-            </div>
+            <div class="education-item"><span class="year">2015 - 2019</span><div class="institution">Universitas Negeri Padang <span class="degree">S1</span></div><div class="major">Teknik Sipil</div></div>
+            <div class="education-item"><span class="year">2012 - 2015</span><div class="institution">SMK N 2 Sijunjung</div><div class="major">Teknik Gambar Bangunan</div></div>
         </div>
     </section>
 
+
+    <!-- SKILLS -->
     <section class="py-20">
         <div class="skills-container">
             <h2 class="skills-h2">Technical Expertise</h2>
-            <div class="skill-card">
-                <div class="skill-info">
-                    <span class="skill-name">AutoCAD</span>
-                    <span class="skill-level-text">Mahir</span>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 95%;"></div>
-                </div>
-                <p class="skill-desc">Spesialis di gambar teknik arsitektur, detail struktur yang rumit, dan pekerjaan infrastruktur.</p>
-            </div>
-            <div class="skill-card">
-                <div class="skill-info">
-                    <span class="skill-name">SketchUp</span>
-                    <span class="skill-level-text">Menengah</span>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 85%;"></div>
-                </div>
-                <p class="skill-desc">Pemodelan 3D untuk visualisasi desain arsitektur.</p>
-            </div>
-            <div class="skill-card">
-                <div class="skill-info">
-                    <span class="skill-name">MS Excel</span>
-                    <span class="skill-level-text">Menengah</span>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 83%;"></div>
-                </div>
-                <p class="skill-desc">Pengolahan data teknis, Rencana Anggaran Biaya (RAB), dan automasi formula.</p>
-            </div>
-            <div class="skill-card">
-                <div class="skill-info">
-                    <span class="skill-name">MS Word</span>
-                    <span class="skill-level-text">Mahir</span>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 90%;"></div>
-                </div>
-                <p class="skill-desc">Penyusunan dokumen teknis, RKS, dan laporan proyek profesional.</p>
-            </div>
+            <div class="skill-card"><div class="skill-info"><span class="skill-name">AutoCAD</span><span class="skill-level-text">Mahir</span></div><div class="progress-bar"><div class="progress-fill" style="width:95%;"></div></div><p class="skill-desc">Spesialis di gambar teknik arsitektur, detail struktur yang rumit, dan pekerjaan infrastruktur.</p></div>
+            <div class="skill-card"><div class="skill-info"><span class="skill-name">SketchUp</span><span class="skill-level-text">Menengah</span></div><div class="progress-bar"><div class="progress-fill" style="width:85%;"></div></div><p class="skill-desc">Pemodelan 3D untuk visualisasi desain arsitektur.</p></div>
+            <div class="skill-card"><div class="skill-info"><span class="skill-name">MS Excel</span><span class="skill-level-text">Menengah</span></div><div class="progress-bar"><div class="progress-fill" style="width:83%;"></div></div><p class="skill-desc">Pengolahan data teknis, Rencana Anggaran Biaya (RAB), dan automasi formula.</p></div>
+            <div class="skill-card"><div class="skill-info"><span class="skill-name">MS Word</span><span class="skill-level-text">Mahir</span></div><div class="progress-bar"><div class="progress-fill" style="width:90%;"></div></div><p class="skill-desc">Penyusunan dokumen teknis, RKS, dan laporan proyek profesional.</p></div>
         </div>
     </section>
 
+
+    <!-- CERTIFICATES -->
     <section id="certificates" class="py-24 bg-[#f9f9f9] px-8 md:px-24 text-center">
         <h2 class="text-xs font-bold uppercase tracking-[0.4em] text-gray-400 mb-12" data-aos="fade-up">Personal Credentials</h2>
         <div class="flex flex-col md:flex-row justify-center gap-6">
@@ -789,14 +740,19 @@
                 <p class="text-gray-500 text-xs italic">Akses sertifikat pelatihan pribadi (12+ Dokumen).</p>
                 <div class="mt-4 text-blue-600 font-bold text-xs">VIEW DRIVE →</div>
             </a>
-            <a href="https://drive.google.com/open?id=1W-GKy2ecMUbizcD0zjU0cLJ2prrS8P9s&usp=drive_fs" target="_blank" class="bg-white p-10 border border-blue-500 hover:bg-blue-50 transition shadow-sm w-full max-w-sm" data-aos="zoom-in" data-aos-delay="100">
+            <!-- PORTFOLIO CARD — buka book popup -->
+            <button onclick="openPortfolio()" class="bg-white p-10 border border-blue-500 hover:bg-blue-50 transition shadow-sm w-full max-w-sm cursor-pointer text-left" data-aos="zoom-in" data-aos-delay="100">
                 <h4 class="font-bold text-lg mb-2 text-blue-600">Full Portfolio PDF</h4>
-                <p class="text-gray-500 text-xs italic">Download dokumen portofolio lengkap teknis.</p>
-                <div class="mt-4 text-blue-600 font-bold text-xs">DOWNLOAD →</div>
-            </a>
+                <p class="text-gray-500 text-xs italic">Lihat dokumen portofolio lengkap teknis — langsung di sini.</p>
+                <div class="mt-4 text-blue-600 font-bold text-xs flex items-center gap-2">
+                    <span>📖</span> BUKA PORTFOLIO →
+                </div>
+            </button>
         </div>
     </section>
 
+
+    <!-- CONTACT -->
     <footer id="contact" class="py-32 px-8 md:px-24 border-t border-gray-100 text-center bg-white">
         <div data-aos="fade-up">
             <h2 class="text-5xl font-bold tracking-tighter mb-12 uppercase">HUBUNGI SAYA.</h2>
@@ -804,115 +760,46 @@
                 <a href="tel:+6282285754080" class="text-2xl font-light hover:text-blue-600 transition tracking-tighter">0822-8575-4080</a>
                 <div class="flex gap-6">
                     <a href="https://www.linkedin.com/in/adhan-ab3a07195/" target="_blank" class="text-xs font-bold uppercase tracking-[0.2em] border-b border-black hover:text-blue-600 hover:border-blue-600">LinkedIn</a>
-                    <a href="https://drive.google.com/open?id=1W-GKy2ecMUbizcD0zjU0cLJ2prrS8P9s&usp=drive_fs" target="_blank" class="text-xs font-bold uppercase tracking-[0.2em] border-b border-black hover:text-blue-600 hover:border-blue-600">Portfolio Drive</a>
+                    <button onclick="openPortfolio()" class="text-xs font-bold uppercase tracking-[0.2em] border-b border-black hover:text-blue-600 hover:border-blue-600 bg-transparent cursor-pointer">Portfolio</button>
                 </div>
             </div>
             <p class="mt-20 text-[10px] text-gray-400 uppercase tracking-[0.5em]">Wahyu Illahi Ramadhan — Bekasi, Indonesia</p>
         </div>
     </footer>
 
-    <!-- =============================================
-         PRINT PDF POPUP TOAST — pojok kanan bawah
-    ============================================= -->
-    <div id="print-toast" style="
-        position: fixed;
-        bottom: 28px;
-        right: 28px;
-        z-index: 9999;
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        background: #ffffff;
-        border: 1px solid #e5e7eb;
-        border-left: 4px solid #3b82f6;
-        box-shadow: 0 8px 32px rgba(0,0,0,0.13), 0 2px 8px rgba(59,130,246,0.10);
-        border-radius: 14px;
-        padding: 16px 22px 16px 18px;
-        min-width: 260px;
-        max-width: 320px;
-        transform: translateY(100px);
-        opacity: 0;
-        transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s ease;
-        font-family: 'Inter', sans-serif;
-        cursor: pointer;
-    " onclick="window.print()" title="Klik untuk cetak / simpan sebagai PDF">
 
-        <!-- Icon PDF -->
-        <div style="
-            width: 42px; height: 42px;
-            background: #eff6ff;
-            border-radius: 10px;
-            display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0;
-        ">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke="#3b82f6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M14 2v6h6" stroke="#3b82f6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M9 13h6M9 17h4" stroke="#3b82f6" stroke-width="1.8" stroke-linecap="round"/>
-                <circle cx="17" cy="17" r="4" fill="#3b82f6"/>
-                <path d="M17 15.5v3M15.5 17h3" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/>
-            </svg>
+    <!-- PRINT PDF TOAST -->
+    <div id="print-toast" style="position:fixed;bottom:28px;right:28px;z-index:9999;display:flex;align-items:center;gap:14px;background:#ffffff;border:1px solid #e5e7eb;border-left:4px solid #3b82f6;box-shadow:0 8px 32px rgba(0,0,0,0.13),0 2px 8px rgba(59,130,246,0.10);border-radius:14px;padding:16px 22px 16px 18px;min-width:260px;max-width:320px;transform:translateY(100px);opacity:0;transition:transform 0.5s cubic-bezier(0.34,1.56,0.64,1),opacity 0.4s ease;font-family:'Inter',sans-serif;cursor:pointer;" onclick="window.print()" title="Klik untuk cetak / simpan sebagai PDF">
+        <div style="width:42px;height:42px;background:#eff6ff;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke="#3b82f6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 2v6h6" stroke="#3b82f6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 13h6M9 17h4" stroke="#3b82f6" stroke-width="1.8" stroke-linecap="round"/><circle cx="17" cy="17" r="4" fill="#3b82f6"/><path d="M17 15.5v3M15.5 17h3" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/></svg>
         </div>
-
-        <!-- Teks -->
-        <div style="flex:1; min-width:0;">
-            <div style="font-size:12.5px; font-weight:700; color:#111; margin-bottom:3px; white-space:nowrap;">
-                Simpan CV sebagai PDF
-            </div>
-            <div style="font-size:11px; color:#6b7280; line-height:1.4;">
-                Klik di sini atau tekan <kbd style="background:#f3f4f6; border:1px solid #d1d5db; border-radius:4px; padding:1px 5px; font-size:10px; font-family:monospace;">Ctrl+P</kbd> lalu pilih <em>Save as PDF</em>
-            </div>
+        <div style="flex:1;min-width:0;">
+            <div style="font-size:12.5px;font-weight:700;color:#111;margin-bottom:3px;white-space:nowrap;">Simpan CV sebagai PDF</div>
+            <div style="font-size:11px;color:#6b7280;line-height:1.4;">Klik di sini atau tekan <kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:4px;padding:1px 5px;font-size:10px;font-family:monospace;">Ctrl+P</kbd> lalu pilih <em>Save as PDF</em></div>
         </div>
-
-        <!-- Tombol close -->
-        <button onclick="event.stopPropagation(); dismissToast()" style="
-            position:absolute; top:8px; right:10px;
-            background:none; border:none; cursor:pointer;
-            color:#9ca3af; font-size:16px; line-height:1;
-            padding:2px 4px; border-radius:4px;
-            transition: color 0.2s;
-        " onmouseover="this.style.color='#374151'" onmouseout="this.style.color='#9ca3af'" title="Tutup">✕</button>
-
-        <!-- Pulse dot -->
-        <span style="
-            position:absolute; top:12px; left:12px;
-            width:8px; height:8px; border-radius:50%;
-            background:#3b82f6;
-            box-shadow: 0 0 0 0 rgba(59,130,246,0.5);
-            animation: pulse-dot 2s infinite;
-        "></span>
+        <button onclick="event.stopPropagation();dismissToast()" style="position:absolute;top:8px;right:10px;background:none;border:none;cursor:pointer;color:#9ca3af;font-size:16px;line-height:1;padding:2px 4px;border-radius:4px;transition:color 0.2s;" onmouseover="this.style.color='#374151'" onmouseout="this.style.color='#9ca3af'">✕</button>
+        <span style="position:absolute;top:12px;left:12px;width:8px;height:8px;border-radius:50%;background:#3b82f6;box-shadow:0 0 0 0 rgba(59,130,246,0.5);animation:pulse-dot 2s infinite;"></span>
     </div>
 
     <style>
-        @keyframes pulse-dot {
-            0%   { box-shadow: 0 0 0 0 rgba(59,130,246,0.5); }
-            70%  { box-shadow: 0 0 0 8px rgba(59,130,246,0); }
-            100% { box-shadow: 0 0 0 0 rgba(59,130,246,0); }
-        }
-        #print-toast:hover {
-            box-shadow: 0 12px 40px rgba(59,130,246,0.18), 0 2px 8px rgba(0,0,0,0.10) !important;
-            border-color: #93c5fd !important;
-            transform: translateY(-2px) !important;
-        }
-        @media print {
-            #print-toast { display: none !important; }
-        }
+        @keyframes pulse-dot { 0%{box-shadow:0 0 0 0 rgba(59,130,246,0.5);}70%{box-shadow:0 0 0 8px rgba(59,130,246,0);}100%{box-shadow:0 0 0 0 rgba(59,130,246,0);} }
+        #print-toast:hover { box-shadow:0 12px 40px rgba(59,130,246,0.18),0 2px 8px rgba(0,0,0,0.10)!important; border-color:#93c5fd!important; transform:translateY(-2px)!important; }
+        @media print { #print-toast{display:none!important;} }
     </style>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({ duration: 800, once: true });
         gsap.to("#hero-title", { opacity: 1, duration: 1.5, y: -10, ease: "power4.out" });
-        gsap.to("#hero-sub", { opacity: 1, duration: 1, delay: 0.5 });
-        gsap.to("#hero-cta", { opacity: 1, duration: 1, delay: 0.8 });
+        gsap.to("#hero-sub",   { opacity: 1, duration: 1, delay: 0.5 });
+        gsap.to("#hero-cta",   { opacity: 1, duration: 1, delay: 0.8 });
 
-        // Tampilkan toast setelah 1.5 detik
+        // Print toast
         setTimeout(function() {
             var t = document.getElementById('print-toast');
             t.style.transform = 'translateY(0)';
             t.style.opacity = '1';
         }, 1500);
-
         function dismissToast() {
             var t = document.getElementById('print-toast');
             t.style.transform = 'translateY(100px)';
@@ -920,35 +807,84 @@
             setTimeout(function(){ t.style.display = 'none'; }, 400);
         }
 
-        // =============================================
-        // GENERATE QR CODE — 2 QR: Website CV & LinkedIn
-        // =============================================
+        // QR codes
         (function() {
-            // QR 1: Website CV
             var qrWeb = document.getElementById('cv-qrcode-web');
             if (qrWeb && typeof QRCode !== 'undefined') {
-                new QRCode(qrWeb, {
-                    text: "https://wahyuillahi0-svg.github.io/adhanCv/",
-                    width: 80,
-                    height: 80,
-                    colorDark: "#111111",
-                    colorLight: "#ffffff",
-                    correctLevel: QRCode.CorrectLevel.H
-                });
+                new QRCode(qrWeb, { text: "https://wahyuillahi0-svg.github.io/adhanCv/", width: 80, height: 80, colorDark: "#111111", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.H });
             }
-            // QR 2: LinkedIn
             var qrLI = document.getElementById('cv-qrcode-linkedin');
             if (qrLI && typeof QRCode !== 'undefined') {
-                new QRCode(qrLI, {
-                    text: "https://www.linkedin.com/in/adhan-ab3a07195/",
-                    width: 80,
-                    height: 80,
-                    colorDark: "#111111",
-                    colorLight: "#ffffff",
-                    correctLevel: QRCode.CorrectLevel.H
-                });
+                new QRCode(qrLI, { text: "https://www.linkedin.com/in/adhan-ab3a07195/", width: 80, height: 80, colorDark: "#111111", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.H });
             }
         })();
+
+        // ============================================================
+        // BOOK POPUP — OPEN / CLOSE
+        // ============================================================
+        function openPortfolio() {
+            var overlay = document.getElementById('portfolio-overlay');
+            var book    = document.getElementById('bookWrap');
+
+            // Scroll lock
+            document.body.style.overflow = 'hidden';
+
+            // Show overlay
+            overlay.classList.add('active');
+
+            // Trigger book open animation after a tiny delay
+            requestAnimationFrame(function() {
+                setTimeout(function() {
+                    book.classList.add('opened');
+                }, 60);
+            });
+
+            // Dismiss print toast if visible
+            dismissToast();
+        }
+
+        function closePortfolio() {
+            var overlay = document.getElementById('portfolio-overlay');
+            var book    = document.getElementById('bookWrap');
+
+            // Reverse book animation
+            book.classList.remove('opened');
+
+            // After animation, hide overlay
+            setTimeout(function() {
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }, 600);
+        }
+
+        // Close on backdrop click (but not on book itself)
+        document.getElementById('portfolio-overlay').addEventListener('click', function(e) {
+            if (e.target === this) closePortfolio();
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closePortfolio();
+        });
+
+        // Hide loading spinner when iframe loads
+        function hidePdfLoading() {
+            setTimeout(function() {
+                var el = document.getElementById('pdfLoading');
+                if (el) el.classList.add('hidden');
+            }, 800);
+        }
+
+        // Extra protection: disable right-click on page
+        document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+
+        // Disable keyboard shortcuts for saving
+        document.addEventListener('keydown', function(e) {
+            // Block Ctrl+S, Ctrl+U
+            if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'u')) {
+                e.preventDefault();
+            }
+        });
     </script>
 </body>
 </html>
