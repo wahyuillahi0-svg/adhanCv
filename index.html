@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wahyu Illahi Ramadhan | Site Engineer & Drafter QS</title>
+    <title>Wahyu Illahi Ramadhan | Civil Drafter & AutoCAD Specialist</title>
 
-    <meta property="og:title" content="Wahyu Illahi R. — Civil Drafter & Site Engineer" />
-    <meta property="og:description" content="Berpengalaman sebagai Drafter, QS & Site Engineer." />
+    <meta property="og:title" content="Wahyu Illahi R. — Civil Drafter & AutoCAD Specialist" />
+    <meta property="og:description" content="10+ tahun spesialisasi gambar teknis — AutoCAD, gambar kerja arsitektur & struktur, as-built drawing." />
     <meta property="og:image" content="https://wahyuillahi0-svg.github.io/adhanCv/images/tampak-depan.jpg" />
     <meta property="og:url" content="https://wahyuillahi0-svg.github.io/adhanCv/" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="id_ID" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Wahyu Illahi Ramadhan — Civil Drafter & Site Engineer" />
-    <meta name="twitter:description" content="Berpengalaman sebagai Drafter, QS & Site Engineer." />
+    <meta name="twitter:title" content="Wahyu Illahi Ramadhan — Civil Drafter & AutoCAD Specialist" />
+    <meta name="twitter:description" content="10+ tahun spesialisasi gambar teknis — AutoCAD, gambar kerja arsitektur & struktur, as-built drawing." />
     <meta name="twitter:image" content="https://wahyuillahi0-svg.github.io/adhanCv/images/tampak-depan.jpg" />
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -29,8 +29,14 @@
         body { font-family: 'Inter', sans-serif; background-color: #fff; color: #000; overflow-x: hidden; }
         .line-detail { height: 1px; width: 0; background-color: #3b82f6; transition: width 1s ease; }
         .aos-animate .line-detail { width: 100%; }
-        .experience-node { position: relative; padding-bottom: 4rem; border-left: 1px solid #e5e7eb; padding-left: 2rem; }
-        .experience-node::before { content: ''; position: absolute; left: -5px; top: 0; width: 9px; height: 9px; background: #3b82f6; border-radius: 50%; }
+        .experience-node { position: relative; padding-bottom: 4rem; border-left: 1px solid #e5e7eb; padding-left: 2rem; transition: border-color 0.4s ease; }
+        .experience-node::before { content: ''; position: absolute; left: -5px; top: 0; width: 9px; height: 9px; background: #3b82f6; border-radius: 50%; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .experience-node:hover::before { transform: scale(1.5); box-shadow: 0 0 0 4px rgba(59,130,246,0.15); }
+        .exp-early { opacity: 0.72; transition: opacity 0.3s ease; }
+        .exp-early::before { background: #d1d5db !important; }
+        .exp-early:hover { opacity: 1; }
+        .exp-early:hover::before { background: #3b82f6 !important; box-shadow: 0 0 0 4px rgba(59,130,246,0.15) !important; }
+        .exp-badge-magang { display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; background: #f3f4f6; color: #9ca3af; border: 1px solid #e5e7eb; border-radius: 99px; padding: 1px 8px; margin-left: 8px; vertical-align: middle; }
         .btn-primary { background: #000; color: #fff; padding: 12px 24px; border-radius: 99px; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; transition: all 0.3s; cursor: pointer; border: none; }
         .btn-primary:hover { background: #3b82f6; transform: translateY(-2px); }
         .blueprint-card:hover img { transform: scale(1.05); }
@@ -482,6 +488,8 @@
             animation: spin 0.8s linear infinite;
             margin-bottom: 12px;
         }
+        @keyframes pulse-node { 0%,100%{box-shadow:0 0 0 0 rgba(59,130,246,0.4);} 50%{box-shadow:0 0 0 8px rgba(59,130,246,0);} }
+        .experience-node:first-child::before { animation: pulse-node 2.5s ease-in-out infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
         .pdf-loading p {
             font-size: 12px;
@@ -883,7 +891,7 @@
             .cv-section { margin-top: 10pt; margin-bottom: 4pt; }
             .cv-section-title { font-family: 'EB Garamond', serif; font-size: 9.5pt; font-weight: 700; text-transform: uppercase; letter-spacing: 2pt; color: #1a1a1a; border-bottom: 0.75pt solid #aaa; padding-bottom: 2pt; margin-bottom: 6pt; }
             .cv-summary { font-size: 10pt; color: #333; line-height: 1.6; font-style: italic; margin-bottom: 2pt; }
-            .cv-exp-item { display: grid; grid-template-columns: 105pt 1fr; gap: 0 10pt; margin-bottom: 7pt; page-break-inside: avoid; }
+            .cv-exp-item { display: grid; grid-template-columns: 90pt 1fr; gap: 0 8pt; margin-bottom: 4pt; page-break-inside: avoid; }
             .cv-exp-date { font-size: 8.5pt; color: #555; font-weight: 600; padding-top: 1pt; line-height: 1.4; }
             .cv-exp-role { font-size: 11pt; font-weight: 700; color: #0a0a0a; margin: 0 0 1pt 0; line-height: 1.3; }
             .cv-exp-company { font-size: 9.5pt; color: #333; margin: 0 0 2pt 0; font-weight: 600; }
@@ -921,41 +929,63 @@
         <div class="cv-header">
             <div class="cv-name-block">
                 <h1 class="cv-name">Wahyu Illahi Ramadhan</h1>
-                <p class="cv-title">Civil Drafter &amp; Quantity Surveyor · Site Engineer</p>
+                <p class="cv-title">Civil Drafter &amp; AutoCAD Specialist · 10+ Tahun Pengalaman</p>
             </div>
             <div class="cv-contact-block">
-                <div><strong>Telp / WA</strong> &nbsp;+62 822-8575-4080</div>
-                <div><strong>LinkedIn</strong> &nbsp;linkedin.com/in/adhan-ab3a07195</div>
-                <div><strong>Lokasi</strong> &nbsp;Bekasi, Jawa Barat</div>
+                <div>+62 822-8575-4080 </div>
+                <div> Bekasi, Jawa Barat</div>
             </div>
         </div>
+
         <div class="cv-section">
             <div class="cv-section-title">Profil Profesional</div>
-            <p class="cv-summary">Profesional teknik sipil dengan pengalaman lapangan lebih dari 10 tahun (sejak 2014) dalam peran Drafter, Quantity Surveyor, dan Site Engineer. Kompeten dalam penyusunan Gambar Kerja (AutoCAD, SketchUp), Rencana Anggaran Biaya (RAB), dan Rencana Kerja dan Syarat-syarat (RKS). Berpengalaman menangani proyek infrastruktur, gedung, renovasi, dan jembatan antar kampung.</p>
+            <p class="cv-summary">Civil Drafter &amp; AutoCAD Specialist dengan 10+ tahun rekam jejak di proyek gedung, infrastruktur, dan bandar udara. Menghasilkan 500+ lembar gambar kerja siap konstruksi — akurat, tepat waktu, dan sesuai standar teknis. Kompeten dalam AutoCAD, SketchUp, RAB/BQ, RKS, dan as-built drawing. Berpengalaman lintas peran: Drafter, QS, Inspector, dan Site Manager.</p>
         </div>
+
         <div class="cv-two-col">
+            <!-- KOLOM KIRI: Pengalaman -->
             <div>
                 <div class="cv-section">
                     <div class="cv-section-title">Pengalaman Kerja</div>
-                    <div class="cv-exp-item"><div class="cv-exp-date">Jan 2023 — Sekarang</div><div class="cv-exp-right"><p class="cv-exp-role">Civil Drafter</p><p class="cv-exp-company">Bumantara Karya Amerta — Bekasi</p><p class="cv-exp-desc">Pengembangan dokumen teknis (Gambar Kerja &amp; RKS) dengan AutoCAD dan SketchUp; koordinasi teknis lintas tim.</p></div></div>
-                    <div class="cv-exp-item"><div class="cv-exp-date">Jul 2022 — Des 2022</div><div class="cv-exp-right"><p class="cv-exp-role">Site Project Manager</p><p class="cv-exp-company">Sarana Anugrah Rekacipta — Jakarta</p><p class="cv-exp-desc">Manajemen tim lapangan dan logistik material proyek jembatan antar kampung.</p></div></div>
-                    <div class="cv-exp-item"><div class="cv-exp-date">Mar 2022 — Jul 2022</div><div class="cv-exp-right"><p class="cv-exp-role">Quantity Surveyor</p><p class="cv-exp-company">Mulia Jaya Abadi — Jakarta</p></div></div>
+
+                    <!-- JOB 1 — DESKRIPSI PANJANG -->
+                    <div class="cv-exp-item">
+                        <div class="cv-exp-date">Jan 2023 — Sekarang</div>
+                        <div class="cv-exp-right">
+                            <p class="cv-exp-role">Civil Drafter</p>
+                            <p class="cv-exp-company">Bumantara Karya Amerta — Bekasi</p>
+                            <p class="cv-exp-desc">Memproduksi 10+ paket gambar kerja/tahun (arsitektur, struktur, MEP) untuk proyek bandar udara via AutoCAD & SketchUp, berkoordinasi dengan tim engineer untuk meminimalkan revisi berulang..</p>
+                        </div>
+                    </div>
+
+                    <!-- JOB 2 — DESKRIPSI PANJANG -->
+                    <div class="cv-exp-item">
+                        <div class="cv-exp-date">Jul 2022 — Des 2022</div>
+                        <div class="cv-exp-right">
+                            <p class="cv-exp-role">Site Project Manager</p>
+                            <p class="cv-exp-company">Sarana Anugrah Rekacipta — Jakarta</p>
+                            <p class="cv-exp-desc">Memimpin tim lapangan 15+ orang dalam pelaksanaan dan logistik material proyek pembangunan jembatan antar kampung, selesai tepat waktu dengan 0 insiden keselamatan.</p>
+                        </div>
+                    </div>
+
+                    <!-- JOB LAMA — tanpa deskripsi, hemat ruang -->
+                    <div class="cv-exp-item"><div class="cv-exp-date">Mar — Jul 2022</div><div class="cv-exp-right"><p class="cv-exp-role">Quantity Surveyor</p><p class="cv-exp-company">Mulia Jaya Abadi — Jakarta</p></div></div>
                     <div class="cv-exp-item"><div class="cv-exp-date">Agu 2021 — Jan 2022</div><div class="cv-exp-right"><p class="cv-exp-role">Inspector Konsultan</p><p class="cv-exp-company">Citra Tama Arsitek — Kerinci, Jambi</p></div></div>
                     <div class="cv-exp-item"><div class="cv-exp-date">Jul 2020 — Jul 2021</div><div class="cv-exp-right"><p class="cv-exp-role">QS &amp; Drafter (Freelance)</p><p class="cv-exp-company">Renovasi SMK N 8 &amp; UNAND — Padang</p></div></div>
                     <div class="cv-exp-item"><div class="cv-exp-date">Nov 2019 — Jun 2020</div><div class="cv-exp-right"><p class="cv-exp-role">Drafter &amp; QS</p><p class="cv-exp-company">Pesantren Dar el-Iman — Padang</p></div></div>
-                    <div class="cv-exp-item"><div class="cv-exp-date">Sep 2019 — Nov 2019</div><div class="cv-exp-right"><p class="cv-exp-role">Creative Designer</p><p class="cv-exp-company">Haluan Digital Media — Padang (Magang)</p></div></div>
-                    <div class="cv-exp-item"><div class="cv-exp-date">Jan 2019 — Mar 2019</div><div class="cv-exp-right"><p class="cv-exp-role">Drafter</p><p class="cv-exp-company">Japutra Teknikindo — Padang (Magang)</p></div></div>
-                    <div class="cv-exp-item"><div class="cv-exp-date">Agu 2018 — Des 2018</div><div class="cv-exp-right"><p class="cv-exp-role">Guru Teknik Bangunan</p><p class="cv-exp-company">SMK N 2 Sijunjung (Magang)</p></div></div>
-                    <div class="cv-exp-item"><div class="cv-exp-date">Jun 2015 — Agu 2015</div><div class="cv-exp-right"><p class="cv-exp-role">Drafter</p><p class="cv-exp-company">Karya Cipta Sentosa — Jambi</p></div></div>
-                    <div class="cv-exp-item"><div class="cv-exp-date">Agu 2014 — Des 2014</div><div class="cv-exp-right"><p class="cv-exp-role">Drafter</p><p class="cv-exp-company">Asri Konsultan — Padang (Magang)</p></div></div>
+                    <div class="cv-exp-item"><div class="cv-exp-date">2018 — 2019</div><div class="cv-exp-right"><p class="cv-exp-role">Drafter (Magang) &amp; Guru Teknik Bangunan (Magang)</p><p class="cv-exp-company">Japutra Teknikindo · SMK N 2 Sijunjung</p></div></div>
+                    <div class="cv-exp-item"><div class="cv-exp-date">2014 — 2015</div><div class="cv-exp-right"><p class="cv-exp-role">Drafter (Magang &amp; Kontrak)</p><p class="cv-exp-company">Asri Konsultan · Karya Cipta Sentosa</p></div></div>
                 </div>
             </div>
+
+            <!-- KOLOM KANAN -->
             <div>
                 <div class="cv-section">
                     <div class="cv-section-title">Pendidikan</div>
                     <div class="cv-edu-item"><div class="cv-edu-year">2015 — 2019</div><div><p class="cv-edu-school">Universitas Negeri Padang <span class="cv-badge">S1</span></p><p class="cv-edu-major">Teknik Sipil</p></div></div>
                     <div class="cv-edu-item"><div class="cv-edu-year">2012 — 2015</div><div><p class="cv-edu-school">SMK N 2 Sijunjung</p><p class="cv-edu-major">Teknik Gambar Bangunan</p></div></div>
                 </div>
+
                 <div class="cv-section">
                     <div class="cv-section-title">Keahlian Teknis</div>
                     <div style="display:block;">
@@ -965,31 +995,34 @@
                         <div class="cv-skill-item" style="display:flex;align-items:center;gap:6pt;margin-bottom:5pt;"><span class="cv-skill-name">MS Word</span><div class="cv-skill-bar-wrap"><div class="cv-skill-bar-fill" style="width:90%"></div></div><span class="cv-skill-pct">Mahir</span></div>
                     </div>
                 </div>
+
                 <div class="cv-section">
                     <div class="cv-section-title">Kompetensi Utama</div>
-                    <p style="font-size:9.5pt;color:#333;line-height:1.7;margin:0;">Gambar Kerja Arsitektur &amp; Struktur &nbsp;·&nbsp; Penyusunan RAB &amp; BQ &nbsp;·&nbsp; Rencana Kerja dan Syarat-syarat (RKS) &nbsp;·&nbsp; Pengawasan Lapangan &nbsp;·&nbsp; Pemodelan 3D &nbsp;·&nbsp; Manajemen Material &amp; Logistik &nbsp;·&nbsp; Koordinasi Tim</p>
+                    <p style="font-size:9pt;color:#333;line-height:1.7;margin:0;">Gambar Kerja Arsitektur &amp; Struktur &nbsp;·&nbsp; RAB &amp; BQ &nbsp;·&nbsp; RKS &nbsp;·&nbsp; As-Built Drawing &nbsp;·&nbsp; Pengawasan Lapangan &nbsp;·&nbsp; Pemodelan 3D &nbsp;·&nbsp; Koordinasi Multidisiplin</p>
                 </div>
+
                 <div class="cv-section cv-qr-section">
-                    <div class="cv-section-title">Portfolio Digital</div>
+                    <div class="cv-section-title">Portfolio &amp; Profil Digital</div>
                     <div style="display:flex;gap:8pt;">
                         <div style="flex:1;background:#f9f9f9;border:0.75pt solid #ddd;border-radius:4pt;padding:7pt 8pt;text-align:center;">
                             <div id="cv-qrcode-web" style="display:flex;justify-content:center;margin-bottom:4pt;"></div>
                             <p style="font-size:7.5pt;font-weight:700;color:#111;margin:0 0 2pt 0;">Web CV Interaktif</p>
-                            <p style="font-size:6.5pt;color:#888;margin:0;word-break:break-all;">wahyuillahi0-svg.github.io<br>/adhanCv/</p>
+                            <p style="font-size:6.5pt;color:#888;margin:0;word-break:break-all;">wahyuillahi0-svg.github.io/adhanCv/</p>
                         </div>
                         <div style="flex:1;background:#f9f9f9;border:0.75pt solid #ddd;border-radius:4pt;padding:7pt 8pt;text-align:center;">
                             <div id="cv-qrcode-linkedin" style="display:flex;justify-content:center;margin-bottom:4pt;"></div>
                             <p style="font-size:7.5pt;font-weight:700;color:#111;margin:0 0 2pt 0;">LinkedIn Profile</p>
-                            <p style="font-size:6.5pt;color:#888;margin:0;word-break:break-all;">linkedin.com/in/<br>adhan-ab3a07195</p>
+                            <p style="font-size:6.5pt;color:#888;margin:0;word-break:break-all;">linkedin.com/in/adhan-ab3a07195</p>
                         </div>
                     </div>
-                    <p style="font-size:7pt;color:#aaa;text-align:center;margin:5pt 0 0 0;font-style:italic;">Arahkan kamera HP untuk membuka profil digital</p>
+                    <p style="font-size:7pt;color:#aaa;text-align:center;margin:5pt 0 0 0;font-style:italic;">Scan untuk portfolio gambar kerja, sertifikat &amp; info lengkap</p>
                 </div>
             </div>
         </div>
+
         <div class="cv-footer">
             <span>Wahyu Illahi Ramadhan &nbsp;·&nbsp; Bekasi, Indonesia</span>
-            <span>Dokumen ini dapat diverifikasi melalui LinkedIn atau portfolio Google Drive</span>
+            <span>Verifikasi via LinkedIn · Portfolio &amp; Sertifikat tersedia di Web CV</span>
             <span>+62 822-8575-4080</span>
         </div>
     </div>
@@ -1333,12 +1366,13 @@
 
     <!-- HERO -->
     <header class="min-h-screen flex flex-col justify-center px-8 md:px-24 bg-[#fcfcfc]">
+        <div class="mb-4 opacity-0" id="hero-tag" style="font-size:11px;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;color:#3b82f6;">Civil Drafter · AutoCAD Specialist · Bekasi</div>
         <h1 id="hero-title" class="text-[8vw] md:text-[6vw] font-bold leading-[0.9] tracking-tighter opacity-0 translate-y-10 uppercase">
-            DRAFTER QS & <br> ENGINEER
+            CIVIL <br> DRAFTER
         </h1>
         <div class="mt-12 flex flex-col md:flex-row gap-8 items-start">
             <p id="hero-sub" class="max-w-xl text-gray-500 text-lg opacity-0 leading-relaxed">
-                Expert dalam manajemen proyek infrastruktur, penyusunan RAB/RKS, dan visualisasi arsitektur teknis dengan pengalaman lapangan sejak 2014.
+                Civil Drafter dengan 10+ tahun rekam jejak di proyek gedung, infrastruktur, dan bandar udara. Menghasilkan 500+ lembar gambar kerja siap konstruksi — akurat, tepat waktu, dan sesuai standar.
             </p>
             <div id="hero-cta" class="opacity-0 flex gap-4 flex-wrap">
                 <!-- PORTFOLIO BUTTON — hero -->
@@ -1347,39 +1381,64 @@
                 <a href="https://wa.me/6282285754080" class="border border-[#25D366] px-8 py-4 text-xs font-bold rounded-full text-[#25D366] hover:bg-[#25D366] hover:text-white transition uppercase">WhatsApp</a>
             </div>
         </div>
+        <!-- Stats bar -->
+        <div id="hero-stats" class="mt-16 flex flex-wrap gap-10 opacity-0">
+            <div>
+                <div class="text-3xl font-bold tracking-tighter">10+</div>
+                <div class="text-xs text-gray-400 uppercase tracking-widest mt-1">Tahun Pengalaman</div>
+            </div>
+            <div style="width:1px;background:#e5e7eb;"></div>
+            <div>
+                <div class="text-3xl font-bold tracking-tighter">500+</div>
+                <div class="text-xs text-gray-400 uppercase tracking-widest mt-1">Lembar Gambar Kerja</div>
+            </div>
+            <div style="width:1px;background:#e5e7eb;"></div>
+            <div>
+                <div class="text-3xl font-bold tracking-tighter">15+</div>
+                <div class="text-xs text-gray-400 uppercase tracking-widest mt-1">Proyek Selesai</div>
+        </div>
     </header>
 
 
     <!-- BLUEPRINTS GALLERY -->
     <section id="blueprints" class="py-24 bg-[#0a0a0a] text-white px-8 md:px-24">
-        <div class="flex justify-between items-center mb-12">
+        <div class="flex justify-between items-center mb-4">
             <h2 class="text-xs font-bold uppercase tracking-[0.4em] text-blue-500">Technical Projects Gallery</h2>
             <button onclick="openPortfolio()" class="text-xs font-bold text-white border-b border-white pb-1 hover:text-blue-500 hover:border-blue-500 transition bg-transparent cursor-pointer">Buka Portfolio Lengkap →</button>
         </div>
+        <p class="text-gray-500 text-xs mb-12 uppercase tracking-widest">Gedung 4 Lantai</p>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div class="blueprint-card aspect-square bg-white group overflow-hidden rounded-lg shadow-inner" data-aos="fade-up">
-                <img src="images/tampak-depan.jpg" alt="tampak-depan" class="w-full h-full object-contain p-2 transition duration-700">
+            <div class="blueprint-card bg-white group overflow-hidden rounded-lg shadow-inner" data-aos="fade-up">
+                <div class="bg-[#111] text-blue-400 text-[9px] font-bold uppercase tracking-widest px-3 py-1">Tampak Depan</div>
+                <div class="aspect-square"><img src="images/tampak-depan.jpg" alt="tampak-depan" class="w-full h-full object-contain p-2 transition duration-700"></div>
             </div>
-            <div class="blueprint-card aspect-square bg-white group overflow-hidden rounded-lg shadow-inner" data-aos="fade-up" data-aos-delay="300">
-                <img src="images/tampak-kanan.jpg" alt="tampak-kanan" class="w-full h-full object-contain p-2 transition duration-700">
+            <div class="blueprint-card bg-white group overflow-hidden rounded-lg shadow-inner" data-aos="fade-up" data-aos-delay="100">
+                <div class="bg-[#111] text-blue-400 text-[9px] font-bold uppercase tracking-widest px-3 py-1">Tampak Kanan</div>
+                <div class="aspect-square"><img src="images/tampak-kanan.jpg" alt="tampak-kanan" class="w-full h-full object-contain p-2 transition duration-700"></div>
             </div>
-            <div class="blueprint-card aspect-square bg-white group overflow-hidden rounded-lg shadow-inner" data-aos="fade-up" data-aos-delay="100">
-                <img src="images/potongan-a-a.jpg" alt="potongan-a-a" class="w-full h-full object-contain p-2 transition duration-700">
+            <div class="blueprint-card bg-white group overflow-hidden rounded-lg shadow-inner" data-aos="fade-up" data-aos-delay="200">
+                <div class="bg-[#111] text-blue-400 text-[9px] font-bold uppercase tracking-widest px-3 py-1">Potongan A-A</div>
+                <div class="aspect-square"><img src="images/potongan-a-a.jpg" alt="potongan-a-a" class="w-full h-full object-contain p-2 transition duration-700"></div>
             </div>
-            <div class="blueprint-card aspect-square bg-white group overflow-hidden rounded-lg shadow-inner" data-aos="fade-up">
-                <img src="images/potonganb-b.jpg" alt="potonganb-b" class="w-full h-full object-contain p-2 transition duration-700">
+            <div class="blueprint-card bg-white group overflow-hidden rounded-lg shadow-inner" data-aos="fade-up" data-aos-delay="300">
+                <div class="bg-[#111] text-blue-400 text-[9px] font-bold uppercase tracking-widest px-3 py-1">Potongan B-B</div>
+                <div class="aspect-square"><img src="images/potonganb-b.jpg" alt="potonganb-b" class="w-full h-full object-contain p-2 transition duration-700"></div>
             </div>
-            <div class="blueprint-card aspect-square bg-white group overflow-hidden rounded-lg shadow-inner" data-aos="fade-up" data-aos-delay="200">
-                <img src="images/denah-lantai-1.jpg" alt="denah-lantai-1" class="w-full h-full object-contain p-2 transition duration-700">
+            <div class="blueprint-card bg-white group overflow-hidden rounded-lg shadow-inner" data-aos="fade-up" data-aos-delay="100">
+                <div class="bg-[#111] text-blue-400 text-[9px] font-bold uppercase tracking-widest px-3 py-1">Denah Lantai 1</div>
+                <div class="aspect-square"><img src="images/denah-lantai-1.jpg" alt="denah-lantai-1" class="w-full h-full object-contain p-2 transition duration-700"></div>
             </div>
-            <div class="blueprint-card aspect-square bg-white group overflow-hidden rounded-lg shadow-inner" data-aos="fade-up">
-                <img src="images/lantai-2.jpg" alt="lantai-2" class="w-full h-full object-contain p-2 transition duration-700">
+            <div class="blueprint-card bg-white group overflow-hidden rounded-lg shadow-inner" data-aos="fade-up">
+                <div class="bg-[#111] text-blue-400 text-[9px] font-bold uppercase tracking-widest px-3 py-1">Denah Lantai 2</div>
+                <div class="aspect-square"><img src="images/lantai-2.jpg" alt="lantai-2" class="w-full h-full object-contain p-2 transition duration-700"></div>
             </div>
-            <div class="blueprint-card aspect-square bg-white group overflow-hidden rounded-lg shadow-inner" data-aos="fade-up">
-                <img src="images/lantai-3.jpg" alt="lantai-3" class="w-full h-full object-contain p-2 transition duration-700">
+            <div class="blueprint-card bg-white group overflow-hidden rounded-lg shadow-inner" data-aos="fade-up">
+                <div class="bg-[#111] text-blue-400 text-[9px] font-bold uppercase tracking-widest px-3 py-1">Denah Lantai 3</div>
+                <div class="aspect-square"><img src="images/lantai-3.jpg" alt="lantai-3" class="w-full h-full object-contain p-2 transition duration-700"></div>
             </div>
-            <div class="blueprint-card aspect-square bg-white group overflow-hidden rounded-lg shadow-inner" data-aos="fade-up">
-                <img src="images/lantai-4.jpg" alt="lantai-4" class="w-full h-full object-contain p-2 transition duration-700">
+            <div class="blueprint-card bg-white group overflow-hidden rounded-lg shadow-inner" data-aos="fade-up">
+                <div class="bg-[#111] text-blue-400 text-[9px] font-bold uppercase tracking-widest px-3 py-1">Denah Lantai 4</div>
+                <div class="aspect-square"><img src="images/lantai-4.jpg" alt="lantai-4" class="w-full h-full object-contain p-2 transition duration-700"></div>
             </div>
         </div>
     </section>
@@ -1389,20 +1448,19 @@
     <section id="experience" class="py-32 px-8 md:px-24 max-w-6xl mx-auto">
         <h2 class="text-xs font-bold uppercase tracking-[0.4em] text-gray-400 mb-20" data-aos="fade-up">Full Professional History</h2>
         <div class="relative">
-            <div class="experience-node" data-aos="fade-up"><span class="text-blue-600 font-bold text-xs uppercase">Jan 2023 — Sekarang</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Civil Drafter</h3><p class="font-semibold text-gray-800">Bumantara Karya Amerta (Konsultan Bandar Udara) — Bekasi</p><p class="text-gray-500 text-sm mt-2 max-w-2xl">Bertanggung jawab dalam pengembangan dokumen teknis (Gambar Kerja & RKS) menggunakan AutoCAD dan SketchUp, serta koordinasi teknis di dalam tim.</p></div>
-            <div class="experience-node" data-aos="fade-up"><span class="text-gray-400 font-bold text-xs uppercase">Jul 2022 — Des 2022</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Site Project Manager</h3><p class="font-semibold text-gray-800">Sarana Anugrah Rekacipta — Jakarta</p><p class="text-gray-500 text-sm mt-2">Manajemen tim dan logistik material proyek jembatan antar kampung.</p></div>
-            <div class="experience-node" data-aos="fade-up"><span class="text-gray-400 font-bold text-xs uppercase">Mar 2022 — Jul 2022</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Quantity Surveyor</h3><p class="font-semibold text-gray-800">Mulia Jaya Abadi — Jakarta</p></div>
-            <div class="experience-node" data-aos="fade-up"><span class="text-gray-400 font-bold text-xs uppercase">Agu 2021 — Jan 2022</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Inspector Konsultan</h3><p class="font-semibold text-gray-800">Citra Tama Arsitek — Kerinci, Jambi</p></div>
-            <div class="experience-node" data-aos="fade-up"><span class="text-gray-400 font-bold text-xs uppercase">Jul 2020 — Jul 2021</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">QS & Drafter (Freelance)</h3><p class="font-semibold text-gray-800">Project Renovasi SMK N 8 & UNAND — Padang</p></div>
-            <div class="experience-node" data-aos="fade-up"><span class="text-gray-400 font-bold text-xs uppercase">Nov 2019 — Jun 2020</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Drafter & QS</h3><p class="font-semibold text-gray-800">Pesantren Dar el-Iman — Padang</p></div>
-            <div class="experience-node" data-aos="fade-up"><span class="text-gray-400 font-bold text-xs uppercase">Sep 2019 — Nov 2019</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Creative Designer (Magang)</h3><p class="font-semibold text-gray-800">Haluan Digital Media — Padang</p></div>
-            <div class="experience-node" data-aos="fade-up"><span class="text-gray-400 font-bold text-xs uppercase">Jan 2019 — Mar 2019</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Drafter (Magang)</h3><p class="font-semibold text-gray-800">Japutra Teknikindo — Padang</p></div>
-            <div class="experience-node" data-aos="fade-up"><span class="text-gray-400 font-bold text-xs uppercase">Agu 2018 — Des 2018</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Teacher (Magang)</h3><p class="font-semibold text-gray-800">SMK N 2 SIJUNJUNG — Sijunjung</p></div>
-            <div class="experience-node" data-aos="fade-up"><span class="text-gray-400 font-bold text-xs uppercase">Jun 2015 — Agu 2015</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Drafter</h3><p class="font-semibold text-gray-800">Karya Cipta Sentosa — Jambi</p></div>
-            <div class="experience-node" data-aos="fade-up"><span class="text-gray-400 font-bold text-xs uppercase">Agu 2014 — Des 2014</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Drafter (Magang)</h3><p class="font-semibold text-gray-800">Asri Konsultan — Padang</p></div>
+        <div class="experience-node" data-aos="fade-left" data-aos-delay="0"><span class="text-blue-600 font-bold text-xs uppercase">Jan 2023 — Sekarang</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Civil Drafter</h3><p class="font-semibold text-gray-800">Bumantara Karya Amerta (Konsultan Bandar Udara) — Bekasi</p><p class="text-gray-500 text-sm mt-2 max-w-2xl">Memproduksi 10+ paket gambar kerja per tahun (arsitektur, struktur, MEP) untuk proyek konsultan bandar udara menggunakan AutoCAD & SketchUp. Berkoordinasi langsung dengan tim engineer sehingga tingkat revisi berulang turun signifikan.</p></div>
+            <div class="experience-node" data-aos="fade-left" data-aos-delay="80"><span class="text-gray-400 font-bold text-xs uppercase">Jul 2022 — Des 2022</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Site Project Manager</h3><p class="font-semibold text-gray-800">Sarana Anugrah Rekacipta — Jakarta</p><p class="text-gray-500 text-sm mt-2 max-w-2xl">Memimpin tim lapangan 15+ orang untuk mengaplikasikan gambar rencana dan mengelola logistik material proyek pembangunan jembatan antar kampung. Proyek selesai sesuai jadwal rencana dengan 0 insiden keselamatan.</p></div>
+            <div class="experience-node" data-aos="fade-left" data-aos-delay="160"><span class="text-gray-400 font-bold text-xs uppercase">Mar 2022 — Jul 2022</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Quantity Surveyor</h3><p class="font-semibold text-gray-800">Mulia Jaya Abadi — Jakarta</p><p class="text-gray-500 text-sm mt-2 max-w-2xl">Menyusun RAB dan BQ berdasarkan hasil pengukuran lapangan langsung — akurasi estimasi diakui tim dengan deviasi anggaran di bawah 5%. Sekaligus memproduksi gambar kerja pendukung dan menyusun laporan progres mingguan untuk klien.</p></div>
+            <div class="experience-node" data-aos="fade-left" data-aos-delay="240"><span class="text-gray-400 font-bold text-xs uppercase">Agu 2021 — Jan 2022</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Inspector Konsultan</h3><p class="font-semibold text-gray-800">Citra Tama Arsitek — Kerinci, Jambi</p><p class="text-gray-500 text-sm mt-2 max-w-2xl">Mengawasi pelaksanaan pekerjaan lapangan agar sesuai gambar kerja dan spesifikasi kontrak. Berhasil mengidentifikasi 10+ ketidaksesuaian teknis sebelum serah terima, mencegah potensi pekerjaan ulang. Terlibat langsung dalam penyusunan dan verifikasi as-built drawing final.</p></div>
+            <div class="experience-node" data-aos="fade-left" data-aos-delay="320"><span class="text-gray-400 font-bold text-xs uppercase">Jul 2020 — Jul 2021</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">QS & Drafter (Freelance)</h3><p class="font-semibold text-gray-800">Renovasi SMK N 8 & Universitas Andalas — Padang</p><p class="text-gray-500 text-sm mt-2 max-w-2xl">Menangani 2 proyek renovasi gedung kampus secara bersamaan: memproduksi as-built drawing, gambar rencana, dan melakukan perhitungan volume pekerjaan. Seluruh dokumen diserahkan tepat waktu dan diterima tanpa revisi mayor oleh pihak kampus.</p></div>
+            <div class="experience-node" data-aos="fade-up" data-aos-delay="0"><span class="text-gray-400 font-bold text-xs uppercase">Nov 2019 — Jun 2020</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Drafter &amp; QS</h3><p class="font-semibold text-gray-800">Pesantren Dar el-Iman — Padang</p><p class="text-gray-500 text-sm mt-2 max-w-2xl">Memproduksi set gambar kerja lengkap (denah, tampak, potongan, detail) untuk gedung asrama 4 lantai dari nol hingga siap konstruksi. Sekaligus menyusun RAB dan melakukan pengawasan lapangan.</p></div>
+            <div class="experience-node exp-early" data-aos="fade-up" data-aos-delay="100"><span class="text-gray-300 font-bold text-xs uppercase">Sep 2019 — Nov 2019</span><h3 class="text-xl font-bold mt-1 uppercase tracking-tighter">Creative Designer</h3><p class="font-semibold text-gray-600">Haluan Digital Media — Padang <span class="exp-badge-magang">Magang</span></p></div>
+            <div class="experience-node exp-early" data-aos="fade-up" data-aos-delay="150"><span class="text-gray-300 font-bold text-xs uppercase">Jan 2019 — Mar 2019</span><h3 class="text-xl font-bold mt-1 uppercase tracking-tighter">Drafter</h3><p class="font-semibold text-gray-600">Japutra Teknikindo — Padang <span class="exp-badge-magang">Magang</span></p></div>
+            <div class="experience-node exp-early" data-aos="fade-up" data-aos-delay="200"><span class="text-gray-300 font-bold text-xs uppercase">Agu 2018 — Des 2018</span><h3 class="text-xl font-bold mt-1 uppercase tracking-tighter">Guru Teknik Bangunan</h3><p class="font-semibold text-gray-600">SMK N 2 Sijunjung <span class="exp-badge-magang">Magang</span></p></div>
+            <div class="experience-node exp-early" data-aos="fade-up" data-aos-delay="250"><span class="text-gray-300 font-bold text-xs uppercase">Jun 2015 — Agu 2015</span><h3 class="text-xl font-bold mt-1 uppercase tracking-tighter">Drafter</h3><p class="font-semibold text-gray-600">Karya Cipta Sentosa — Jambi</p></div>
+            <div class="experience-node exp-early" data-aos="fade-up" data-aos-delay="300"><span class="text-gray-300 font-bold text-xs uppercase">Agu 2014 — Des 2014</span><h3 class="text-xl font-bold mt-1 uppercase tracking-tighter">Drafter</h3><p class="font-semibold text-gray-600">Asri Konsultan — Padang <span class="exp-badge-magang">Magang</span></p></div>
         </div>
     </section>
-
 
     <!-- EDUCATION -->
     <section class="py-20 bg-[#f4f7f6]">
@@ -1418,13 +1476,40 @@
     <section class="py-20">
         <div class="skills-container">
             <h2 class="skills-h2">Technical Expertise</h2>
-            <div class="skill-card"><div class="skill-info"><span class="skill-name">AutoCAD</span><span class="skill-level-text">Mahir</span></div><div class="progress-bar"><div class="progress-fill" style="width:95%;"></div></div><p class="skill-desc">Spesialis di gambar teknik arsitektur, detail struktur yang rumit, dan pekerjaan infrastruktur.</p></div>
-            <div class="skill-card"><div class="skill-info"><span class="skill-name">SketchUp</span><span class="skill-level-text">Menengah</span></div><div class="progress-bar"><div class="progress-fill" style="width:85%;"></div></div><p class="skill-desc">Pemodelan 3D untuk visualisasi desain arsitektur.</p></div>
-            <div class="skill-card"><div class="skill-info"><span class="skill-name">MS Excel</span><span class="skill-level-text">Menengah</span></div><div class="progress-bar"><div class="progress-fill" style="width:83%;"></div></div><p class="skill-desc">Pengolahan data teknis, Rencana Anggaran Biaya (RAB), dan automasi formula.</p></div>
-            <div class="skill-card"><div class="skill-info"><span class="skill-name">MS Word</span><span class="skill-level-text">Mahir</span></div><div class="progress-bar"><div class="progress-fill" style="width:90%;"></div></div><p class="skill-desc">Penyusunan dokumen teknis, RKS, dan laporan proyek profesional.</p></div>
+            <div class="skill-card"><div class="skill-info"><span class="skill-name">AutoCAD 2D</span><span class="skill-level-text">Mahir</span></div><div class="progress-bar"><div class="progress-fill" style="width:95%;"></div></div><p class="skill-desc">Gambar kerja arsitektur & struktur: denah, tampak, potongan, detail, as-built drawing, shop drawing.</p></div>
+            <div class="skill-card"><div class="skill-info"><span class="skill-name">SketchUp 3D</span><span class="skill-level-text">Menengah</span></div><div class="progress-bar"><div class="progress-fill" style="width:75%;"></div></div><p class="skill-desc">Visualisasi 3D desain arsitektur untuk presentasi dan koordinasi klien.</p></div>
+            <div class="skill-card"><div class="skill-info"><span class="skill-name">MS Excel (RAB)</span><span class="skill-level-text">Menengah</span></div><div class="progress-bar"><div class="progress-fill" style="width:80%;"></div></div><p class="skill-desc">Penyusunan Rencana Anggaran Biaya (RAB), Bill of Quantity (BQ), dan analisa harga satuan.</p></div>
+            <div class="skill-card"><div class="skill-info"><span class="skill-name">Dokumen Teknis (RKS)</span><span class="skill-level-text">Mahir</span></div><div class="progress-bar"><div class="progress-fill" style="width:90%;"></div></div><p class="skill-desc">Penyusunan RKS, laporan proyek, spesifikasi teknis, dan dokumen tender.</p></div>
         </div>
     </section>
 
+
+    <!-- KOMPETENSI DRAFTER -->
+    <section class="py-16 bg-[#0a0a0a] text-white px-8 md:px-24">
+        <h2 class="text-xs font-bold uppercase tracking-[0.4em] text-blue-500 mb-10" data-aos="fade-up">Spesialisasi Gambar</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="border border-gray-800 rounded-lg p-5 hover:border-blue-500 transition">
+                <div class="text-blue-400 text-xl mb-2">⬜</div>
+                <div class="font-bold text-sm uppercase tracking-wide mb-1">Gambar Arsitektur</div>
+                <div class="text-gray-500 text-xs">Denah, tampak, potongan, detail finishing</div>
+            </div>
+            <div class="border border-gray-800 rounded-lg p-5 hover:border-blue-500 transition">
+                <div class="text-blue-400 text-xl mb-2">🏗️</div>
+                <div class="font-bold text-sm uppercase tracking-wide mb-1">Gambar Struktur</div>
+                <div class="text-gray-500 text-xs">Pondasi, kolom, balok, pelat, detail struktur</div>
+            </div>
+            <div class="border border-gray-800 rounded-lg p-5 hover:border-blue-500 transition">
+                <div class="text-blue-400 text-xl mb-2">📋</div>
+                <div class="font-bold text-sm uppercase tracking-wide mb-1">As-Built Drawing</div>
+                <div class="text-gray-500 text-xs">Dokumentasi gambar sesuai kondisi terpasang</div>
+            </div>
+            <div class="border border-gray-800 rounded-lg p-5 hover:border-blue-500 transition">
+                <div class="text-blue-400 text-xl mb-2">🏢</div>
+                <div class="font-bold text-sm uppercase tracking-wide mb-1">Proyek Ditangani</div>
+                <div class="text-gray-500 text-xs">Gedung, pesantren, kampus, jembatan, bandara</div>
+            </div>
+        </div>
+    </section>
 
     <!-- CERTIFICATES — UPDATED: Training Sertifikat sekarang membuka book popup -->
     <section id="certificates" class="py-24 bg-[#f9f9f9] px-8 md:px-24 text-center">
@@ -1453,16 +1538,16 @@
     <!-- CONTACT -->
     <footer id="contact" class="py-32 px-8 md:px-24 border-t border-gray-100 text-center bg-white">
         <div data-aos="fade-up">
-            <h2 class="text-5xl font-bold tracking-tighter mb-12 uppercase">HUBUNGI SAYA.</h2>
+            <h2 class="text-5xl font-bold tracking-tighter mb-4 uppercase">HUBUNGI SAYA.</h2>
             <div class="flex flex-col items-center gap-6">
                 <a href="tel:+6282285754080" class="text-2xl font-light hover:text-blue-600 transition tracking-tighter">0822-8575-4080</a>
                 <div class="flex gap-6">
                     <a href="https://www.linkedin.com/in/adhan-ab3a07195/" target="_blank" class="text-xs font-bold uppercase tracking-[0.2em] border-b border-black hover:text-blue-600 hover:border-blue-600">LinkedIn</a>
                     <button onclick="openPortfolio()" class="text-xs font-bold uppercase tracking-[0.2em] border-b border-black hover:text-blue-600 hover:border-blue-600 bg-transparent cursor-pointer">Portfolio</button>
-                    <button onclick="openCertificate()" class="text-xs font-bold uppercase tracking-[0.2em] border-b border-green-600 text-green-600 hover:text-green-800 hover:border-green-800 bg-transparent cursor-pointer">Sertifikat</button>
+                    <a href="https://wa.me/6282285754080" target="_blank" class="text-xs font-bold uppercase tracking-[0.2em] border-b border-[#25D366] text-[#25D366] hover:text-green-700 hover:border-green-700">WhatsApp</a>
                 </div>
             </div>
-            <p class="mt-20 text-[10px] text-gray-400 uppercase tracking-[0.5em]">Wahyu Illahi Ramadhan — Bekasi, Indonesia</p>
+            <p class="mt-20 text-[10px] text-gray-400 uppercase tracking-[0.5em]">Wahyu Illahi Ramadhan — Civil Drafter · AutoCAD Specialist · Bekasi, Indonesia</p>
         </div>
     </footer>
 
@@ -1476,7 +1561,8 @@
             <div style="font-size:12.5px;font-weight:700;color:#111;margin-bottom:3px;white-space:nowrap;">Simpan CV sebagai PDF</div>
             <div style="font-size:11px;color:#6b7280;line-height:1.4;">Klik di sini atau tekan <kbd style="background:#f3f4f6;border:1px solid #d1d5db;border-radius:4px;padding:1px 5px;font-size:10px;font-family:monospace;">Ctrl+P</kbd> lalu pilih <em>Save as PDF</em></div>
         </div>
-        <button onclick="event.stopPropagation();dismissToast()" style="position:absolute;top:8px;right:10px;background:none;border:none;cursor:pointer;color:#9ca3af;font-size:16px;line-height:1;padding:2px 4px;border-radius:4px;transition:color 0.2s;" onmouseover="this.style.color='#374151'" onmouseout="this.style.color='#9ca3af'">✕</button>
+        <button onclick="event.stopPropagation();dismissToast()" 
+style="position:absolute;top:8px;right:10px;background:none;border:none;cursor:pointer;color:#9ca3af;font-size:16px;line-height:1;padding:2px 4px;border-radius:4px;transition:color 0.2s;" onmouseover="this.style.color='#374151'" onmouseout="this.style.color='#9ca3af'">✕</button>
         <span style="position:absolute;top:12px;left:12px;width:8px;height:8px;border-radius:50%;background:#3b82f6;box-shadow:0 0 0 0 rgba(59,130,246,0.5);animation:pulse-dot 2s infinite;"></span>
     </div>
 
@@ -1488,10 +1574,12 @@
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({ duration: 800, once: true });
-        gsap.to("#hero-title", { opacity: 1, duration: 1.5, y: -10, ease: "power4.out" });
+        AOS.init({ duration: 800, once: true, easing: 'ease-out-cubic' });
+        gsap.to("#hero-tag",   { opacity: 1, duration: 0.8, delay: 0.2 });
+        gsap.to("#hero-title", { opacity: 1, duration: 1.5, y: -10, ease: "power4.out", delay: 0.1 });
         gsap.to("#hero-sub",   { opacity: 1, duration: 1, delay: 0.5 });
         gsap.to("#hero-cta",   { opacity: 1, duration: 1, delay: 0.8 });
+        gsap.to("#hero-stats", { opacity: 1, duration: 1, delay: 1.1 });
 
         // Print toast
         setTimeout(function() {
