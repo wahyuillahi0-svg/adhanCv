@@ -538,7 +538,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(5, 15, 10, 0.93);
+            background: rgba(5, 10, 20, 0.92);
             backdrop-filter: blur(8px);
             opacity: 0;
             pointer-events: none;
@@ -571,7 +571,7 @@
             top: 0;
             width: 50%;
             height: 100%;
-            background: linear-gradient(135deg, #071a0e 0%, #0a2a1a 50%, #061510 100%);
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0d1117 100%);
             border-radius: 4px 0 0 4px;
             display: flex;
             flex-direction: column;
@@ -591,15 +591,15 @@
                     0deg,
                     transparent,
                     transparent 39px,
-                    rgba(34,197,94,0.05) 39px,
-                    rgba(34,197,94,0.05) 40px
+                    rgba(59,130,246,0.06) 39px,
+                    rgba(59,130,246,0.06) 40px
                 ),
                 repeating-linear-gradient(
                     90deg,
                     transparent,
                     transparent 39px,
-                    rgba(34,197,94,0.03) 39px,
-                    rgba(34,197,94,0.03) 40px
+                    rgba(59,130,246,0.04) 39px,
+                    rgba(59,130,246,0.04) 40px
                 );
         }
         .cert-book-cover-spine {
@@ -608,8 +608,8 @@
             top: 0;
             width: 6px;
             height: 100%;
-            background: linear-gradient(to right, #14532d, #22c55e, #14532d);
-            box-shadow: 2px 0 12px rgba(34,197,94,0.4);
+            background: linear-gradient(to right, #1e3a5f, #2563eb, #1e3a5f);
+            box-shadow: 2px 0 12px rgba(37,99,235,0.4);
         }
         .cert-cover-title {
             font-family: 'EB Garamond', serif;
@@ -626,7 +626,7 @@
             font-family: 'Inter', sans-serif;
             font-size: clamp(8px, 1.1vw, 11px);
             font-weight: 600;
-            color: #22c55e;
+            color: #3b82f6;
             text-transform: uppercase;
             letter-spacing: 0.25em;
             margin-top: 10px;
@@ -636,7 +636,7 @@
         .cert-cover-divider {
             width: 48px;
             height: 2px;
-            background: linear-gradient(to right, transparent, #22c55e, transparent);
+            background: linear-gradient(to right, transparent, #3b82f6, transparent);
             margin: 14px 0;
             position: relative;
             z-index: 1;
@@ -645,7 +645,7 @@
             position: relative;
             z-index: 1;
             margin-top: 16px;
-            border: 1px solid rgba(34,197,94,0.4);
+            border: 1px solid rgba(59,130,246,0.4);
             border-radius: 4px;
             padding: 5px 12px;
             font-family: 'Inter', sans-serif;
@@ -674,11 +674,11 @@
             max-height: 360px;
             overflow-y: auto;
             scrollbar-width: thin;
-            scrollbar-color: rgba(34,197,94,0.4) transparent;
+            scrollbar-color: rgba(59,130,246,0.4) transparent;
         }
         .cert-selector::-webkit-scrollbar { width: 4px; }
         .cert-selector::-webkit-scrollbar-track { background: transparent; }
-        .cert-selector::-webkit-scrollbar-thumb { background: rgba(34,197,94,0.4); border-radius: 4px; }
+        .cert-selector::-webkit-scrollbar-thumb { background: rgba(59,130,246,0.4); border-radius: 4px; }
         .cert-selector-label {
             font-family: 'Inter', sans-serif;
             font-size: 9px;
@@ -694,7 +694,7 @@
             align-items: center;
             gap: 10px;
             background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(34,197,94,0.2);
+            border: 1px solid rgba(59,130,246,0.25);
             border-radius: 6px;
             padding: 9px 12px;
             cursor: pointer;
@@ -708,7 +708,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(90deg, rgba(21,128,61,0.18), transparent);
+            background: linear-gradient(90deg, rgba(37,99,235,0.15), transparent);
             opacity: 0;
             transition: opacity 0.25s ease;
         }
@@ -717,19 +717,19 @@
             opacity: 1;
         }
         .cert-btn:hover {
-            border-color: rgba(34,197,94,0.65);
+            border-color: rgba(59,130,246,0.7);
             transform: translateX(3px);
         }
         .cert-btn.active {
-            border-color: #22c55e;
-            background: rgba(21,128,61,0.18);
+            border-color: #3b82f6;
+            background: rgba(37,99,235,0.15);
         }
         .cert-btn-icon {
             width: 28px;
             height: 28px;
             border-radius: 4px;
-            background: rgba(34,197,94,0.15);
-            border: 1px solid rgba(34,197,94,0.35);
+            background: rgba(59,130,246,0.2);
+            border: 1px solid rgba(59,130,246,0.4);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -756,7 +756,7 @@
         }
         .cert-btn-arrow {
             font-size: 10px;
-            color: #22c55e;
+            color: #3b82f6;
             opacity: 0;
             transition: opacity 0.2s ease, transform 0.2s ease;
             flex-shrink: 0;
@@ -766,7 +766,7 @@
             opacity: 1;
             transform: translateX(2px);
         }
-        .cert-btn.active .cert-btn-title { color: #86efac; }
+        .cert-btn.active .cert-btn-title { color: #93c5fd; }
 
         /* Cert right page */
         .cert-book-page {
@@ -800,9 +800,9 @@
         .cert-page-header-badge {
             font-size: 10px;
             font-weight: 700;
-            color: #16a34a;
-            background: #f0fdf4;
-            border: 1px solid #bbf7d0;
+            color: #3b82f6;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
             border-radius: 99px;
             padding: 2px 10px;
             letter-spacing: 0.08em;
@@ -816,7 +816,7 @@
             height: 0;
             border-style: solid;
             border-width: 0 0 32px 32px;
-            border-color: transparent transparent #22c55e transparent;
+            border-color: transparent transparent #2563eb transparent;
             opacity: 0;
             transition: opacity 0.5s ease 0.6s;
         }
@@ -875,7 +875,7 @@
             font-family: 'EB Garamond', serif;
             font-size: clamp(10px, 1.5vw, 16px);
             font-weight: 700;
-            color: rgba(21, 128, 61, 0.09);
+            color: rgba(37, 99, 235, 0.10);
             letter-spacing: 0.08em;
             text-transform: uppercase;
             transform: rotate(-25deg);
@@ -1088,6 +1088,15 @@
                             <div class="portfolio-btn-icon">🏗️</div>
                             <div class="portfolio-btn-text">
                                 <div class="portfolio-btn-title">Portfolio-2</div>
+                                <div class="portfolio-btn-desc">As built drawing</div>
+                            </div>
+                            <div class="portfolio-btn-arrow">▶</div>
+                        </button>
+
+                        <button class="portfolio-btn" id="btn-portfolio-3" onclick="switchPortfolio(3)">
+                            <div class="portfolio-btn-icon">🏗️</div>
+                            <div class="portfolio-btn-text">
+                                <div class="portfolio-btn-title">Portfolio-3</div>
                                 <div class="portfolio-btn-desc">As built drawing</div>
                             </div>
                             <div class="portfolio-btn-arrow">▶</div>
@@ -1322,7 +1331,7 @@
                     <div class="pdf-frame-wrap">
                         <!-- Loading indicator -->
                         <div class="pdf-loading" id="certPdfLoading">
-                            <div class="spinner" style="border-top-color:#22c55e;"></div>
+                            <div class="spinner" style="border-top-color:#3b82f6;"></div>
                             <p>Memuat dokumen…</p>
                         </div>
 
@@ -1360,15 +1369,79 @@
     <!-- ============================================================
          WEB NAVIGATION
     ============================================================ -->
+    <style>
+        .nav-link {
+            position: relative;
+            color: #2563eb;
+            text-decoration: none;
+            padding: 4px 16px;
+            border-radius: 99px;
+            border: 1px solid #2563eb;
+            transition: color 0.25s, border-color 0.25s, background 0.25s;
+        }
+        .nav-link:hover {
+            background: #2563eb;
+            color: #fff;
+        }
+        .nav-link.nav-active {
+            background: #2563eb;
+            color: #fff;
+            border-color: #2563eb;
+        }
+        .nav-link.nav-active:hover {
+            background: #1d4ed8;
+            border-color: #1d4ed8;
+            color: #fff;
+        }
+    </style>
+
     <nav class="fixed w-full z-50 bg-white/95 backdrop-blur-md py-4 px-8 md:px-16 flex justify-between items-center border-b border-gray-100">
         <div class="font-bold text-xl tracking-tighter uppercase text-blue-600">Wahyu Illahi R.</div>
-        <div class="hidden md:flex space-x-8 text-[10px] font-bold uppercase tracking-[0.2em] items-center">
-            <a href="#experience" class="hover:text-blue-600 transition">Karir</a>
-            <a href="#blueprints" class="hover:text-blue-600 transition">Proyek</a>
-            <button onclick="openPortfolio()" class="text-blue-600 border border-blue-600 px-4 py-1 rounded-full hover:bg-blue-600 hover:text-white transition cursor-pointer bg-transparent font-bold text-[10px] uppercase tracking-[0.2em]">Full Portfolio</button>
-            <a href="https://www.linkedin.com/in/adhan-ab3a07195/" target="_blank" class="hover:text-blue-600 transition">LinkedIn</a>
+        <div class="hidden md:flex space-x-2 text-[10px] font-bold uppercase tracking-[0.2em] items-center">
+            <a href="#experience" id="nav-karir" class="nav-link hover:text-blue-600 transition">Karir</a>
+            <a href="#blueprints" id="nav-proyek" class="nav-link hover:text-blue-600 transition">Proyek</a>
+            <button onclick="openPortfolio()" id="nav-portfolio" class="text-blue-600 border border-blue-600 px-4 py-1 rounded-full hover:bg-blue-600 hover:text-white transition cursor-pointer bg-transparent font-bold text-[10px] uppercase tracking-[0.2em]">Full Portfolio</button>
+            <a href="https://www.linkedin.com/in/adhan-ab3a07195/" target="_blank" id="nav-linkedin" class="nav-link hover:text-blue-600 transition">LinkedIn</a>
         </div>
     </nav>
+
+    <script>
+        // Scroll spy — highlights nav item matching the visible section
+        (function() {
+            const sections = [
+                { id: 'experience', navId: 'nav-karir' },
+                { id: 'blueprints', navId: 'nav-proyek' },
+            ];
+
+            function updateNav() {
+                const scrollY = window.scrollY + 100; // offset for fixed nav height
+                let activeNavId = null;
+
+                for (let i = sections.length - 1; i >= 0; i--) {
+                    const el = document.getElementById(sections[i].id);
+                    if (el && el.offsetTop <= scrollY) {
+                        activeNavId = sections[i].navId;
+                        break;
+                    }
+                }
+
+                // Clear all active states
+                sections.forEach(s => {
+                    const navEl = document.getElementById(s.navId);
+                    if (navEl) navEl.classList.remove('nav-active');
+                });
+
+                // Set active
+                if (activeNavId) {
+                    const activeEl = document.getElementById(activeNavId);
+                    if (activeEl) activeEl.classList.add('nav-active');
+                }
+            }
+
+            window.addEventListener('scroll', updateNav, { passive: true });
+            window.addEventListener('load', updateNav);
+        })();
+    </script>
 
 
     <!-- HERO -->
@@ -1383,25 +1456,26 @@
             </p>
             <div id="hero-cta" class="opacity-0 flex gap-4 flex-wrap">
                 <button onclick="openPortfolio()" class="btn-primary uppercase">Portofolio</button>
-                <a href="tel:+6282285754080" class="border border-black px-8 py-4 text-xs font-bold rounded-full hover:bg-black hover:text-white transition uppercase">Kontak</a>
+                <button onclick="openKontakPopup()" class="border border-black px-8 py-4 text-xs font-bold rounded-full hover:bg-black hover:text-white transition uppercase bg-transparent cursor-pointer">Kontak</button>
                 <a href="https://wa.me/6282285754080" class="border border-[#25D366] px-8 py-4 text-xs font-bold rounded-full text-[#25D366] hover:bg-[#25D366] hover:text-white transition uppercase">WhatsApp</a>
             </div>
         </div>
         <!-- Stats bar -->
         <div id="hero-stats" class="mt-16 flex flex-wrap gap-10 opacity-0">
             <div>
-                <div class="text-3xl font-bold tracking-tighter">10+</div>
+                <div class="text-3xl font-bold tracking-tighter"><span id="stat-tahun">0</span>+</div>
                 <div class="text-xs text-gray-400 uppercase tracking-widest mt-1">Tahun Pengalaman</div>
             </div>
             <div style="width:1px;background:#e5e7eb;"></div>
             <div>
-                <div class="text-3xl font-bold tracking-tighter">500+</div>
+                <div class="text-3xl font-bold tracking-tighter"><span id="stat-lembar">0</span>+</div>
                 <div class="text-xs text-gray-400 uppercase tracking-widest mt-1">Lembar Gambar Kerja</div>
             </div>
             <div style="width:1px;background:#e5e7eb;"></div>
             <div>
-                <div class="text-3xl font-bold tracking-tighter">15+</div>
+                <div class="text-3xl font-bold tracking-tighter"><span id="stat-proyek">0</span>+</div>
                 <div class="text-xs text-gray-400 uppercase tracking-widest mt-1">Proyek Selesai</div>
+            </div>
         </div>
     </header>
 
@@ -1521,10 +1595,10 @@
     <section id="certificates" class="py-24 bg-[#f9f9f9] px-8 md:px-24 text-center">
         <h2 class="text-xs font-bold uppercase tracking-[0.4em] text-gray-400 mb-12" data-aos="fade-up">Personal Credentials</h2>
         <div class="flex flex-col md:flex-row justify-center gap-6">
-            <button onclick="openCertificate()" class="bg-white p-10 border border-green-500 hover:bg-green-50 transition shadow-sm w-full max-w-sm cursor-pointer text-left" data-aos="zoom-in">
-                <h4 class="font-bold text-lg mb-2 text-green-600">Training Certificates</h4>
+            <button onclick="openCertificate()" class="bg-white p-10 border border-blue-500 hover:bg-blue-50 transition shadow-sm w-full max-w-sm cursor-pointer text-left" data-aos="zoom-in">
+                <h4 class="font-bold text-lg mb-2 text-blue-600">Training Certificates</h4>
                 <p class="text-gray-500 text-xs italic">Ijazah, Transkrip Nilai &amp; Akreditasi Kampus — lihat langsung di sini.</p>
-                <div class="mt-4 text-green-600 font-bold text-xs flex items-center gap-2">
+                <div class="mt-4 text-blue-600 font-bold text-xs flex items-center gap-2">
                     <span>🎓</span> BUKA SERTIFIKAT →
                 </div>
             </button>
@@ -1544,8 +1618,7 @@
         <div data-aos="fade-up">
             <h2 class="text-5xl font-bold tracking-tighter mb-4 uppercase">HUBUNGI SAYA.</h2>
             <div class="flex flex-col items-center gap-6">
-                <a href="tel:+6282285754080" class="text-2xl font-light hover:text-blue-600 transition tracking-tighter">0822-8575-4080</a>
-                <div class="flex gap-6">
+                             <div class="flex gap-6">
                     <a href="https://www.linkedin.com/in/adhan-ab3a07195/" target="_blank" class="text-xs font-bold uppercase tracking-[0.2em] border-b border-black hover:text-blue-600 hover:border-blue-600">LinkedIn</a>
                     <button onclick="openPortfolio()" class="text-xs font-bold uppercase tracking-[0.2em] border-b border-black hover:text-blue-600 hover:border-blue-600 bg-transparent cursor-pointer">Portfolio</button>
                     <a href="https://wa.me/6282285754080" target="_blank" class="text-xs font-bold uppercase tracking-[0.2em] border-b border-[#25D366] text-[#25D366] hover:text-green-700 hover:border-green-700">WhatsApp</a>
@@ -1582,7 +1655,27 @@
         gsap.to("#hero-title", { opacity: 1, duration: 1.5, y: -10, ease: "power4.out", delay: 0.1 });
         gsap.to("#hero-sub",   { opacity: 1, duration: 1, delay: 0.5 });
         gsap.to("#hero-cta",   { opacity: 1, duration: 1, delay: 0.8 });
-        gsap.to("#hero-stats", { opacity: 1, duration: 1, delay: 1.1 });
+        gsap.to("#hero-stats", {
+            opacity: 1, duration: 0.6, delay: 1.1,
+            onComplete: function() {
+                function animateCounter(id, target, duration) {
+                    var el = document.getElementById(id);
+                    var startTime = null;
+                    function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+                    function step(timestamp) {
+                        if (!startTime) startTime = timestamp;
+                        var progress = Math.min((timestamp - startTime) / duration, 1);
+                        el.textContent = Math.floor(easeOut(progress) * target);
+                        if (progress < 1) requestAnimationFrame(step);
+                        else el.textContent = target;
+                    }
+                    requestAnimationFrame(step);
+                }
+                animateCounter('stat-tahun',  10,  900);
+                animateCounter('stat-lembar', 500, 1600);
+                animateCounter('stat-proyek', 15,  1000);
+            }
+        });
 
         // Print toast
         setTimeout(function() {
@@ -1620,6 +1713,10 @@
             2: {
                 src: 'https://drive.google.com/file/d/1MeGwZmkAdqinuT4cHOHUbKQZIZKC38nF/preview?embedded=true',
                 title: 'Gambar-2'
+            },
+            3: {
+                src: 'https://drive.google.com/file/d/1BLecDON6hzIeIyhgiYJwm-LjjgTIQhep/preview?embedded=true',
+                title: 'Gambar-3'
             }
         };
 
@@ -1651,6 +1748,7 @@
             var loader = document.getElementById('pdfLoading');
             document.getElementById('btn-portfolio-1').classList.toggle('active', num === 1);
             document.getElementById('btn-portfolio-2').classList.toggle('active', num === 2);
+            document.getElementById('btn-portfolio-3').classList.toggle('active', num === 3);
             loader.classList.remove('hidden');
             frame.src = data.src;
             header.textContent = data.title;
@@ -1724,6 +1822,7 @@
             if (e.key === 'Escape') {
                 closePortfolio();
                 closeCertificate();
+                closeKontakPopup();
             }
         });
 
@@ -1741,13 +1840,212 @@
             }, 800);
         }
 
-        document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+        // ============================================================
+        // KONTAK POPUP
+        // ============================================================
+        function openKontakPopup() {
+            document.getElementById('kontak-popup').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeKontakPopup() {
+            document.getElementById('kontak-popup').classList.remove('active');
+            document.body.style.overflow = '';
+        }
 
+        // ============================================================
+        // PROTEKSI COPY PASTE
+        // ============================================================
+        document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+        document.addEventListener('copy',  function(e) { e.preventDefault(); });
+        document.addEventListener('cut',   function(e) { e.preventDefault(); });
         document.addEventListener('keydown', function(e) {
-            if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'u')) {
+            if ((e.ctrlKey || e.metaKey) && ['c','C','x','X','a','A','s','S','u','U'].includes(e.key)) {
                 e.preventDefault();
             }
         });
+
+    </script>
+    <!-- ============================================================
+         KONTAK POPUP
+    ============================================================ -->
+    <style>
+        #kontak-popup {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.55);
+            backdrop-filter: blur(6px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease;
+        }
+        #kontak-popup.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .kontak-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 40px 36px 32px;
+            max-width: 360px;
+            width: 90%;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.25);
+            text-align: center;
+            position: relative;
+            transform: scale(0.88) translateY(20px);
+            transition: transform 0.4s cubic-bezier(0.34,1.2,0.64,1), opacity 0.35s ease;
+            opacity: 0;
+        }
+        #kontak-popup.active .kontak-card {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+        .kontak-close-btn {
+            position: absolute;
+            top: 14px;
+            right: 16px;
+            background: #f3f4f6;
+            border: none;
+            border-radius: 99px;
+            width: 30px;
+            height: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            color: #555;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .kontak-close-btn:hover { background: #e5e7eb; }
+        .kontak-icon {
+            width: 56px;
+            height: 56px;
+            background: #f0f4ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 26px;
+        }
+        .kontak-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #9ca3af;
+            margin-bottom: 6px;
+        }
+        .kontak-name {
+            font-family: 'EB Garamond', serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: #111;
+            margin-bottom: 4px;
+        }
+        .kontak-number {
+            font-size: 26px;
+            font-weight: 700;
+            color: #111;
+            letter-spacing: 0.04em;
+            margin: 10px 0 24px;
+        }
+        .kontak-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        .kontak-btn-call {
+            flex: 1;
+            background: #000;
+            color: #fff;
+            border: none;
+            border-radius: 99px;
+            padding: 13px 0;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .kontak-btn-call:hover { background: #3b82f6; transform: translateY(-2px); }
+        .kontak-btn-copy {
+            flex: 1;
+            background: #f3f4f6;
+            color: #111;
+            border: none;
+            border-radius: 99px;
+            padding: 13px 0;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .kontak-btn-copy:hover { background: #e5e7eb; transform: translateY(-2px); }
+        .kontak-divider {
+            height: 1px;
+            background: #f0f0f0;
+            margin: 20px 0 16px;
+        }
+        .kontak-wa-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            background: #25D366;
+            color: #fff;
+            border: none;
+            border-radius: 99px;
+            padding: 13px 0;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .kontak-wa-btn:hover { background: #1ebe5d; transform: translateY(-2px); }
+    </style>
+
+    <div id="kontak-popup" onclick="if(event.target===this)closeKontakPopup()">
+        <div class="kontak-card">
+            <button class="kontak-close-btn" onclick="closeKontakPopup()">✕</button>
+            <div class="kontak-icon">📞</div>
+            <div class="kontak-label">Hubungi Saya</div>
+            <div class="kontak-name">Wahyu Illahi Ramadhan</div>
+            <div style="font-size:12px;color:#9ca3af;margin-bottom:4px;">Civil Drafter · AutoCAD Specialist</div>
+            <div class="kontak-number">0822-8575-4080</div>
+            <div class="kontak-actions">
+                <a href="tel:+6282285754080" class="kontak-btn-call">
+                    <span>📞</span> Telepon
+                </a>
+                <button class="kontak-btn-copy" onclick="copyNumber()">Salin No.</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function copyNumber() {
+            navigator.clipboard.writeText('082285754080').then(function() {
+                var btn = document.querySelector('.kontak-btn-copy');
+                btn.textContent = '✓ Tersalin!';
+                setTimeout(function() { btn.textContent = 'Salin No.'; }, 2000);
+            });
+        }
     </script>
 </body>
 </html>
