@@ -72,6 +72,36 @@
         .skill-desc { font-size: 0.85rem; color: #64748b; margin-top: 5px; font-style: italic; }
 
         /* ============================================================
+           TWO-COLUMN EXPERIENCE + STICKY SKILLS LAYOUT
+        ============================================================ */
+        .exp-two-col {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 3rem;
+        }
+        .exp-timeline-col { min-width: 0; }
+        .exp-skills-col { min-width: 0; }
+        .exp-skills-sticky {
+            position: sticky;
+            top: 80px;
+        }
+        @media (max-width: 768px) {
+            .exp-two-col {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .exp-skills-sticky { position: static; }
+            .exp-skills-col { order: 1; }
+            .exp-timeline-col { order: 0; }
+        }
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .exp-two-col {
+                grid-template-columns: 1fr 260px;
+                gap: 2rem;
+            }
+        }
+
+        /* ============================================================
            BOOK FLIP POPUP — PORTFOLIO VIEWER
         ============================================================ */
 
@@ -450,6 +480,120 @@
             background: #f8f9fa;
             z-index: 4;
         }
+
+        /* PDF.js fallback viewer */
+        .pdfjs-viewer-wrap {
+            position: absolute;
+            inset: 0;
+            display: none;
+            flex-direction: column;
+            background: #f8f9fa;
+            z-index: 2;
+        }
+        .pdfjs-viewer-wrap.active {
+            display: flex;
+        }
+        .pdfjs-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 6px 12px;
+            background: #fff;
+            border-bottom: 1px solid #e5e7eb;
+            flex-shrink: 0;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .pdfjs-toolbar-left {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .pdfjs-toolbar-right {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .pdfjs-btn {
+            background: #f3f4f6;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 4px 10px;
+            font-size: 12px;
+            cursor: pointer;
+            color: #374151;
+            font-weight: 600;
+            transition: all 0.15s;
+            font-family: 'Inter', sans-serif;
+        }
+        .pdfjs-btn:hover { background: #e5e7eb; }
+        .pdfjs-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+        .pdfjs-page-info {
+            font-size: 11px;
+            color: #6b7280;
+            font-family: 'Inter', sans-serif;
+            white-space: nowrap;
+        }
+        .pdfjs-canvas-wrap {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #e5e7eb;
+            padding: 12px 8px;
+            gap: 8px;
+        }
+        .pdfjs-canvas-wrap canvas {
+            box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+            max-width: 100%;
+        }
+        .pdfjs-error-panel {
+            position: absolute;
+            inset: 0;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
+            z-index: 6;
+            gap: 12px;
+            padding: 24px;
+            text-align: center;
+        }
+        .pdfjs-error-panel.show { display: flex; }
+        .pdfjs-error-icon { font-size: 36px; }
+        .pdfjs-error-title { font-size: 13px; font-weight: 700; color: #374151; font-family: 'Inter', sans-serif; }
+        .pdfjs-error-sub { font-size: 11px; color: #9ca3af; font-family: 'Inter', sans-serif; }
+        .pdfjs-retry-btn {
+            background: #3b82f6;
+            color: #fff;
+            border: none;
+            border-radius: 99px;
+            padding: 8px 20px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: background 0.2s;
+        }
+        .pdfjs-retry-btn:hover { background: #2563eb; }
+        .pdfjs-open-btn {
+            background: #f3f4f6;
+            color: #374151;
+            border: 1px solid #e5e7eb;
+            border-radius: 99px;
+            padding: 8px 20px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: background 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .pdfjs-open-btn:hover { background: #e5e7eb; }
 
         /* Close button */
         #portfolio-close {
@@ -1116,13 +1260,14 @@
                         <span class="book-page-header-badge">📄 Protected View</span>
                     </div>
 
-                    <div class="pdf-frame-wrap">
+                    <div class="pdf-frame-wrap" id="pdfFrameWrap">
                         <!-- Loading indicator -->
                         <div class="pdf-loading" id="pdfLoading">
                             <div class="spinner"></div>
                             <p>Memuat portofolio…</p>
                         </div>
 
+                        <!-- Google Drive iframe (primary) -->
                         <iframe
                             id="pdfFrame"
                             src="https://drive.google.com/file/d/1GnWPxTrsyeuwe8KJeGrOKVqE3YYuSBiU/preview?embedded=true"
@@ -1131,6 +1276,34 @@
                             onload="hidePdfLoading()"
                             title="Portfolio Wahyu Illahi Ramadhan"
                         ></iframe>
+
+                        <!-- PDF.js fallback viewer -->
+                        <div class="pdfjs-viewer-wrap" id="pdfjsViewer">
+                            <div class="pdfjs-toolbar">
+                                <div class="pdfjs-toolbar-left">
+                                    <button class="pdfjs-btn" id="pdfjsPrevBtn" onclick="pdfjsPrevPage()">‹ Prev</button>
+                                    <span class="pdfjs-page-info" id="pdfjsPageInfo">Hal 1 / 1</span>
+                                    <button class="pdfjs-btn" id="pdfjsNextBtn" onclick="pdfjsNextPage()">Next ›</button>
+                                </div>
+                                <div class="pdfjs-toolbar-right">
+                                    <button class="pdfjs-btn" onclick="pdfjsZoomOut()">−</button>
+                                    <button class="pdfjs-btn" onclick="pdfjsZoomIn()">+</button>
+                                    <button class="pdfjs-btn" onclick="pdfjsFitWidth()">Fit</button>
+                                </div>
+                            </div>
+                            <div class="pdfjs-canvas-wrap" id="pdfjsCanvasWrap">
+                                <!-- canvases rendered here -->
+                            </div>
+                        </div>
+
+                        <!-- Error panel (shows if both methods fail) -->
+                        <div class="pdfjs-error-panel" id="pdfErrorPanel">
+                            <div class="pdfjs-error-icon">⚠️</div>
+                            <div class="pdfjs-error-title">Gagal memuat preview</div>
+                            <div class="pdfjs-error-sub">File mungkin sedang tidak tersedia atau koneksi bermasalah.</div>
+                            <button class="pdfjs-retry-btn" onclick="retryPdfLoad()">🔄 Coba Ulang</button>
+                            <a id="pdfOpenDriveLink" href="#" target="_blank" class="pdfjs-open-btn">Buka di Google Drive →</a>
+                        </div>
 
                         <!-- Watermark grid overlay -->
                         <div class="watermark-layer">
@@ -1480,66 +1653,314 @@
     </header>
 
 
-    <!-- BLUEPRINTS GALLERY -->
-    <section id="blueprints" class="py-24 bg-[#0a0a0a] text-white px-8 md:px-24">
-        <div class="flex justify-between items-center mb-4">
+    <!-- BLUEPRINTS GALLERY — 3D Perspective Slide Carousel -->
+    <section id="blueprints" class="py-4 bg-[#0a0a0a] text-white overflow-hidden">
+        <div class="flex justify-between items-center mb-1 px-8 md:px-24">
             <h2 class="text-xs font-bold uppercase tracking-[0.4em] text-blue-500">Technical Projects Gallery</h2>
             <button onclick="openPortfolio()" class="text-xs font-bold text-white border-b border-white pb-1 hover:text-blue-500 hover:border-blue-500 transition bg-transparent cursor-pointer">Buka Portfolio Lengkap →</button>
         </div>
-        <p class="text-gray-500 text-xs mb-12 uppercase tracking-widest">Gedung 4 Lantai</p>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div class="blueprint-card bg-white group overflow-hidden rounded-lg shadow-inner" data-aos="fade-up">
-                <div class="bg-[#111] text-blue-400 text-[9px] font-bold uppercase tracking-widest px-3 py-1">Tampak Depan</div>
-                <div class="aspect-square"><img src="images/tampak-depan.jpg" alt="tampak-depan" class="w-full h-full object-contain p-2 transition duration-700"></div>
+        <p class="text-gray-500 text-xs mb-2 uppercase tracking-widest px-8 md:px-24">Gedung 4 Lantai</p>
+
+        <!-- 3D Slide Stage -->
+        <div id="bp-stage-outer" style="position:relative;width:100%;padding:8px 0 12px;">
+            <!-- Pause hint -->
+            <div id="bp-pause-hint" style="position:absolute;top:0;left:50%;transform:translateX(-50%);z-index:20;background:rgba(0,0,0,0.65);color:#93c5fd;font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;padding:5px 16px;border-radius:99px;opacity:0;transition:opacity 0.4s;pointer-events:none;">⏸ Dijeda — Klik lagi untuk lanjut</div>
+
+            <!-- perspective stage -->
+            <div id="bp-3d-stage" style="perspective:1800px;perspective-origin:50% 40%;width:100%;height:620px;position:relative;cursor:pointer;" onclick="bpTogglePause()">
+                <!-- slides injected by JS -->
             </div>
-            <div class="blueprint-card bg-white group overflow-hidden rounded-lg shadow-inner" data-aos="fade-up" data-aos-delay="100">
-                <div class="bg-[#111] text-blue-400 text-[9px] font-bold uppercase tracking-widest px-3 py-1">Tampak Kanan</div>
-                <div class="aspect-square"><img src="images/tampak-kanan.jpg" alt="tampak-kanan" class="w-full h-full object-contain p-2 transition duration-700"></div>
+
+            <!-- Dot indicators -->
+            <div id="bp-dots" style="display:flex;justify-content:center;gap:8px;margin-top:24px;position:relative;z-index:10;"></div>
+        </div>
+
+        <!-- Zoom lightbox -->
+        <div id="bp-lightbox" onclick="bpCloseLightbox()" style="display:none;position:fixed;inset:0;z-index:99998;background:rgba(0,0,0,0.92);backdrop-filter:blur(10px);align-items:center;justify-content:center;flex-direction:column;">
+            <div style="position:relative;max-width:90vw;max-height:82vh;display:flex;align-items:center;justify-content:center;overflow:auto;" onclick="event.stopPropagation()">
+                <img id="bp-lightbox-img" src="" alt="" style="max-width:88vw;max-height:78vh;object-fit:contain;border-radius:10px;box-shadow:0 0 80px rgba(59,130,246,0.3);user-select:none;transition:transform 0.2s ease;">
             </div>
-            <div class="blueprint-card bg-white group overflow-hidden rounded-lg shadow-inner" data-aos="fade-up" data-aos-delay="200">
-                <div class="bg-[#111] text-blue-400 text-[9px] font-bold uppercase tracking-widest px-3 py-1">Potongan A-A</div>
-                <div class="aspect-square"><img src="images/potongan-a-a.jpg" alt="potongan-a-a" class="w-full h-full object-contain p-2 transition duration-700"></div>
+            <!-- zoom controls -->
+            <div style="margin-top:18px;display:flex;gap:10px;align-items:center;">
+                <button onclick="bpZoom(-0.3)" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.25);color:#fff;border-radius:99px;width:40px;height:40px;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s;">−</button>
+                <button onclick="bpZoomReset()" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.25);color:#fff;border-radius:99px;padding:0 18px;height:40px;font-size:10px;font-weight:700;letter-spacing:0.12em;cursor:pointer;transition:background 0.2s;">RESET</button>
+                <button onclick="bpZoom(0.3)" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.25);color:#fff;border-radius:99px;width:40px;height:40px;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s;">+</button>
+                <button onclick="bpCloseLightbox()" style="background:rgba(239,68,68,0.7);border:none;color:#fff;border-radius:99px;width:40px;height:40px;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;margin-left:8px;transition:background 0.2s;">✕</button>
             </div>
-            <div class="blueprint-card bg-white group overflow-hidden rounded-lg shadow-inner" data-aos="fade-up" data-aos-delay="300">
-                <div class="bg-[#111] text-blue-400 text-[9px] font-bold uppercase tracking-widest px-3 py-1">Potongan B-B</div>
-                <div class="aspect-square"><img src="images/potonganb-b.jpg" alt="potonganb-b" class="w-full h-full object-contain p-2 transition duration-700"></div>
-            </div>
-            <div class="blueprint-card bg-white group overflow-hidden rounded-lg shadow-inner" data-aos="fade-up" data-aos-delay="100">
-                <div class="bg-[#111] text-blue-400 text-[9px] font-bold uppercase tracking-widest px-3 py-1">Denah Lantai 1</div>
-                <div class="aspect-square"><img src="images/denah-lantai-1.jpg" alt="denah-lantai-1" class="w-full h-full object-contain p-2 transition duration-700"></div>
-            </div>
-            <div class="blueprint-card bg-white group overflow-hidden rounded-lg shadow-inner" data-aos="fade-up">
-                <div class="bg-[#111] text-blue-400 text-[9px] font-bold uppercase tracking-widest px-3 py-1">Denah Lantai 2</div>
-                <div class="aspect-square"><img src="images/lantai-2.jpg" alt="lantai-2" class="w-full h-full object-contain p-2 transition duration-700"></div>
-            </div>
-            <div class="blueprint-card bg-white group overflow-hidden rounded-lg shadow-inner" data-aos="fade-up">
-                <div class="bg-[#111] text-blue-400 text-[9px] font-bold uppercase tracking-widest px-3 py-1">Denah Lantai 3</div>
-                <div class="aspect-square"><img src="images/lantai-3.jpg" alt="lantai-3" class="w-full h-full object-contain p-2 transition duration-700"></div>
-            </div>
-            <div class="blueprint-card bg-white group overflow-hidden rounded-lg shadow-inner" data-aos="fade-up">
-                <div class="bg-[#111] text-blue-400 text-[9px] font-bold uppercase tracking-widest px-3 py-1">Denah Lantai 4</div>
-                <div class="aspect-square"><img src="images/lantai-4.jpg" alt="lantai-4" class="w-full h-full object-contain p-2 transition duration-700"></div>
-            </div>
+            <div id="bp-lightbox-label" style="margin-top:14px;font-size:10px;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:#3b82f6;"></div>
+            <div style="margin-top:6px;font-size:10px;color:rgba(255,255,255,0.3);">Klik di luar gambar untuk tutup · Scroll untuk zoom</div>
         </div>
     </section>
+
+    <style>
+        /* ============================================================
+           3D PERSPECTIVE SLIDE CAROUSEL
+        ============================================================ */
+        .bp-slide {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform-origin: center center;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.65s cubic-bezier(0.34,1.1,0.64,1), box-shadow 0.65s ease, opacity 0.65s ease;
+            will-change: transform, opacity;
+            background: #fff;
+            user-select: none;
+        }
+        .bp-slide:hover { filter: brightness(1.08); }
+        .bp-slide-label {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            background: rgba(10,10,10,0.82);
+            color: #60a5fa;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            padding: 5px 10px;
+            z-index: 2;
+        }
+        .bp-slide img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 4px;
+        }
+        /* dot */
+        .bp-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            transition: background 0.3s, transform 0.3s;
+            cursor: pointer;
+        }
+        .bp-dot.active {
+            background: #3b82f6;
+            transform: scale(1.3);
+            border-color: #3b82f6;
+        }
+    </style>
+
+    <script>
+    (function(){
+        var cards = [
+            { label: 'Tampak Depan',   src: 'images/tampak-depan.jpg'   },
+            { label: 'Tampak Kanan',   src: 'images/tampak-kanan.jpg'   },
+            { label: 'Potongan A-A',   src: 'images/potongan-a-a.jpg'   },
+            { label: 'Potongan B-B',   src: 'images/potonganb-b.jpg'    },
+            { label: 'Denah Lantai 1', src: 'images/denah-lantai-1.jpg' },
+            { label: 'Denah Lantai 2', src: 'images/lantai-2.jpg'       },
+            { label: 'Denah Lantai 3', src: 'images/lantai-3.jpg'       },
+            { label: 'Denah Lantai 4', src: 'images/lantai-4.jpg'       },
+        ];
+
+        var N        = cards.length;
+        var CARD_W   = 480;
+        var CARD_H   = 380;
+        var AUTO_INT = 2800;   // ms per slide
+        var current  = 0;
+        var paused   = false;
+        var timer;
+        var slides   = [];
+        var dots     = [];
+
+        var stage = document.getElementById('bp-3d-stage');
+        var dotsEl = document.getElementById('bp-dots');
+        var hint   = document.getElementById('bp-pause-hint');
+        var hintTO;
+
+        /* ---- Build slide elements ---- */
+        cards.forEach(function(c, i){
+            var el = document.createElement('div');
+            el.className = 'bp-slide';
+            el.style.width  = CARD_W + 'px';
+            el.style.height = CARD_H + 'px';
+            el.style.marginLeft = -(CARD_W/2) + 'px';
+            el.style.marginTop  = -(CARD_H/2) + 'px';
+            el.innerHTML =
+                '<div class="bp-slide-label">' + c.label + '</div>' +
+                '<img src="' + c.src + '" alt="' + c.label + '" loading="lazy">';
+            el.addEventListener('click', function(e){
+                e.stopPropagation();
+                if(i === current) bpOpenLightbox(c.src, c.label);
+                else              jumpTo(i);
+            });
+            stage.appendChild(el);
+            slides.push(el);
+
+            /* dot */
+            var d = document.createElement('div');
+            d.className = 'bp-dot' + (i===0?' active':'');
+            d.addEventListener('click', function(){ jumpTo(i); });
+            dotsEl.appendChild(d);
+            dots.push(d);
+        });
+
+        /* ---- Position slides in 3D fan ---- */
+        function positionSlides(active){
+            slides.forEach(function(el, i){
+                var rel   = i - active;
+                /* wrap around */
+                if(rel >  N/2) rel -= N;
+                if(rel < -N/2) rel += N;
+
+                var absRel  = Math.abs(rel);
+                var side    = rel < 0 ? -1 : (rel > 0 ? 1 : 0);
+
+                /* depth stack: front = 0, each step back ~80px */
+                var tz      = -absRel * 120;
+                /* spread horizontally */
+                var tx      = side * absRel * 260 + side * 30;
+                /* tilt */
+                var ry      = side * absRel * 18;
+                /* scale down background cards */
+                var sc      = Math.max(0.55, 1 - absRel * 0.12);
+                /* opacity fade */
+                var op      = absRel > 3 ? 0 : Math.max(0.15, 1 - absRel * 0.28);
+                /* z-index: front card highest */
+                var zi      = 100 - absRel * 10;
+                /* shadow intensity on front card */
+                var sh      = absRel === 0
+                    ? '0 24px 60px rgba(0,0,0,0.55), 0 0 0 1px rgba(59,130,246,0.35)'
+                    : '0 8px 24px rgba(0,0,0,0.4)';
+
+                el.style.zIndex    = zi;
+                el.style.opacity   = op;
+                el.style.boxShadow = sh;
+                el.style.transform =
+                    'translateX(' + tx + 'px) ' +
+                    'translateZ(' + tz + 'px) ' +
+                    'rotateY('    + ry + 'deg) ' +
+                    'scale('      + sc + ')';
+                /* cursor */
+                el.style.cursor = absRel === 0 ? 'zoom-in' : 'pointer';
+            });
+
+            /* update dots */
+            dots.forEach(function(d,i){ d.classList.toggle('active', i===active); });
+        }
+
+        function jumpTo(idx){
+            current = ((idx % N) + N) % N;
+            positionSlides(current);
+        }
+
+        function next(){
+            jumpTo(current + 1);
+        }
+
+        function startTimer(){
+            clearInterval(timer);
+            timer = setInterval(function(){ if(!paused) next(); }, AUTO_INT);
+        }
+
+        positionSlides(0);
+        startTimer();
+
+        window.bpTogglePause = function(){
+            paused = !paused;
+            hint.style.opacity = paused ? '1' : '0';
+            clearTimeout(hintTO);
+            if(!paused){
+                hintTO = setTimeout(function(){ hint.style.opacity='0'; }, 2000);
+            }
+        };
+
+        /* ---- Lightbox ---- */
+        var lb      = document.getElementById('bp-lightbox');
+        var lbImg   = document.getElementById('bp-lightbox-img');
+        var lbLabel = document.getElementById('bp-lightbox-label');
+        var lbScale = 1;
+
+        window.bpOpenLightbox = function(src, label){
+            lbImg.src = src;
+            lbImg.style.transform = 'scale(1)';
+            lbScale = 1;
+            lbLabel.textContent = label;
+            lb.style.display = 'flex';
+            if(!paused){ paused = true; lb._autopause = true; }
+        };
+        window.bpCloseLightbox = function(){
+            lb.style.display = 'none';
+            if(lb._autopause){ paused = false; lb._autopause = false; }
+        };
+        window.bpZoom = function(delta){
+            lbScale = Math.min(5, Math.max(0.4, lbScale + delta));
+            lbImg.style.transform = 'scale(' + lbScale + ')';
+        };
+        window.bpZoomReset = function(){
+            lbScale = 1;
+            lbImg.style.transform = 'scale(1)';
+        };
+
+        /* scroll to zoom in lightbox */
+        lb.addEventListener('wheel', function(e){
+            if(lb.style.display === 'none') return;
+            e.preventDefault();
+            bpZoom(e.deltaY < 0 ? 0.15 : -0.15);
+        }, { passive: false });
+
+        document.addEventListener('keydown', function(e){
+            if(e.key === 'Escape') bpCloseLightbox();
+            if(e.key === 'ArrowRight' && lb.style.display === 'none') next();
+            if(e.key === 'ArrowLeft'  && lb.style.display === 'none') jumpTo(current - 1);
+        });
+
+        /* touch/swipe support */
+        var touchStartX = null;
+        stage.addEventListener('touchstart', function(e){ touchStartX = e.touches[0].clientX; }, {passive:true});
+        stage.addEventListener('touchend', function(e){
+            if(touchStartX === null) return;
+            var dx = e.changedTouches[0].clientX - touchStartX;
+            if(Math.abs(dx) > 40){ dx < 0 ? next() : jumpTo(current - 1); }
+            touchStartX = null;
+        }, {passive:true});
+    })();
+    </script>
 
 
     <!-- EXPERIENCE -->
     <section id="experience" class="py-32 px-8 md:px-24 max-w-6xl mx-auto">
         <h2 class="text-xs font-bold uppercase tracking-[0.4em] text-gray-400 mb-20" data-aos="fade-up">Full Professional History</h2>
-        <div class="relative">
-        <div class="experience-node" data-aos="fade-left" data-aos-delay="0"><span class="text-blue-600 font-bold text-xs uppercase">Jan 2023 — Sekarang</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Civil Drafter</h3><p class="font-semibold text-gray-800">Bumantara Karya Amerta (Konsultan Bandar Udara) — Bekasi</p><p class="text-gray-500 text-sm mt-2 max-w-2xl">Memproduksi 10+ paket gambar kerja per tahun (arsitektur, struktur, MEP) untuk proyek konsultan bandar udara menggunakan AutoCAD & SketchUp. Berkoordinasi langsung dengan tim engineer sehingga tingkat revisi berulang turun signifikan.</p></div>
-            <div class="experience-node" data-aos="fade-left" data-aos-delay="80"><span class="text-gray-400 font-bold text-xs uppercase">Jul 2022 — Des 2022</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Site Project Manager</h3><p class="font-semibold text-gray-800">Sarana Anugrah Rekacipta — Jakarta</p><p class="text-gray-500 text-sm mt-2 max-w-2xl">Memimpin tim lapangan 15+ orang untuk mengaplikasikan gambar rencana dan mengelola logistik material proyek pembangunan jembatan antar kampung. Proyek selesai sesuai jadwal rencana dengan 0 insiden keselamatan.</p></div>
-            <div class="experience-node" data-aos="fade-left" data-aos-delay="160"><span class="text-gray-400 font-bold text-xs uppercase">Mar 2022 — Jul 2022</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Quantity Surveyor</h3><p class="font-semibold text-gray-800">Mulia Jaya Abadi — Jakarta</p><p class="text-gray-500 text-sm mt-2 max-w-2xl">Menyusun RAB dan BQ berdasarkan hasil pengukuran lapangan langsung — akurasi estimasi diakui tim dengan deviasi anggaran di bawah 5%. Sekaligus memproduksi gambar kerja pendukung dan menyusun laporan progres mingguan untuk klien.</p></div>
-            <div class="experience-node" data-aos="fade-left" data-aos-delay="240"><span class="text-gray-400 font-bold text-xs uppercase">Agu 2021 — Jan 2022</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Inspector Konsultan</h3><p class="font-semibold text-gray-800">Citra Tama Arsitek — Kerinci, Jambi</p><p class="text-gray-500 text-sm mt-2 max-w-2xl">Mengawasi pelaksanaan pekerjaan lapangan agar sesuai gambar kerja dan spesifikasi kontrak. Berhasil mengidentifikasi 10+ ketidaksesuaian teknis sebelum serah terima, mencegah potensi pekerjaan ulang. Terlibat langsung dalam penyusunan dan verifikasi as-built drawing final.</p></div>
-            <div class="experience-node" data-aos="fade-left" data-aos-delay="320"><span class="text-gray-400 font-bold text-xs uppercase">Jul 2020 — Jul 2021</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">QS & Drafter (Freelance)</h3><p class="font-semibold text-gray-800">Renovasi SMK N 8 & Universitas Andalas — Padang</p><p class="text-gray-500 text-sm mt-2 max-w-2xl">Menangani 2 proyek renovasi gedung kampus secara bersamaan: memproduksi as-built drawing, gambar rencana, dan melakukan perhitungan volume pekerjaan. Seluruh dokumen diserahkan tepat waktu dan diterima tanpa revisi mayor oleh pihak kampus.</p></div>
-            <div class="experience-node" data-aos="fade-up" data-aos-delay="0"><span class="text-gray-400 font-bold text-xs uppercase">Nov 2019 — Jun 2020</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Drafter &amp; QS</h3><p class="font-semibold text-gray-800">Pesantren Dar el-Iman — Padang</p><p class="text-gray-500 text-sm mt-2 max-w-2xl">Memproduksi set gambar kerja lengkap (denah, tampak, potongan, detail) untuk gedung asrama 4 lantai dari nol hingga siap konstruksi. Sekaligus menyusun RAB dan melakukan pengawasan lapangan.</p></div>
-            <div class="experience-node exp-early" data-aos="fade-up" data-aos-delay="100"><span class="text-gray-300 font-bold text-xs uppercase">Sep 2019 — Nov 2019</span><h3 class="text-xl font-bold mt-1 uppercase tracking-tighter">Creative Designer</h3><p class="font-semibold text-gray-600">Haluan Digital Media — Padang <span class="exp-badge-magang">Magang</span></p></div>
-            <div class="experience-node exp-early" data-aos="fade-up" data-aos-delay="150"><span class="text-gray-300 font-bold text-xs uppercase">Jan 2019 — Mar 2019</span><h3 class="text-xl font-bold mt-1 uppercase tracking-tighter">Drafter</h3><p class="font-semibold text-gray-600">Japutra Teknikindo — Padang <span class="exp-badge-magang">Magang</span></p></div>
-            <div class="experience-node exp-early" data-aos="fade-up" data-aos-delay="200"><span class="text-gray-300 font-bold text-xs uppercase">Agu 2018 — Des 2018</span><h3 class="text-xl font-bold mt-1 uppercase tracking-tighter">Guru Teknik Bangunan</h3><p class="font-semibold text-gray-600">SMK N 2 Sijunjung <span class="exp-badge-magang">Magang</span></p></div>
-            <div class="experience-node exp-early" data-aos="fade-up" data-aos-delay="250"><span class="text-gray-300 font-bold text-xs uppercase">Jun 2015 — Agu 2015</span><h3 class="text-xl font-bold mt-1 uppercase tracking-tighter">Drafter</h3><p class="font-semibold text-gray-600">Karya Cipta Sentosa — Jambi</p></div>
-            <div class="experience-node exp-early" data-aos="fade-up" data-aos-delay="300"><span class="text-gray-300 font-bold text-xs uppercase">Agu 2014 — Des 2014</span><h3 class="text-xl font-bold mt-1 uppercase tracking-tighter">Drafter</h3><p class="font-semibold text-gray-600">Asri Konsultan — Padang <span class="exp-badge-magang">Magang</span></p></div>
-        </div>
+
+        <!-- Two-column layout: left = timeline, right = sticky skills -->
+        <div class="exp-two-col">
+
+            <!-- LEFT: Professional History Timeline -->
+            <div class="exp-timeline-col">
+                <div class="relative">
+                    <div class="experience-node" data-aos="fade-left" data-aos-delay="0"><span class="text-blue-600 font-bold text-xs uppercase">Jan 2023 — Sekarang</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Civil Drafter</h3><p class="font-semibold text-gray-800">Bumantara Karya Amerta (Konsultan Bandar Udara) — Bekasi</p><p class="text-gray-500 text-sm mt-2 max-w-2xl">Memproduksi 10+ paket gambar kerja per tahun (arsitektur, struktur, MEP) untuk proyek konsultan bandar udara menggunakan AutoCAD & SketchUp. Berkoordinasi langsung dengan tim engineer sehingga tingkat revisi berulang turun signifikan.</p></div>
+                    <div class="experience-node" data-aos="fade-left" data-aos-delay="80"><span class="text-gray-400 font-bold text-xs uppercase">Jul 2022 — Des 2022</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Site Project Manager</h3><p class="font-semibold text-gray-800">Sarana Anugrah Rekacipta — Jakarta</p><p class="text-gray-500 text-sm mt-2 max-w-2xl">Memimpin tim lapangan 15+ orang untuk mengaplikasikan gambar rencana dan mengelola logistik material proyek pembangunan jembatan antar kampung. Proyek selesai sesuai jadwal rencana dengan 0 insiden keselamatan.</p></div>
+                    <div class="experience-node" data-aos="fade-left" data-aos-delay="160"><span class="text-gray-400 font-bold text-xs uppercase">Mar 2022 — Jul 2022</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Quantity Surveyor</h3><p class="font-semibold text-gray-800">Mulia Jaya Abadi — Jakarta</p><p class="text-gray-500 text-sm mt-2 max-w-2xl">Menyusun RAB dan BQ berdasarkan hasil pengukuran lapangan langsung — akurasi estimasi diakui tim dengan deviasi anggaran di bawah 5%. Sekaligus memproduksi gambar kerja pendukung dan menyusun laporan progres mingguan untuk klien.</p></div>
+                    <div class="experience-node" data-aos="fade-left" data-aos-delay="240"><span class="text-gray-400 font-bold text-xs uppercase">Agu 2021 — Jan 2022</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Inspector Konsultan</h3><p class="font-semibold text-gray-800">Citra Tama Arsitek — Kerinci, Jambi</p><p class="text-gray-500 text-sm mt-2 max-w-2xl">Mengawasi pelaksanaan pekerjaan lapangan agar sesuai gambar kerja dan spesifikasi kontrak. Berhasil mengidentifikasi 10+ ketidaksesuaian teknis sebelum serah terima, mencegah potensi pekerjaan ulang. Terlibat langsung dalam penyusunan dan verifikasi as-built drawing final.</p></div>
+                    <div class="experience-node" data-aos="fade-left" data-aos-delay="320"><span class="text-gray-400 font-bold text-xs uppercase">Jul 2020 — Jul 2021</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">QS & Drafter (Freelance)</h3><p class="font-semibold text-gray-800">Renovasi SMK N 8 & Universitas Andalas — Padang</p><p class="text-gray-500 text-sm mt-2 max-w-2xl">Menangani 2 proyek renovasi gedung kampus secara bersamaan: memproduksi as-built drawing, gambar rencana, dan melakukan perhitungan volume pekerjaan. Seluruh dokumen diserahkan tepat waktu dan diterima tanpa revisi mayor oleh pihak kampus.</p></div>
+                    <div class="experience-node" data-aos="fade-up" data-aos-delay="0"><span class="text-gray-400 font-bold text-xs uppercase">Nov 2019 — Jun 2020</span><h3 class="text-2xl font-bold mt-1 uppercase tracking-tighter">Drafter &amp; QS</h3><p class="font-semibold text-gray-800">Pesantren Dar el-Iman — Padang</p><p class="text-gray-500 text-sm mt-2 max-w-2xl">Memproduksi set gambar kerja lengkap (denah, tampak, potongan, detail) untuk gedung asrama 4 lantai dari nol hingga siap konstruksi. Sekaligus menyusun RAB dan melakukan pengawasan lapangan.</p></div>
+                    <div class="experience-node exp-early" data-aos="fade-up" data-aos-delay="100"><span class="text-gray-300 font-bold text-xs uppercase">Sep 2019 — Nov 2019</span><h3 class="text-xl font-bold mt-1 uppercase tracking-tighter">Creative Designer</h3><p class="font-semibold text-gray-600">Haluan Digital Media — Padang <span class="exp-badge-magang">Magang</span></p></div>
+                    <div class="experience-node exp-early" data-aos="fade-up" data-aos-delay="150"><span class="text-gray-300 font-bold text-xs uppercase">Jan 2019 — Mar 2019</span><h3 class="text-xl font-bold mt-1 uppercase tracking-tighter">Drafter</h3><p class="font-semibold text-gray-600">Japutra Teknikindo — Padang <span class="exp-badge-magang">Magang</span></p></div>
+                    <div class="experience-node exp-early" data-aos="fade-up" data-aos-delay="200"><span class="text-gray-300 font-bold text-xs uppercase">Agu 2018 — Des 2018</span><h3 class="text-xl font-bold mt-1 uppercase tracking-tighter">Guru Teknik Bangunan</h3><p class="font-semibold text-gray-600">SMK N 2 Sijunjung <span class="exp-badge-magang">Magang</span></p></div>
+                    <div class="experience-node exp-early" data-aos="fade-up" data-aos-delay="250"><span class="text-gray-300 font-bold text-xs uppercase">Jun 2015 — Agu 2015</span><h3 class="text-xl font-bold mt-1 uppercase tracking-tighter">Drafter</h3><p class="font-semibold text-gray-600">Karya Cipta Sentosa — Jambi</p></div>
+                    <div class="experience-node exp-early" data-aos="fade-up" data-aos-delay="300"><span class="text-gray-300 font-bold text-xs uppercase">Agu 2014 — Des 2014</span><h3 class="text-xl font-bold mt-1 uppercase tracking-tighter">Drafter</h3><p class="font-semibold text-gray-600">Asri Konsultan — Padang <span class="exp-badge-magang">Magang</span></p></div>
+                </div>
+            </div>
+
+            <!-- RIGHT: Sticky Technical Expertise -->
+            <div class="exp-skills-col">
+                <div class="exp-skills-sticky">
+                    <div class="skills-container" style="margin:0;max-width:100%;">
+                        <h2 class="skills-h2">Technical Expertise</h2>
+                        <div class="skill-card"><div class="skill-info"><span class="skill-name">AutoCAD 2D</span><span class="skill-level-text">Mahir</span></div><div class="progress-bar"><div class="progress-fill" style="width:95%;"></div></div><p class="skill-desc">Gambar kerja arsitektur & struktur: denah, tampak, potongan, detail, as-built drawing, shop drawing.</p></div>
+                        <div class="skill-card"><div class="skill-info"><span class="skill-name">SketchUp 3D</span><span class="skill-level-text">Menengah</span></div><div class="progress-bar"><div class="progress-fill" style="width:75%;"></div></div><p class="skill-desc">Visualisasi 3D desain arsitektur untuk presentasi dan koordinasi klien.</p></div>
+                        <div class="skill-card"><div class="skill-info"><span class="skill-name">MS Excel (RAB)</span><span class="skill-level-text">Menengah</span></div><div class="progress-bar"><div class="progress-fill" style="width:80%;"></div></div><p class="skill-desc">Penyusunan Rencana Anggaran Biaya (RAB), Bill of Quantity (BQ), dan analisa harga satuan.</p></div>
+                        <div class="skill-card"><div class="skill-info"><span class="skill-name">Dokumen Teknis (RKS)</span><span class="skill-level-text">Mahir</span></div><div class="progress-bar"><div class="progress-fill" style="width:90%;"></div></div><p class="skill-desc">Penyusunan RKS, laporan proyek, spesifikasi teknis, dan dokumen tender.</p></div>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- end exp-two-col -->
     </section>
 
     <!-- EDUCATION -->
@@ -1552,16 +1973,7 @@
     </section>
 
 
-    <!-- SKILLS -->
-    <section class="py-20">
-        <div class="skills-container">
-            <h2 class="skills-h2">Technical Expertise</h2>
-            <div class="skill-card"><div class="skill-info"><span class="skill-name">AutoCAD 2D</span><span class="skill-level-text">Mahir</span></div><div class="progress-bar"><div class="progress-fill" style="width:95%;"></div></div><p class="skill-desc">Gambar kerja arsitektur & struktur: denah, tampak, potongan, detail, as-built drawing, shop drawing.</p></div>
-            <div class="skill-card"><div class="skill-info"><span class="skill-name">SketchUp 3D</span><span class="skill-level-text">Menengah</span></div><div class="progress-bar"><div class="progress-fill" style="width:75%;"></div></div><p class="skill-desc">Visualisasi 3D desain arsitektur untuk presentasi dan koordinasi klien.</p></div>
-            <div class="skill-card"><div class="skill-info"><span class="skill-name">MS Excel (RAB)</span><span class="skill-level-text">Menengah</span></div><div class="progress-bar"><div class="progress-fill" style="width:80%;"></div></div><p class="skill-desc">Penyusunan Rencana Anggaran Biaya (RAB), Bill of Quantity (BQ), dan analisa harga satuan.</p></div>
-            <div class="skill-card"><div class="skill-info"><span class="skill-name">Dokumen Teknis (RKS)</span><span class="skill-level-text">Mahir</span></div><div class="progress-bar"><div class="progress-fill" style="width:90%;"></div></div><p class="skill-desc">Penyusunan RKS, laporan proyek, spesifikasi teknis, dan dokumen tender.</p></div>
-        </div>
-    </section>
+
 
 
     <!-- KOMPETENSI DRAFTER -->
@@ -1707,18 +2119,202 @@
         // ============================================================
         var portfolios = {
             1: {
-                src:   'https://drive.google.com/file/d/1GnWPxTrsyeuwe8KJeGrOKVqE3YYuSBiU/preview?embedded=true',
-                title: 'Gambar-1'
+                src:    'https://drive.google.com/file/d/1GnWPxTrsyeuwe8KJeGrOKVqE3YYuSBiU/preview?embedded=true',
+                pdfUrl: 'https://drive.google.com/uc?export=download&id=1GnWPxTrsyeuwe8KJeGrOKVqE3YYuSBiU',
+                driveUrl: 'https://drive.google.com/file/d/1GnWPxTrsyeuwe8KJeGrOKVqE3YYuSBiU/view',
+                title:  'Gambar-1'
             },
             2: {
-                src: 'https://drive.google.com/file/d/1MeGwZmkAdqinuT4cHOHUbKQZIZKC38nF/preview?embedded=true',
-                title: 'Gambar-2'
+                src:    'https://drive.google.com/file/d/1MeGwZmkAdqinuT4cHOHUbKQZIZKC38nF/preview?embedded=true',
+                pdfUrl: 'https://drive.google.com/uc?export=download&id=1MeGwZmkAdqinuT4cHOHUbKQZIZKC38nF',
+                driveUrl: 'https://drive.google.com/file/d/1MeGwZmkAdqinuT4cHOHUbKQZIZKC38nF/view',
+                title:  'Gambar-2'
             },
             3: {
-                src: 'https://drive.google.com/file/d/1BLecDON6hzIeIyhgiYJwm-LjjgTIQhep/preview?embedded=true',
-                title: 'Gambar-3'
+                src:    'https://drive.google.com/file/d/1BLecDON6hzIeIyhgiYJwm-LjjgTIQhep/preview?embedded=true',
+                pdfUrl: 'https://drive.google.com/uc?export=download&id=1BLecDON6hzIeIyhgiYJwm-LjjgTIQhep',
+                driveUrl: 'https://drive.google.com/file/d/1BLecDON6hzIeIyhgiYJwm-LjjgTIQhep/view',
+                title:  'Gambar-3'
             }
         };
+
+        // ============================================================
+        // PDF.JS STATE
+        // ============================================================
+        var pdfjsLib = null;
+        var pdfjsCurrentDoc = null;
+        var pdfjsCurrentPage = 1;
+        var pdfjsTotalPages = 1;
+        var pdfjsScale = 1.2;
+        var pdfjsCurrentPdfUrl = '';
+        var pdfjsRendering = false;
+        var pdfjsRenderQueue = null;
+
+        // Load PDF.js from CDN
+        function loadPdfjsLibrary(callback) {
+            if (pdfjsLib) { callback(); return; }
+            var script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+            script.onload = function() {
+                pdfjsLib = window['pdfjs-dist/build/pdf'];
+                pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+                callback();
+            };
+            script.onerror = function() { showPdfError(); };
+            document.head.appendChild(script);
+        }
+
+        function showPdfjsViewer() {
+            document.getElementById('pdfFrame').style.display = 'none';
+            document.getElementById('pdfjsViewer').classList.add('active');
+            document.getElementById('pdfErrorPanel').classList.remove('show');
+        }
+
+        function hidePdfjsViewer() {
+            document.getElementById('pdfFrame').style.display = 'block';
+            document.getElementById('pdfjsViewer').classList.remove('active');
+        }
+
+        function showPdfError() {
+            document.getElementById('pdfLoading').classList.add('hidden');
+            document.getElementById('pdfFrame').style.display = 'none';
+            document.getElementById('pdfjsViewer').classList.remove('active');
+            document.getElementById('pdfErrorPanel').classList.add('show');
+        }
+
+        function retryPdfLoad() {
+            var frame = document.getElementById('pdfFrame');
+            var currentNum = getCurrentPortfolioNum();
+            var data = portfolios[currentNum];
+            document.getElementById('pdfErrorPanel').classList.remove('show');
+            document.getElementById('pdfjsViewer').classList.remove('active');
+            frame.style.display = 'block';
+            document.getElementById('pdfLoading').classList.remove('hidden');
+            // Try PDF.js directly on retry
+            loadPdfjsLibrary(function() {
+                renderPdfJs(data.pdfUrl);
+            });
+        }
+
+        function getCurrentPortfolioNum() {
+            for (var i = 1; i <= 3; i++) {
+                var btn = document.getElementById('btn-portfolio-' + i);
+                if (btn && btn.classList.contains('active')) return i;
+            }
+            return 1;
+        }
+
+        function renderPdfJs(url) {
+            pdfjsCurrentPdfUrl = url;
+            pdfjsCurrentPage = 1;
+            showPdfjsViewer();
+            document.getElementById('pdfLoading').classList.remove('hidden');
+            document.getElementById('pdfjsCanvasWrap').innerHTML = '';
+
+            var loadingTask = pdfjsLib.getDocument({ url: url, withCredentials: false });
+            loadingTask.promise.then(function(pdf) {
+                pdfjsCurrentDoc = pdf;
+                pdfjsTotalPages = pdf.numPages;
+                document.getElementById('pdfLoading').classList.add('hidden');
+                renderAllPagesPdfJs();
+            }).catch(function(err) {
+                console.warn('PDF.js load error:', err);
+                showPdfError();
+            });
+        }
+
+        function renderAllPagesPdfJs() {
+            var wrap = document.getElementById('pdfjsCanvasWrap');
+            wrap.innerHTML = '';
+            var totalPages = pdfjsTotalPages;
+            updatePdfjsPageInfo();
+            // Render pages sequentially
+            (function renderPage(num) {
+                if (num > totalPages) return;
+                pdfjsCurrentDoc.getPage(num).then(function(page) {
+                    var viewport = page.getViewport({ scale: pdfjsScale });
+                    var canvas = document.createElement('canvas');
+                    canvas.id = 'pdfjs-canvas-' + num;
+                    canvas.width = viewport.width;
+                    canvas.height = viewport.height;
+                    wrap.appendChild(canvas);
+                    var ctx = canvas.getContext('2d');
+                    page.render({ canvasContext: ctx, viewport: viewport }).promise.then(function() {
+                        renderPage(num + 1);
+                    });
+                });
+            })(1);
+        }
+
+        function pdfjsPrevPage() {
+            if (pdfjsCurrentPage <= 1) return;
+            pdfjsCurrentPage--;
+            var canvas = document.getElementById('pdfjs-canvas-' + pdfjsCurrentPage);
+            if (canvas) canvas.scrollIntoView({ behavior: 'smooth' });
+            updatePdfjsPageInfo();
+        }
+
+        function pdfjsNextPage() {
+            if (pdfjsCurrentPage >= pdfjsTotalPages) return;
+            pdfjsCurrentPage++;
+            var canvas = document.getElementById('pdfjs-canvas-' + pdfjsCurrentPage);
+            if (canvas) canvas.scrollIntoView({ behavior: 'smooth' });
+            updatePdfjsPageInfo();
+        }
+
+        function pdfjsZoomIn() {
+            pdfjsScale = Math.min(pdfjsScale + 0.3, 3.0);
+            if (pdfjsCurrentDoc) renderAllPagesPdfJs();
+        }
+
+        function pdfjsZoomOut() {
+            pdfjsScale = Math.max(pdfjsScale - 0.3, 0.5);
+            if (pdfjsCurrentDoc) renderAllPagesPdfJs();
+        }
+
+        function pdfjsFitWidth() {
+            var wrap = document.getElementById('pdfjsCanvasWrap');
+            // Estimate scale to fit wrap width (~wrap.clientWidth - 32px padding)
+            if (!pdfjsCurrentDoc) return;
+            pdfjsCurrentDoc.getPage(1).then(function(page) {
+                var vp = page.getViewport({ scale: 1 });
+                var availW = wrap.clientWidth - 24;
+                pdfjsScale = availW / vp.width;
+                renderAllPagesPdfJs();
+            });
+        }
+
+        function updatePdfjsPageInfo() {
+            document.getElementById('pdfjsPageInfo').textContent = 'Hal ' + pdfjsCurrentPage + ' / ' + pdfjsTotalPages;
+            document.getElementById('pdfjsPrevBtn').disabled = pdfjsCurrentPage <= 1;
+            document.getElementById('pdfjsNextBtn').disabled = pdfjsCurrentPage >= pdfjsTotalPages;
+        }
+
+        // ============================================================
+        // IFRAME ERROR DETECTION — auto fallback to PDF.js
+        // ============================================================
+        var pdfIframeTimer = null;
+
+        function startIframeErrorDetection(portfolioNum) {
+            clearTimeout(pdfIframeTimer);
+            var data = portfolios[portfolioNum];
+            // Set the drive link for fallback button
+            document.getElementById('pdfOpenDriveLink').href = data.driveUrl;
+
+            // Wait 10s — if still loading, check if iframe has content
+            pdfIframeTimer = setTimeout(function() {
+                var frame = document.getElementById('pdfFrame');
+                var loading = document.getElementById('pdfLoading');
+                // If loading indicator is still visible, assume error
+                if (!loading.classList.contains('hidden')) {
+                    console.warn('Portfolio iframe timeout, switching to PDF.js fallback...');
+                    loading.classList.add('hidden');
+                    loadPdfjsLibrary(function() {
+                        renderPdfJs(data.pdfUrl);
+                    });
+                }
+            }, 10000);
+        }
 
         // ============================================================
         // CERTIFICATE DATA
@@ -1749,9 +2345,24 @@
             document.getElementById('btn-portfolio-1').classList.toggle('active', num === 1);
             document.getElementById('btn-portfolio-2').classList.toggle('active', num === 2);
             document.getElementById('btn-portfolio-3').classList.toggle('active', num === 3);
+
+            // Reset viewer state
             loader.classList.remove('hidden');
+            document.getElementById('pdfErrorPanel').classList.remove('show');
+            document.getElementById('pdfjsViewer').classList.remove('active');
+            frame.style.display = 'block';
+            pdfjsCurrentDoc = null;
+            pdfjsCurrentPage = 1;
+            document.getElementById('pdfjsCanvasWrap').innerHTML = '';
+
             frame.src = data.src;
             header.textContent = data.title;
+
+            // Set drive link for error panel
+            document.getElementById('pdfOpenDriveLink').href = data.driveUrl;
+
+            // Start timeout fallback detection
+            startIframeErrorDetection(num);
         }
 
         function switchCertificate(num) {
@@ -1774,7 +2385,11 @@
             document.body.style.overflow = 'hidden';
             overlay.classList.add('active');
             requestAnimationFrame(function() {
-                setTimeout(function() { book.classList.add('opened'); }, 60);
+                setTimeout(function() {
+                    book.classList.add('opened');
+                    // Start error detection for whichever portfolio is active
+                    startIframeErrorDetection(getCurrentPortfolioNum());
+                }, 60);
             });
             dismissToast();
         }
@@ -1827,6 +2442,7 @@
         });
 
         function hidePdfLoading() {
+            clearTimeout(pdfIframeTimer);
             setTimeout(function() {
                 var el = document.getElementById('pdfLoading');
                 if (el) el.classList.add('hidden');
