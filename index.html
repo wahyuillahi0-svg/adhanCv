@@ -1654,7 +1654,7 @@
 
 
     <!-- BLUEPRINTS GALLERY — 3D Perspective Slide Carousel -->
-    <section id="blueprints" class="py-4 bg-[#0a0a0a] text-white overflow-hidden">
+    <section id="blueprints" class="py-6 bg-[#0a0a0a] text-white overflow-hidden">
         <div class="flex justify-between items-center mb-1 px-8 md:px-24">
             <h2 class="text-xs font-bold uppercase tracking-[0.4em] text-blue-500">Technical Projects Gallery</h2>
             <button onclick="openPortfolio()" class="text-xs font-bold text-white border-b border-white pb-1 hover:text-blue-500 hover:border-blue-500 transition bg-transparent cursor-pointer">Buka Portfolio Lengkap →</button>
@@ -1662,12 +1662,12 @@
         <p class="text-gray-500 text-xs mb-2 uppercase tracking-widest px-8 md:px-24">Gedung 4 Lantai</p>
 
         <!-- 3D Slide Stage -->
-        <div id="bp-stage-outer" style="position:relative;width:100%;padding:8px 0 12px;">
+        <div id="bp-stage-outer" style="position:relative;width:100%;padding:8px 0 16px;">
             <!-- Pause hint -->
             <div id="bp-pause-hint" style="position:absolute;top:0;left:50%;transform:translateX(-50%);z-index:20;background:rgba(0,0,0,0.65);color:#93c5fd;font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;padding:5px 16px;border-radius:99px;opacity:0;transition:opacity 0.4s;pointer-events:none;">⏸ Dijeda — Klik lagi untuk lanjut</div>
 
             <!-- perspective stage -->
-            <div id="bp-3d-stage" style="perspective:1800px;perspective-origin:50% 40%;width:100%;height:620px;position:relative;cursor:pointer;" onclick="bpTogglePause()">
+            <div id="bp-3d-stage" style="perspective:2200px;perspective-origin:50% 40%;width:100%;height:82vh;min-height:560px;max-height:900px;position:relative;cursor:pointer;" onclick="bpTogglePause()">
                 <!-- slides injected by JS -->
             </div>
 
@@ -1706,7 +1706,7 @@
             cursor: pointer;
             transition: transform 0.65s cubic-bezier(0.34,1.1,0.64,1), box-shadow 0.65s ease, opacity 0.65s ease;
             will-change: transform, opacity;
-            background: #fff;
+            background: linear-gradient(135deg, #0d1120 0%, #111827 40%, #0d1528 100%);
             user-select: none;
         }
         .bp-slide:hover { filter: brightness(1.08); }
@@ -1720,14 +1720,50 @@
             letter-spacing: 0.18em;
             text-transform: uppercase;
             padding: 5px 10px;
-            z-index: 2;
+            z-index: 3;
         }
         .bp-slide img {
             display: block;
             width: 100%;
             height: 100%;
             object-fit: contain;
-            padding: 4px;
+            padding: 0;
+            position: relative;
+            z-index: 1;
+        }
+        /* Soft color-blended wings — fades from transparent image edge to dark outer edge */
+        .bp-slide::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            /* Left wing */
+            background: linear-gradient(to right,
+                rgba(18, 22, 38, 0.96) 0%,
+                rgba(30, 40, 70, 0.72) 6%,
+                rgba(180, 195, 220, 0.18) 18%,
+                transparent 30%,
+                transparent 70%,
+                rgba(180, 195, 220, 0.18) 82%,
+                rgba(30, 40, 70, 0.72) 94%,
+                rgba(18, 22, 38, 0.96) 100%
+            );
+            z-index: 2;
+            pointer-events: none;
+            border-radius: 10px;
+        }
+        /* Bottom vignette — soft fade to dark at bottom edge */
+        .bp-slide::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom,
+                transparent 55%,
+                rgba(15, 18, 35, 0.30) 78%,
+                rgba(15, 18, 35, 0.72) 100%
+            );
+            z-index: 2;
+            pointer-events: none;
+            border-radius: 10px;
         }
         /* dot */
         .bp-dot {
@@ -1759,8 +1795,8 @@
         ];
 
         var N        = cards.length;
-        var CARD_W   = 480;
-        var CARD_H   = 380;
+        var CARD_W   = Math.min(Math.round(window.innerWidth * 0.58), 820);
+        var CARD_H   = Math.min(Math.round(window.innerHeight * 0.72), 680);
         var AUTO_INT = 2800;   // ms per slide
         var current  = 0;
         var paused   = false;
@@ -1812,11 +1848,11 @@
                 var side    = rel < 0 ? -1 : (rel > 0 ? 1 : 0);
 
                 /* depth stack: front = 0, each step back ~80px */
-                var tz      = -absRel * 120;
+                var tz      = -absRel * 160;
                 /* spread horizontally */
-                var tx      = side * absRel * 260 + side * 30;
+                var tx      = side * absRel * 340 + side * 30;
                 /* tilt */
-                var ry      = side * absRel * 18;
+                var ry      = side * absRel * 16;
                 /* scale down background cards */
                 var sc      = Math.max(0.55, 1 - absRel * 0.12);
                 /* opacity fade */
