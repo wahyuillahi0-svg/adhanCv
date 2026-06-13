@@ -1082,7 +1082,17 @@
             #cv-print-only .cv-skill-pct { color: #888 !important; }
             #cv-print-only .cv-contact-block, #cv-print-only .cv-contact-block a { color: #333 !important; }
         }
-        @media screen { #cv-print-only { display: none; } }
+        @media screen {
+            #cv-print-only {
+                position: absolute !important;
+                width: 210mm !important;
+                height: auto !important;
+                left: -9999px !important;
+                top: 0 !important;
+                overflow: hidden !important;
+                pointer-events: none !important;
+            }
+        }
     </style>
 
     <!-- ============================================================
@@ -1343,6 +1353,15 @@
             background: rgba(59,130,246,0.15) !important;
             color: var(--d3-cyan) !important;
         }
+        .skill-level-text.skill-level-hidden {
+            opacity: 0;
+            transform: translateX(-6px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .skill-level-text.skill-level-show {
+            opacity: 1;
+            transform: translateX(0);
+        }
 
         /* Education items */
         .education-item {
@@ -1351,6 +1370,20 @@
         .education-item::before {
             background: var(--d3-blue) !important;
             box-shadow: 0 0 10px rgba(59,130,246,0.7) !important;
+        }
+
+        /* Typewriter effect */
+        .typewriter-text {
+            display: inline-block;
+            border-right: 2px solid transparent;
+        }
+        .typewriter-text.tw-active {
+            border-right-color: var(--d3-cyan);
+            animation: tw-blink 0.6s step-end infinite;
+        }
+        @keyframes tw-blink {
+            from, to { border-color: transparent; }
+            50% { border-color: var(--d3-cyan); }
         }
 
         /* ── Blueprint cards ── */
@@ -1542,7 +1575,7 @@
     <div id="cv-print-only">
         <div class="cv-header">
             <div class="cv-name-block">
-                <h1 class="cv-name">Wahyu Illahi Ramadhan</h1>
+                <h1 class="cv-name notranslate">Wahyu Illahi Ramadhan</h1>
                 <p class="cv-title">Civil Drafter &amp; AutoCAD Specialist · 10+ Tahun Pengalaman</p>
             </div>
             <div class="cv-contact-block">
@@ -1632,7 +1665,7 @@
         </div>
 
         <div class="cv-footer">
-            <span>Wahyu Illahi Ramadhan &nbsp;·&nbsp; Bekasi, Indonesia</span>
+            <span><span class="notranslate">Wahyu Illahi Ramadhan</span> &nbsp;·&nbsp; Bekasi, Indonesia</span>
             <span>Verifikasi via LinkedIn · Portfolio &amp; Sertifikat tersedia di Web CV</span>
             <span>+62 822-8575-4080</span>
         </div>
@@ -1670,7 +1703,7 @@
 
                     <div class="book-cover-sub">Portfolio Teknis</div>
                     <div class="book-cover-divider"></div>
-                    <div class="book-cover-title">Wahyu Illahi<br>Ramadhan</div>
+                    <div class="book-cover-title notranslate">Wahyu Illahi<br>Ramadhan</div>
                     <div class="book-cover-divider"></div>
                     <div class="book-cover-sub" style="color:rgba(255,255,255,0.4);font-size:10px;letter-spacing:0.15em;">Civil Drafter · QS · Site Engineer</div>
 
@@ -1767,14 +1800,14 @@
                         <!-- Watermark grid overlay -->
                         <div class="watermark-layer">
                             <div class="watermark-grid">
-                                <div class="watermark-cell"><span>Wahyu Illahi R.</span></div>
+                                <div class="watermark-cell"><span class="notranslate">Wahyu Illahi R.</span></div>
                                 <div class="watermark-cell"><span>© Portofolio</span></div>
-                                <div class="watermark-cell"><span>Wahyu Illahi R.</span></div>
+                                <div class="watermark-cell"><span class="notranslate">Wahyu Illahi R.</span></div>
                                 <div class="watermark-cell"><span>© Portofolio</span></div>
                                 <div class="watermark-cell"><span>© Portofolio</span></div>
-                                <div class="watermark-cell"><span>Wahyu Illahi R.</span></div>
+                                <div class="watermark-cell"><span class="notranslate">Wahyu Illahi R.</span></div>
                                 <div class="watermark-cell"><span>© Portofolio</span></div>
-                                <div class="watermark-cell"><span>Wahyu Illahi R.</span></div>
+                                <div class="watermark-cell"><span class="notranslate">Wahyu Illahi R.</span></div>
                             </div>
                         </div>
                     </div>
@@ -1803,7 +1836,7 @@
 
                     <div class="cert-cover-sub">Dokumen Akademik</div>
                     <div class="cert-cover-divider"></div>
-                    <div class="cert-cover-title">Wahyu Illahi<br>Ramadhan</div>
+                    <div class="cert-cover-title notranslate">Wahyu Illahi<br>Ramadhan</div>
                     <div class="cert-cover-divider"></div>
                     <div class="cert-cover-sub" style="color:rgba(255,255,255,0.4);font-size:9px;letter-spacing:0.12em;">Universitas Negeri Padang · S1 Teknik Sipil</div>
 
@@ -1979,14 +2012,14 @@
                         <!-- Cert Watermark -->
                         <div class="cert-watermark-layer">
                             <div class="cert-watermark-grid">
-                                <div class="cert-watermark-cell"><span>Wahyu Illahi R.</span></div>
+                                <div class="cert-watermark-cell"><span class="notranslate">Wahyu Illahi R.</span></div>
                                 <div class="cert-watermark-cell"><span>© Akademik</span></div>
-                                <div class="cert-watermark-cell"><span>Wahyu Illahi R.</span></div>
+                                <div class="cert-watermark-cell"><span class="notranslate">Wahyu Illahi R.</span></div>
                                 <div class="cert-watermark-cell"><span>© Akademik</span></div>
                                 <div class="cert-watermark-cell"><span>© Akademik</span></div>
-                                <div class="cert-watermark-cell"><span>Wahyu Illahi R.</span></div>
+                                <div class="cert-watermark-cell"><span class="notranslate">Wahyu Illahi R.</span></div>
                                 <div class="cert-watermark-cell"><span>© Akademik</span></div>
-                                <div class="cert-watermark-cell"><span>Wahyu Illahi R.</span></div>
+                                <div class="cert-watermark-cell"><span class="notranslate">Wahyu Illahi R.</span></div>
                             </div>
                         </div>
                     </div>
@@ -2027,65 +2060,65 @@
         }
     </style>
 
-    <!-- Google Translate Element (hidden) -->
+    <!-- Google Translate Widget (hidden) -->
     <div id="google_translate_element" style="display:none;"></div>
     <script type="text/javascript">
         var _gtReady = false;
 
-        // Dipanggil Google Translate saat berhasil load (online)
         function googleTranslateElementInit() {
             _gtReady = true;
             new google.translate.TranslateElement({
                 pageLanguage: 'id',
                 includedLanguages: 'id,en',
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
                 autoDisplay: false
             }, 'google_translate_element');
-            // Restore state EN jika sebelumnya sudah dipilih
-            var match = document.cookie.match(/googtrans=\/id\/(\w+)/);
-            if (match && match[1] === 'en') {
-                document.getElementById('lang-btn-id').classList.remove('lang-active');
-                document.getElementById('lang-btn-en').classList.add('lang-active');
-            }
         }
 
         function translatePage(lang) {
             if (!_gtReady) {
-                // Offline: tampilkan feedback merah sebentar
                 var enBtn = document.getElementById('lang-btn-en');
                 var orig = enBtn.textContent;
                 enBtn.textContent = 'Offline';
                 enBtn.style.cssText = 'background:#ef4444!important;color:#fff!important;';
-                setTimeout(function() {
-                    enBtn.textContent = orig;
-                    enBtn.style.cssText = '';
-                }, 1800);
+                setTimeout(function() { enBtn.textContent = orig; enBtn.style.cssText = ''; }, 1800);
                 return;
             }
+
+            // Update tombol aktif langsung
             var isID = (lang === 'id');
             document.getElementById('lang-btn-id').classList.toggle('lang-active', isID);
             document.getElementById('lang-btn-en').classList.toggle('lang-active', !isID);
-            var iframe = document.querySelector('.goog-te-banner-frame');
-            if (iframe) iframe.style.display = 'none';
-            var expires = new Date();
-            expires.setFullYear(expires.getFullYear() + 1);
-            if (lang === 'en') {
-                document.cookie = 'googtrans=/id/en; expires=' + expires.toUTCString() + '; path=/';
+
+            // Metode paling responsif: doGTranslate() — langsung trigger tanpa reload
+            var langPair = isID ? 'id|id' : 'id|en';
+            if (typeof doGTranslate === 'function') {
+                doGTranslate(langPair);
             } else {
-                document.cookie = 'googtrans=/id/id; expires=' + expires.toUTCString() + '; path=/';
-                document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
+                // Fallback: trigger via select combo
+                var trySelect = function(attempt) {
+                    var select = document.querySelector('.goog-te-combo');
+                    if (select) {
+                        select.value = lang;
+                        select.dispatchEvent(new Event('change'));
+                    } else if (attempt < 10) {
+                        setTimeout(function() { trySelect(attempt + 1); }, 200);
+                    }
+                };
+                trySelect(0);
             }
-            var select = document.querySelector('.goog-te-combo');
-            if (select) {
-                select.value = lang;
-                select.dispatchEvent(new Event('change'));
-            }
+
+            // Sembunyikan banner Google Translate
+            setTimeout(function() {
+                var banner = document.querySelector('.goog-te-banner-frame');
+                if (banner) banner.style.display = 'none';
+                document.body.style.top = '0';
+            }, 100);
         }
     </script>
-    <!-- async + defer: tidak block halaman saat offline. onerror: silent fail -->
+    <!-- async+defer: tidak block halaman saat offline -->
     <script async defer
         src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-        onerror="console.warn('Google Translate tidak tersedia (offline).');"></script>
+        onerror="console.warn('Google Translate offline.');"></script>
 
     <style>
         /* Hide Google Translate top banner */
@@ -2125,7 +2158,7 @@
     </style>
 
     <nav class="fixed w-full z-50 bg-white/95 backdrop-blur-md py-4 px-8 md:px-16 flex justify-between items-center border-b border-gray-100">
-        <div class="font-bold text-xl tracking-tighter uppercase text-blue-600">Wahyu Illahi R.</div>
+        <div class="font-bold text-xl tracking-tighter uppercase text-blue-600"><span class="notranslate">Wahyu Illahi R.</span></div>
         <div class="hidden md:flex space-x-2 text-[10px] font-bold uppercase tracking-[0.2em] items-center">
             <a href="#experience" id="nav-karir" class="nav-link hover:text-blue-600 transition">Karir</a>
             <a href="#blueprints" id="nav-proyek" class="nav-link hover:text-blue-600 transition">Proyek</a>
@@ -2611,10 +2644,10 @@
                 <div class="exp-skills-sticky">
                     <div class="skills-container" style="margin:0;max-width:100%;">
                         <h2 class="skills-h2">Technical Expertise</h2>
-                        <div class="skill-card"><div class="skill-info"><span class="skill-name">AutoCAD 2D</span><span class="skill-level-text">Mahir</span></div><div class="progress-bar"><div class="progress-fill" style="width:95%;"></div></div><p class="skill-desc">Gambar kerja arsitektur & struktur: denah, tampak, potongan, detail, as-built drawing, shop drawing.</p></div>
-                        <div class="skill-card"><div class="skill-info"><span class="skill-name">SketchUp 3D</span><span class="skill-level-text">Menengah</span></div><div class="progress-bar"><div class="progress-fill" style="width:75%;"></div></div><p class="skill-desc">Visualisasi 3D desain arsitektur untuk presentasi dan koordinasi klien.</p></div>
-                        <div class="skill-card"><div class="skill-info"><span class="skill-name">MS Excel (RAB)</span><span class="skill-level-text">Menengah</span></div><div class="progress-bar"><div class="progress-fill" style="width:80%;"></div></div><p class="skill-desc">Penyusunan Rencana Anggaran Biaya (RAB), Bill of Quantity (BQ), dan analisa harga satuan.</p></div>
-                        <div class="skill-card"><div class="skill-info"><span class="skill-name">Dokumen Teknis (RKS)</span><span class="skill-level-text">Mahir</span></div><div class="progress-bar"><div class="progress-fill" style="width:90%;"></div></div><p class="skill-desc">Penyusunan RKS, laporan proyek, spesifikasi teknis, dan dokumen tender.</p></div>
+                        <div class="skill-card"><div class="skill-info"><span class="skill-name">AutoCAD 2D</span><span class="skill-level-text skill-level-hidden">Mahir</span></div><div class="progress-bar"><div class="progress-fill" data-target-width="95%" style="width:0%;"></div></div><p class="skill-desc">Gambar kerja arsitektur & struktur: denah, tampak, potongan, detail, as-built drawing, shop drawing.</p></div>
+                        <div class="skill-card"><div class="skill-info"><span class="skill-name">SketchUp 3D</span><span class="skill-level-text skill-level-hidden">Menengah</span></div><div class="progress-bar"><div class="progress-fill" data-target-width="75%" style="width:0%;"></div></div><p class="skill-desc">Visualisasi 3D desain arsitektur untuk presentasi dan koordinasi klien.</p></div>
+                        <div class="skill-card"><div class="skill-info"><span class="skill-name">MS Excel (RAB)</span><span class="skill-level-text skill-level-hidden">Menengah</span></div><div class="progress-bar"><div class="progress-fill" data-target-width="80%" style="width:0%;"></div></div><p class="skill-desc">Penyusunan Rencana Anggaran Biaya (RAB), Bill of Quantity (BQ), dan analisa harga satuan.</p></div>
+                        <div class="skill-card"><div class="skill-info"><span class="skill-name">Dokumen Teknis (RKS)</span><span class="skill-level-text skill-level-hidden">Mahir</span></div><div class="progress-bar"><div class="progress-fill" data-target-width="90%" style="width:0%;"></div></div><p class="skill-desc">Penyusunan RKS, laporan proyek, spesifikasi teknis, dan dokumen tender.</p></div>
                     </div>
                 </div>
             </div>
@@ -2626,8 +2659,8 @@
     <section class="py-20 bg-[#f4f7f6]">
         <div class="edu-container">
             <h2 class="edu-h2">Riwayat Pendidikan</h2>
-            <div class="education-item"><span class="year">2015 - 2019</span><div class="institution">Universitas Negeri Padang <span class="degree">S1</span></div><div class="major">Teknik Sipil</div></div>
-            <div class="education-item"><span class="year">2012 - 2015</span><div class="institution">SMK N 2 Sijunjung</div><div class="major">Teknik Gambar Bangunan</div></div>
+            <div class="education-item"><span class="year typewriter-text" data-tw-text="2015 - 2019" data-tw-order="1"></span><div class="institution"><span class="typewriter-text" data-tw-text="Universitas Negeri Padang" data-tw-order="2"></span> <span class="degree">S1</span></div><div class="major typewriter-text" data-tw-text="Teknik Sipil" data-tw-order="3"></div></div>
+            <div class="education-item"><span class="year typewriter-text" data-tw-text="2012 - 2015" data-tw-order="4"></span><div class="institution"><span class="typewriter-text" data-tw-text="SMK N 2 Sijunjung" data-tw-order="5"></span></div><div class="major typewriter-text" data-tw-text="Teknik Gambar Bangunan" data-tw-order="6"></div></div>
         </div>
     </section>
 
@@ -2695,7 +2728,7 @@
                     <a href="https://wa.me/6282285754080" target="_blank" class="text-xs font-bold uppercase tracking-[0.2em] border-b border-[#25D366] text-[#25D366] hover:text-green-700 hover:border-green-700">WhatsApp</a>
                 </div>
             </div>
-            <p class="mt-20 text-[10px] text-gray-400 uppercase tracking-[0.5em]">Wahyu Illahi Ramadhan — Civil Drafter · AutoCAD Specialist · Bekasi, Indonesia</p>
+            <p class="mt-20 text-[10px] text-gray-400 uppercase tracking-[0.5em]"><span class="notranslate">Wahyu Illahi Ramadhan</span> — Civil Drafter · AutoCAD Specialist · Bekasi, Indonesia</p>
         </div>
     </footer>
 
@@ -3301,7 +3334,7 @@
             <button class="kontak-close-btn" onclick="closeKontakPopup()">✕</button>
             <div class="kontak-icon">📞</div>
             <div class="kontak-label">Hubungi Saya</div>
-            <div class="kontak-name">Wahyu Illahi Ramadhan</div>
+            <div class="kontak-name notranslate">Wahyu Illahi Ramadhan</div>
             <div style="font-size:12px;color:#9ca3af;margin-bottom:4px;">Civil Drafter · AutoCAD Specialist</div>
             <div class="kontak-number">0822-8575-4080</div>
             <div class="kontak-actions">
@@ -3321,6 +3354,116 @@
                 setTimeout(function() { btn.textContent = 'Salin No.'; }, 2000);
             });
         }
+
+        // Typewriter animation for Riwayat Pendidikan section
+        (function () {
+            var section = document.querySelector('.edu-container');
+            if (!section) return;
+
+            var elements = Array.prototype.slice.call(section.querySelectorAll('.typewriter-text'))
+                .sort(function (a, b) {
+                    return (parseInt(a.getAttribute('data-tw-order'), 10) || 0) -
+                           (parseInt(b.getAttribute('data-tw-order'), 10) || 0);
+                });
+
+            var SPEED = 18; // ms per character (cepat)
+            var DELAY_BETWEEN = 80; // ms gap between elements
+
+            function typeElement(el, callback) {
+                var text = el.getAttribute('data-tw-text') || '';
+                el.textContent = '';
+                el.classList.add('tw-active');
+                var i = 0;
+                (function step() {
+                    if (i <= text.length) {
+                        el.textContent = text.slice(0, i);
+                        i++;
+                        setTimeout(step, SPEED);
+                    } else {
+                        el.classList.remove('tw-active');
+                        if (callback) setTimeout(callback, DELAY_BETWEEN);
+                    }
+                })();
+            }
+
+            var playing = false;
+
+            function resetElements() {
+                elements.forEach(function (el) {
+                    el.classList.remove('tw-active');
+                    el.textContent = '';
+                });
+            }
+
+            function runSequence(idx) {
+                if (idx >= elements.length) { playing = false; return; }
+                typeElement(elements[idx], function () {
+                    runSequence(idx + 1);
+                });
+            }
+
+            var observer = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        if (!playing) {
+                            playing = true;
+                            resetElements();
+                            runSequence(0);
+                        }
+                    } else {
+                        playing = false;
+                        resetElements();
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            observer.observe(section);
+        })();
+
+        // Skill progress bar animation
+        (function () {
+            var cards = document.querySelectorAll('.skill-card');
+            if (!cards.length) return;
+
+            var skillObserver = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    var card = entry.target;
+                    var fill = card.querySelector('.progress-fill');
+                    var label = card.querySelector('.skill-level-text');
+
+                    if (entry.isIntersecting) {
+                        var target = fill.getAttribute('data-target-width');
+
+                        requestAnimationFrame(function () {
+                            fill.style.width = target;
+                        });
+
+                        fill.addEventListener('transitionend', function handler(e) {
+                            if (e.propertyName !== 'width') return;
+                            fill.removeEventListener('transitionend', handler);
+                            if (label) {
+                                label.classList.remove('skill-level-hidden');
+                                label.classList.add('skill-level-show');
+                            }
+                        });
+                    } else {
+                        fill.style.transition = 'none';
+                        fill.style.width = '0%';
+                        if (label) {
+                            label.classList.remove('skill-level-show');
+                            label.classList.add('skill-level-hidden');
+                        }
+                        requestAnimationFrame(function () {
+                            fill.style.transition = '';
+                        });
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            cards.forEach(function (card) {
+                skillObserver.observe(card);
+            });
+        })();
     </script>
 </body>
 </html>
