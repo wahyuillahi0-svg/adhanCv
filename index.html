@@ -1071,11 +1071,470 @@
             #portfolio-overlay { display: none !important; }
             #certificate-overlay { display: none !important; }
             #print-toast { display: none !important; }
+            #cv-print-only h1, #cv-print-only h2, #cv-print-only h3, #cv-print-only h4, #cv-print-only h5, #cv-print-only h6 { color: #0a0a0a !important; }
+            #cv-print-only .cv-name { color: #0a0a0a !important; }
+            #cv-print-only .cv-skill-name { color: #111 !important; }
+            #cv-print-only .cv-title { color: #555 !important; }
+            #cv-print-only .cv-section-title { color: #1a1a1a !important; }
+            #cv-print-only .cv-exp-role, #cv-print-only .cv-edu-school { color: #0a0a0a !important; }
+            #cv-print-only .cv-exp-date, #cv-print-only .cv-edu-year, #cv-print-only .cv-exp-company { color: #555 !important; }
+            #cv-print-only .cv-exp-desc, #cv-print-only .cv-edu-major, #cv-print-only .cv-summary { color: #333 !important; }
+            #cv-print-only .cv-skill-pct { color: #888 !important; }
+            #cv-print-only .cv-contact-block, #cv-print-only .cv-contact-block a { color: #333 !important; }
         }
         @media screen { #cv-print-only { display: none; } }
     </style>
+
+    <!-- ============================================================
+         3D WEBSITE VISUAL THEME — OVERLAY LAYER (no content changed)
+    ============================================================ -->
+    <style>
+        /* ── Global 3D atmosphere ── */
+        :root {
+            --d3-bg:        #06080f;
+            --d3-surface:   #0d111c;
+            --d3-card:      #111827;
+            --d3-border:    rgba(59,130,246,0.18);
+            --d3-glow:      rgba(59,130,246,0.55);
+            --d3-glow-soft: rgba(99,160,255,0.12);
+            --d3-blue:      #3b82f6;
+            --d3-cyan:      #38bdf8;
+            --d3-white:     #e8eeff;
+            --d3-muted:     #7a8bad;
+            --d3-grid:      rgba(59,130,246,0.07);
+        }
+
+        /* ── Body: deep space background + infinite grid ── */
+        body {
+            background: var(--d3-bg) !important;
+            color: var(--d3-white) !important;
+        }
+
+        /* 3D perspective grid background attached to body */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(var(--d3-grid) 1px, transparent 1px),
+                linear-gradient(90deg, var(--d3-grid) 1px, transparent 1px);
+            background-size: 44px 44px;
+            background-position: center center;
+            mask-image: radial-gradient(ellipse 90% 70% at 50% 50%, black 0%, transparent 100%);
+            -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 50%, black 0%, transparent 100%);
+        }
+
+        /* Ambient radial glow at top center */
+        body::after {
+            content: '';
+            position: fixed;
+            top: -160px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 900px;
+            height: 500px;
+            background: radial-gradient(ellipse at center, rgba(59,130,246,0.18) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ── Navbar ── */
+        nav {
+            background: rgba(6,8,15,0.82) !important;
+            border-bottom: 1px solid var(--d3-border) !important;
+            backdrop-filter: blur(20px) !important;
+            position: relative;
+            z-index: 50;
+        }
+
+        nav .font-bold.text-xl {
+            color: var(--d3-cyan) !important;
+            text-shadow: 0 0 18px rgba(56,189,248,0.6);
+            letter-spacing: 0.12em;
+        }
+
+        /* Glow line under navbar */
+        nav::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--d3-blue), var(--d3-cyan), var(--d3-blue), transparent);
+            opacity: 0.7;
+        }
+
+        /* ── Hero section ── */
+        header {
+            background: transparent !important;
+            position: relative;
+            z-index: 1;
+        }
+
+        #hero-tag {
+            color: var(--d3-cyan) !important;
+            text-shadow: 0 0 14px rgba(56,189,248,0.5);
+            letter-spacing: 0.35em;
+        }
+
+        #hero-title {
+            color: var(--d3-white) !important;
+            text-shadow:
+                0 0 80px rgba(59,130,246,0.35),
+                0 2px 0 rgba(0,0,0,0.8);
+            /* 3D extrude illusion */
+            filter: drop-shadow(0 8px 32px rgba(59,130,246,0.2));
+            transform: perspective(900px) rotateX(2deg);
+            transform-origin: bottom center;
+        }
+
+        #hero-sub {
+            color: var(--d3-muted) !important;
+        }
+
+        /* Stats bar */
+        #hero-stats .text-3xl {
+            color: var(--d3-white) !important;
+            text-shadow: 0 0 24px rgba(59,130,246,0.5);
+        }
+        #hero-stats .text-xs {
+            color: var(--d3-muted) !important;
+        }
+        #hero-stats [style*="width:1px"] {
+            background: var(--d3-border) !important;
+        }
+
+        /* CTA buttons */
+        .btn-primary {
+            background: var(--d3-blue) !important;
+            box-shadow: 0 0 22px rgba(59,130,246,0.55), inset 0 1px 0 rgba(255,255,255,0.15) !important;
+            border: 1px solid rgba(99,160,255,0.4) !important;
+        }
+        .btn-primary:hover {
+            background: var(--d3-cyan) !important;
+            box-shadow: 0 0 36px rgba(56,189,248,0.7) !important;
+        }
+
+        /* WhatsApp / Kontak outline buttons in hero */
+        #hero-cta a, #hero-cta button:not(.btn-primary) {
+            background: rgba(255,255,255,0.04) !important;
+            backdrop-filter: blur(8px);
+            color: var(--d3-white) !important;
+        }
+        #hero-cta a[href*="wa.me"] {
+            border-color: #25D366 !important;
+            color: #25D366 !important;
+        }
+        #hero-cta a[href*="wa.me"]:hover {
+            background: #25D366 !important;
+            color: #fff !important;
+        }
+
+        /* ── Section backgrounds ── */
+        section, #experience {
+            background: transparent !important;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Blueprints section already dark – enhance */
+        #blueprints {
+            background: rgba(6,8,15,0.95) !important;
+        }
+        #blueprints::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(59,130,246,0.09) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* ── Experience / Timeline section ── */
+        #experience {
+            background: var(--d3-surface) !important;
+        }
+        #experience::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 60% 40% at 30% 20%, rgba(59,130,246,0.07) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* Experience section heading text */
+        #experience h2,
+        #experience .text-xs.font-bold.uppercase {
+            color: var(--d3-white) !important;
+        }
+        #experience p, #experience li {
+            color: var(--d3-muted) !important;
+        }
+        #experience .text-gray-400,
+        #experience .text-gray-500,
+        #experience .text-gray-600 {
+            color: var(--d3-muted) !important;
+        }
+
+        /* Timeline line */
+        .experience-node {
+            border-left-color: var(--d3-border) !important;
+        }
+        .experience-node::before {
+            background: var(--d3-blue) !important;
+            box-shadow: 0 0 10px rgba(59,130,246,0.7) !important;
+        }
+        .exp-early::before {
+            background: #334155 !important;
+        }
+
+        /* ── Cards / white panels ── */
+        .skills-container,
+        .edu-container {
+            background: var(--d3-card) !important;
+            border: 1px solid var(--d3-border) !important;
+            box-shadow:
+                0 8px 40px rgba(0,0,0,0.5),
+                0 0 0 1px rgba(59,130,246,0.08),
+                inset 0 1px 0 rgba(255,255,255,0.04) !important;
+            transform: perspective(800px) rotateX(1.5deg) translateZ(0);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .skills-container:hover,
+        .edu-container:hover {
+            transform: perspective(800px) rotateX(0deg) translateY(-4px);
+            box-shadow:
+                0 20px 60px rgba(0,0,0,0.6),
+                0 0 30px rgba(59,130,246,0.15),
+                inset 0 1px 0 rgba(255,255,255,0.06) !important;
+        }
+
+        .skills-h2, .edu-h2 {
+            color: var(--d3-white) !important;
+            border-bottom-color: var(--d3-blue) !important;
+        }
+
+        .skill-name, .institution {
+            color: var(--d3-white) !important;
+        }
+        .skill-desc, .major {
+            color: var(--d3-muted) !important;
+        }
+        .year {
+            color: var(--d3-cyan) !important;
+        }
+        .degree {
+            background: rgba(59,130,246,0.15) !important;
+            color: var(--d3-cyan) !important;
+            border: 1px solid var(--d3-border) !important;
+        }
+
+        /* Progress bars */
+        .progress-bar {
+            background: rgba(255,255,255,0.08) !important;
+        }
+        .progress-fill {
+            background: linear-gradient(90deg, var(--d3-blue), var(--d3-cyan)) !important;
+            box-shadow: 0 0 10px rgba(56,189,248,0.4);
+        }
+        .skill-level-text {
+            background: rgba(59,130,246,0.15) !important;
+            color: var(--d3-cyan) !important;
+        }
+
+        /* Education items */
+        .education-item {
+            border-left-color: var(--d3-blue) !important;
+        }
+        .education-item::before {
+            background: var(--d3-blue) !important;
+            box-shadow: 0 0 10px rgba(59,130,246,0.7) !important;
+        }
+
+        /* ── Blueprint cards ── */
+        .blueprint-card {
+            background: var(--d3-card) !important;
+            border: 1px solid var(--d3-border) !important;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5) !important;
+            transform: perspective(600px) rotateX(2deg) translateZ(0);
+            transition: all 0.4s cubic-bezier(0.34,1.1,0.64,1) !important;
+        }
+        .blueprint-card:hover {
+            transform: perspective(600px) rotateX(-1deg) translateY(-8px) translateZ(20px) !important;
+            box-shadow:
+                0 30px 60px rgba(0,0,0,0.6),
+                0 0 30px rgba(59,130,246,0.25) !important;
+            border-color: rgba(59,130,246,0.5) !important;
+        }
+
+        /* ── General text color overrides ── */
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--d3-white) !important;
+        }
+        p, li, span:not([class*="text-blue"]):not([class*="text-green"]):not([class*="text-gray"]) {
+            color: var(--d3-muted);
+        }
+        .text-gray-400, .text-gray-500 { color: var(--d3-muted) !important; }
+        .text-blue-500, .text-blue-600 { color: var(--d3-blue) !important; }
+        .text-white { color: var(--d3-white) !important; }
+        .text-black { color: var(--d3-white) !important; }
+
+        /* Badge & exp-badge */
+        .exp-badge-magang {
+            background: rgba(255,255,255,0.06) !important;
+            color: var(--d3-muted) !important;
+            border-color: var(--d3-border) !important;
+        }
+
+        /* ── Line details / decorative lines ── */
+        .line-detail {
+            background: var(--d3-blue) !important;
+            box-shadow: 0 0 6px rgba(59,130,246,0.6);
+        }
+
+        /* ── Blueprint section section headings ── */
+        #blueprints h2, #blueprints p {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── 3D floating orbs (decorative, pointer-events:none) ── */
+        .d3-orb {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            animation: d3-float 12s ease-in-out infinite;
+            will-change: transform;
+        }
+        .d3-orb-1 {
+            width: 380px; height: 380px;
+            top: -100px; right: -80px;
+            background: radial-gradient(circle at 40% 40%, rgba(59,130,246,0.12) 0%, transparent 70%);
+            animation-duration: 14s;
+        }
+        .d3-orb-2 {
+            width: 260px; height: 260px;
+            bottom: 20%; left: -60px;
+            background: radial-gradient(circle at 60% 60%, rgba(56,189,248,0.10) 0%, transparent 70%);
+            animation-duration: 18s;
+            animation-delay: -6s;
+        }
+        .d3-orb-3 {
+            width: 180px; height: 180px;
+            top: 55%; right: 8%;
+            background: radial-gradient(circle, rgba(99,102,241,0.10) 0%, transparent 70%);
+            animation-duration: 10s;
+            animation-delay: -3s;
+        }
+        @keyframes d3-float {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            33% { transform: translateY(-24px) scale(1.04); }
+            66% { transform: translateY(12px) scale(0.97); }
+        }
+
+        /* ── Scrollbar ── */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--d3-bg); }
+        ::-webkit-scrollbar-thumb { background: var(--d3-border); border-radius: 6px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--d3-blue); }
+
+        /* ── Kontak popup ── */
+        .kontak-card {
+            background: var(--d3-card) !important;
+            border: 1px solid var(--d3-border) !important;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.7), 0 0 40px rgba(59,130,246,0.15) !important;
+            color: var(--d3-white) !important;
+        }
+        .kontak-name, .kontak-number {
+            color: var(--d3-white) !important;
+        }
+        .kontak-label {
+            color: var(--d3-muted) !important;
+        }
+        .kontak-icon {
+            background: rgba(59,130,246,0.15) !important;
+            border: 1px solid var(--d3-border) !important;
+        }
+        .kontak-close-btn {
+            background: rgba(255,255,255,0.08) !important;
+            color: var(--d3-muted) !important;
+        }
+        .kontak-btn-call {
+            background: var(--d3-blue) !important;
+            box-shadow: 0 0 18px rgba(59,130,246,0.4) !important;
+        }
+        .kontak-btn-copy {
+            background: rgba(255,255,255,0.08) !important;
+            color: var(--d3-white) !important;
+            border: 1px solid var(--d3-border) !important;
+        }
+        .kontak-divider {
+            background: var(--d3-border) !important;
+        }
+        #kontak-popup {
+            background: rgba(4,6,12,0.75) !important;
+        }
+
+        /* ── Nav links ── */
+        .nav-link {
+            color: var(--d3-muted) !important;
+            border-color: var(--d3-border) !important;
+            background: rgba(255,255,255,0.03) !important;
+        }
+        .nav-link:hover, .nav-link.nav-active {
+            color: var(--d3-white) !important;
+            background: var(--d3-blue) !important;
+            border-color: var(--d3-blue) !important;
+            box-shadow: 0 0 16px rgba(59,130,246,0.4) !important;
+        }
+        #nav-portfolio {
+            color: var(--d3-blue) !important;
+            border-color: var(--d3-blue) !important;
+            background: rgba(59,130,246,0.06) !important;
+        }
+        #nav-portfolio:hover {
+            background: var(--d3-blue) !important;
+            color: #fff !important;
+            box-shadow: 0 0 20px rgba(59,130,246,0.5) !important;
+        }
+
+        /* ── General white backgrounds → dark card ── */
+        .bg-white, [class*="bg-white"] {
+            background-color: var(--d3-card) !important;
+        }
+        .bg-\[\#fcfcfc\], .bg-\[\#f8fafc\] {
+            background-color: transparent !important;
+        }
+
+        /* Borders */
+        .border-gray-100, .border-gray-200 {
+            border-color: var(--d3-border) !important;
+        }
+
+        /* ── Reduce motion respect ── */
+        @media (prefers-reduced-motion: reduce) {
+            .d3-orb { animation: none !important; }
+            #hero-title { transform: none !important; }
+        }
+
+        /* ── Print: revert 3D styles ── */
+        @media print {
+            body { background: #fff !important; color: #000 !important; }
+            body::before, body::after { display: none !important; }
+            .d3-orb { display: none !important; }
+            .skills-container, .edu-container, .blueprint-card { transform: none !important; box-shadow: none !important; border: none !important; background: #fff !important; }
+        }
+    </style>
 </head>
 <body class="antialiased" oncontextmenu="return false;">
+
+    <!-- 3D floating orbs — decorative atmosphere -->
+    <div class="d3-orb d3-orb-1" aria-hidden="true"></div>
+    <div class="d3-orb d3-orb-2" aria-hidden="true"></div>
+    <div class="d3-orb d3-orb-3" aria-hidden="true"></div>
 
     <!-- ============================================================
          PRINT-ONLY CV ATS
@@ -1568,6 +2027,103 @@
         }
     </style>
 
+    <!-- Google Translate Element (hidden) -->
+    <div id="google_translate_element" style="display:none;"></div>
+    <script type="text/javascript">
+        var _gtReady = false;
+
+        // Dipanggil Google Translate saat berhasil load (online)
+        function googleTranslateElementInit() {
+            _gtReady = true;
+            new google.translate.TranslateElement({
+                pageLanguage: 'id',
+                includedLanguages: 'id,en',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+            // Restore state EN jika sebelumnya sudah dipilih
+            var match = document.cookie.match(/googtrans=\/id\/(\w+)/);
+            if (match && match[1] === 'en') {
+                document.getElementById('lang-btn-id').classList.remove('lang-active');
+                document.getElementById('lang-btn-en').classList.add('lang-active');
+            }
+        }
+
+        function translatePage(lang) {
+            if (!_gtReady) {
+                // Offline: tampilkan feedback merah sebentar
+                var enBtn = document.getElementById('lang-btn-en');
+                var orig = enBtn.textContent;
+                enBtn.textContent = 'Offline';
+                enBtn.style.cssText = 'background:#ef4444!important;color:#fff!important;';
+                setTimeout(function() {
+                    enBtn.textContent = orig;
+                    enBtn.style.cssText = '';
+                }, 1800);
+                return;
+            }
+            var isID = (lang === 'id');
+            document.getElementById('lang-btn-id').classList.toggle('lang-active', isID);
+            document.getElementById('lang-btn-en').classList.toggle('lang-active', !isID);
+            var iframe = document.querySelector('.goog-te-banner-frame');
+            if (iframe) iframe.style.display = 'none';
+            var expires = new Date();
+            expires.setFullYear(expires.getFullYear() + 1);
+            if (lang === 'en') {
+                document.cookie = 'googtrans=/id/en; expires=' + expires.toUTCString() + '; path=/';
+            } else {
+                document.cookie = 'googtrans=/id/id; expires=' + expires.toUTCString() + '; path=/';
+                document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
+            }
+            var select = document.querySelector('.goog-te-combo');
+            if (select) {
+                select.value = lang;
+                select.dispatchEvent(new Event('change'));
+            }
+        }
+    </script>
+    <!-- async + defer: tidak block halaman saat offline. onerror: silent fail -->
+    <script async defer
+        src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+        onerror="console.warn('Google Translate tidak tersedia (offline).');"></script>
+
+    <style>
+        /* Hide Google Translate top banner */
+        .goog-te-banner-frame, .skiptranslate { display: none !important; }
+        body { top: 0 !important; }
+        .goog-te-gadget { display: none !important; }
+
+        /* Language toggle pill */
+        .lang-toggle {
+            display: flex;
+            align-items: center;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(59,130,246,0.35);
+            border-radius: 99px;
+            padding: 2px;
+            gap: 0;
+        }
+        .lang-btn {
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            padding: 3px 10px;
+            border-radius: 99px;
+            border: none;
+            background: transparent;
+            color: var(--d3-muted, #7a8bad);
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+            text-transform: uppercase;
+            line-height: 1;
+        }
+        .lang-btn:hover { color: #fff; }
+        .lang-btn.lang-active {
+            background: #2563eb;
+            color: #fff;
+        }
+    </style>
+
     <nav class="fixed w-full z-50 bg-white/95 backdrop-blur-md py-4 px-8 md:px-16 flex justify-between items-center border-b border-gray-100">
         <div class="font-bold text-xl tracking-tighter uppercase text-blue-600">Wahyu Illahi R.</div>
         <div class="hidden md:flex space-x-2 text-[10px] font-bold uppercase tracking-[0.2em] items-center">
@@ -1575,6 +2131,11 @@
             <a href="#blueprints" id="nav-proyek" class="nav-link hover:text-blue-600 transition">Proyek</a>
             <button onclick="openPortfolio()" id="nav-portfolio" class="text-blue-600 border border-blue-600 px-4 py-1 rounded-full hover:bg-blue-600 hover:text-white transition cursor-pointer bg-transparent font-bold text-[10px] uppercase tracking-[0.2em]">Full Portfolio</button>
             <a href="https://www.linkedin.com/in/adhan-ab3a07195/" target="_blank" id="nav-linkedin" class="nav-link hover:text-blue-600 transition">LinkedIn</a>
+            <!-- Language Toggle -->
+            <div class="lang-toggle" title="Alih Bahasa / Switch Language">
+                <button id="lang-btn-id" class="lang-btn lang-active" onclick="translatePage('id')">ID</button>
+                <button id="lang-btn-en" class="lang-btn" onclick="translatePage('en')">EN</button>
+            </div>
         </div>
     </nav>
 
@@ -1618,36 +2179,98 @@
 
 
     <!-- HERO -->
-    <header class="min-h-screen flex flex-col justify-center px-8 md:px-24 bg-[#fcfcfc]">
-        <div class="mb-4 opacity-0" id="hero-tag" style="font-size:11px;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;color:#3b82f6;">Civil Drafter · AutoCAD Specialist · Bekasi</div>
-        <h1 id="hero-title" class="text-[8vw] md:text-[6vw] font-bold leading-[0.9] tracking-tighter opacity-0 translate-y-10 uppercase">
-            CIVIL <br> DRAFTER
-        </h1>
-        <div class="mt-12 flex flex-col md:flex-row gap-8 items-start">
-            <p id="hero-sub" class="max-w-xl text-gray-500 text-lg opacity-0 leading-relaxed">
-                Civil Drafter dengan 10+ tahun rekam jejak di proyek gedung, infrastruktur, dan bandar udara. Menghasilkan 500+ lembar gambar kerja siap konstruksi — akurat, tepat waktu, dan sesuai standar.
-            </p>
-            <div id="hero-cta" class="opacity-0 flex gap-4 flex-wrap">
-                <button onclick="openPortfolio()" class="btn-primary uppercase">Portofolio</button>
-                <button onclick="openKontakPopup()" class="border border-black px-8 py-4 text-xs font-bold rounded-full hover:bg-black hover:text-white transition uppercase bg-transparent cursor-pointer">Kontak</button>
-                <a href="https://wa.me/6282285754080" class="border border-[#25D366] px-8 py-4 text-xs font-bold rounded-full text-[#25D366] hover:bg-[#25D366] hover:text-white transition uppercase">WhatsApp</a>
-            </div>
+    <style>
+        .hero-photo-wrap {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            width: 32%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .hero-photo-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+            display: block;
+            /* Fade kiri, bawah, dan atas agar nyambung ke background gelap */
+            -webkit-mask-image:
+                linear-gradient(to right,  transparent 0%,  rgba(0,0,0,0.15) 18%, rgba(0,0,0,0.6) 32%, black 55%),
+                linear-gradient(to bottom, transparent 0%,  black 8%,  black 80%, transparent 100%);
+            mask-image:
+                linear-gradient(to right,  transparent 0%,  rgba(0,0,0,0.15) 18%, rgba(0,0,0,0.6) 32%, black 55%),
+                linear-gradient(to bottom, transparent 0%,  black 8%,  black 80%, transparent 100%);
+            -webkit-mask-composite: intersect;
+            mask-composite: intersect;
+            /* Sesuaikan tone foto ke palette biru-gelap */
+            filter: brightness(0.82) contrast(1.08) saturate(0.75) hue-rotate(10deg);
+            mix-blend-mode: luminosity;
+        }
+        /* Overlay warna biru gelap agar blend sempurna */
+        .hero-photo-wrap::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to right,
+                var(--d3-bg) 0%,
+                rgba(6,8,15,0.55) 30%,
+                rgba(6,8,15,0.05) 60%,
+                transparent 100%
+            );
+            pointer-events: none;
+        }
+        @media (max-width: 768px) {
+            .hero-photo-wrap {
+                width: 100%;
+                height: 55%;
+                top: auto;
+                bottom: 0;
+                opacity: 0.35;
+            }
+        }
+    </style>
+
+    <header class="min-h-screen flex flex-col justify-center px-8 md:px-24 bg-[#fcfcfc]" style="position:relative;overflow:hidden;">
+        <!-- Foto pas foto -->
+        <div class="hero-photo-wrap">
+            <img src="pas_foto.jpeg" alt="Wahyu Illahi Ramadhan" draggable="false" oncontextmenu="return false;">
         </div>
-        <!-- Stats bar -->
-        <div id="hero-stats" class="mt-16 flex flex-wrap gap-10 opacity-0">
-            <div>
-                <div class="text-3xl font-bold tracking-tighter"><span id="stat-tahun">0</span>+</div>
-                <div class="text-xs text-gray-400 uppercase tracking-widest mt-1">Tahun Pengalaman</div>
+
+        <!-- Konten teks (z-index lebih tinggi dari foto) -->
+        <div style="position:relative;z-index:1;">
+            <div class="mb-4 opacity-0" id="hero-tag" style="font-size:11px;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;color:#3b82f6;">Civil Drafter · AutoCAD Specialist · Bekasi</div>
+            <h1 id="hero-title" class="text-[8vw] md:text-[6vw] font-bold leading-[0.9] tracking-tighter opacity-0 translate-y-10 uppercase">
+                CIVIL <br> DRAFTER
+            </h1>
+            <div class="mt-12 flex flex-col md:flex-row gap-8 items-start">
+                <p id="hero-sub" class="max-w-xl text-gray-500 text-lg opacity-0 leading-relaxed">
+                    Civil Drafter dengan 10+ tahun rekam jejak di proyek gedung, infrastruktur, dan bandar udara. Menghasilkan 500+ lembar gambar kerja siap konstruksi — akurat, tepat waktu, dan sesuai standar.
+                </p>
+                <div id="hero-cta" class="opacity-0 flex gap-4 flex-wrap">
+                    <button onclick="openPortfolio()" class="btn-primary uppercase">Portofolio</button>
+                    <button onclick="openKontakPopup()" class="border border-black px-8 py-4 text-xs font-bold rounded-full hover:bg-black hover:text-white transition uppercase bg-transparent cursor-pointer">Kontak</button>
+                    <a href="https://wa.me/6282285754080" class="border border-[#25D366] px-8 py-4 text-xs font-bold rounded-full text-[#25D366] hover:bg-[#25D366] hover:text-white transition uppercase">WhatsApp</a>
+                </div>
             </div>
-            <div style="width:1px;background:#e5e7eb;"></div>
-            <div>
-                <div class="text-3xl font-bold tracking-tighter"><span id="stat-lembar">0</span>+</div>
-                <div class="text-xs text-gray-400 uppercase tracking-widest mt-1">Lembar Gambar Kerja</div>
-            </div>
-            <div style="width:1px;background:#e5e7eb;"></div>
-            <div>
-                <div class="text-3xl font-bold tracking-tighter"><span id="stat-proyek">0</span>+</div>
-                <div class="text-xs text-gray-400 uppercase tracking-widest mt-1">Proyek Selesai</div>
+            <!-- Stats bar -->
+            <div id="hero-stats" class="mt-16 flex flex-wrap gap-10 opacity-0">
+                <div>
+                    <div class="text-3xl font-bold tracking-tighter"><span id="stat-tahun">0</span>+</div>
+                    <div class="text-xs text-gray-400 uppercase tracking-widest mt-1">Tahun Pengalaman</div>
+                </div>
+                <div style="width:1px;background:#e5e7eb;"></div>
+                <div>
+                    <div class="text-3xl font-bold tracking-tighter"><span id="stat-lembar">0</span>+</div>
+                    <div class="text-xs text-gray-400 uppercase tracking-widest mt-1">Lembar Gambar Kerja</div>
+                </div>
+                <div style="width:1px;background:#e5e7eb;"></div>
+                <div>
+                    <div class="text-3xl font-bold tracking-tighter"><span id="stat-proyek">0</span>+</div>
+                    <div class="text-xs text-gray-400 uppercase tracking-widest mt-1">Proyek Selesai</div>
+                </div>
             </div>
         </div>
     </header>
